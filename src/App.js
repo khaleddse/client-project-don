@@ -12,7 +12,6 @@ function App() {
      <h1>project don</h1>
      <button onClick={() => incrementCounter()}>+</button>
       <h2>{counter}</h2>
-      <h6> branche "addtest" created by malek </h6>
     </div>
   );
 }
