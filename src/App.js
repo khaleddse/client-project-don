@@ -13,7 +13,6 @@ function App() {
      <button onClick={() => incrementCounter()}>+</button>
       <h2>{counter}</h2>
       <h6> branche "addtest" created by malek </h6>
-      <h4>branche test with khaled</h4>
     </div>
   );
 }
