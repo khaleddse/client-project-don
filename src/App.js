@@ -15,7 +15,6 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    console.log(this.state);
     fetch("http://localhost:5000/user/signup", {
       method: "POST",
       headers: {
