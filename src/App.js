@@ -13,6 +13,7 @@ class App extends Component {
     error: null,
   };
   signupHandler = (event, authData) => {
+    let mortadha="rien"
     event.preventDefault();
     this.setState({ authLoading: true });
     console.log(this.state);
