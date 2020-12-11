@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-
-import Input from "../../components/Form/Input/Input";
-import Button from "../../components/Button/Button";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { required, length, email } from "../util/validators";
 import Auth from "./Auth";
+import "./Auth.css";
+import { signupHandler } from "../../services/auth-service";
 
 class Signup extends Component {
   state = {
@@ -40,14 +41,15 @@ class Signup extends Component {
       },
       formIsValid: false,
     },
+    loading: false,
   };
 
   inputChangeHandler = (input, value) => {
     this.setState((prevState) => {
       let isValid = true;
-      for (const validator of prevState.signupForm[input].validators) {
+      /* for (const validator of prevState.signupForm[input].validators) {
         isValid = isValid && validator(value);
-      }
+      }*/
       const updatedForm = {
         ...prevState.signupForm,
         [input]: {
@@ -80,12 +82,36 @@ class Signup extends Component {
       };
     });
   };
+  onSignupHandler = async (e) => {
+    e.preventDefault();
+    const { nom, prenom, tel, email, password } = this.state.signupForm;
+    const signupData = {
+      nom: nom.value,
+      prenom: prenom.value,
+      tel: tel.value,
+      email: email.value,
+      password: password.value,
+    };
+    this.setState({ loading: true });
+    await signupHandler(signupData);
+    this.setState({ loading: false });
+    this.props.history.push("/");
+  };
 
   render() {
     return (
       <Auth>
-        <form onSubmit={(e) => this.props.onSignup(e, this.state)}>
-          <Input
+        <form onSubmit={(e) => this.onSignupHandler(e)} className="form">
+          <TextField
+            id="nom"
+            label="Nom"
+            onChange={(e) => this.inputChangeHandler("nom", e.target.value)}
+            onBlur={this.inputBlurHandler.bind(this, "nom")}
+            value={this.state.signupForm["nom"].value}
+            valid={this.state.signupForm["nom"].valid}
+            touched={this.state.signupForm["nom"].touched}
+          />
+          {/*<Input
             id="nom"
             label="Nom"
             type="text"
@@ -95,8 +121,17 @@ class Signup extends Component {
             value={this.state.signupForm["nom"].value}
             valid={this.state.signupForm["nom"].valid}
             touched={this.state.signupForm["nom"].touched}
+         />*/}
+          <TextField
+            id="prenom"
+            label="Prenom"
+            onChange={(e) => this.inputChangeHandler("prenom", e.target.value)}
+            onBlur={this.inputBlurHandler.bind(this, "prenom")}
+            value={this.state.signupForm["prenom"].value}
+            valid={this.state.signupForm["prenom"].valid}
+            touched={this.state.signupForm["prenom"].touched}
           />
-          <Input
+          {/*<Input
             id="prenom"
             label="Prenom"
             type="text"
@@ -106,8 +141,17 @@ class Signup extends Component {
             value={this.state.signupForm["prenom"].value}
             valid={this.state.signupForm["prenom"].valid}
             touched={this.state.signupForm["prenom"].touched}
+          />*/}
+          <TextField
+            id="tel"
+            label="Numéro de mobile"
+            onChange={(e) => this.inputChangeHandler("tel", e.target.value)}
+            onBlur={this.inputBlurHandler.bind(this, "tel")}
+            value={this.state.signupForm["tel"].value}
+            valid={this.state.signupForm["tel"].valid}
+            touched={this.state.signupForm["tel"].touched}
           />
-          <Input
+          {/*<Input
             id="tel"
             label="Numéro de mobile"
             type="text"
@@ -117,8 +161,18 @@ class Signup extends Component {
             value={this.state.signupForm["tel"].value}
             valid={this.state.signupForm["tel"].valid}
             touched={this.state.signupForm["tel"].touched}
+          />*/}
+          <TextField
+            id="email"
+            label="E-Mail"
+            type="email"
+            onChange={(e) => this.inputChangeHandler("email", e.target.value)}
+            onBlur={this.inputBlurHandler.bind(this, "email")}
+            value={this.state.signupForm["email"].value}
+            valid={this.state.signupForm["email"].valid}
+            touched={this.state.signupForm["email"].touched}
           />
-          <Input
+          {/* <Input
             id="email"
             label="E-Mail"
             type="email"
@@ -128,9 +182,20 @@ class Signup extends Component {
             value={this.state.signupForm["email"].value}
             valid={this.state.signupForm["email"].valid}
             touched={this.state.signupForm["email"].touched}
+         />*/}
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            onChange={(e) =>
+              this.inputChangeHandler("password", e.target.value)
+            }
+            onBlur={this.inputBlurHandler.bind(this, "password")}
+            value={this.state.signupForm["password"].value}
+            valid={this.state.signupForm["password"].valid}
+            touched={this.state.signupForm["password"].touched}
           />
-
-          <Input
+          {/*<Input
             id="password"
             label="Password"
             type="password"
@@ -140,8 +205,16 @@ class Signup extends Component {
             value={this.state.signupForm["password"].value}
             valid={this.state.signupForm["password"].valid}
             touched={this.state.signupForm["password"].touched}
-          />
-          <Button design="raised" type="submit" loading={this.props.loading}>
+          />*/}
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={this.props.loading}
+            style={{
+              marginTop: "30px",
+            }}
+          >
             Signup
           </Button>
         </form>
