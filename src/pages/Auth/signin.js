@@ -1,6 +1,9 @@
 import Auth from "./Auth";
 import Input from "../../components/Form/Input/Input";
-import Button from "../../components/Button/Button";
+import TextField from "@material-ui/core/TextField";
+import "./signin.css";
+//import Button from "../../components/Button/Button";
+import Button from "@material-ui/core/Button";
 import { required, length, email } from "../util/validators";
 const { Component } = require("react");
 
@@ -25,9 +28,9 @@ class Signin extends Component {
   inputChangeHandler = (input, value) => {
     this.setState((prevState) => {
       let isValid = true;
-      for (let validator of prevState.SigInForm[input].validators) {
+      /* for (let validator of prevState.SigInForm[input].validators) {
         isValid = isValid && validator(value);
-      }
+      } */
       const updatedForm = {
         ...prevState.SigInForm,
         [input]: {
@@ -70,31 +73,33 @@ class Signin extends Component {
               password: this.state.SigInForm.password.value,
             })
           }
+          className="form"
         >
-          <Input
+          <TextField
             id="email"
             label="E-mail"
-            type="email"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "email")}
-            value={this.state.SigInForm.email.value}
-            valid={this.state.SigInForm["email"].valid}
-            touched={this.state.SigInForm["email"].touched}
+            onChange={(e) => this.inputChangeHandler("email", e.target.value)}
+            value={this.state.SigInForm.email.value || ""}
           />
-          <Input
+          <TextField
             id="password"
             label="Password"
+            onChange={(e) =>
+              this.inputChangeHandler("password", e.target.value)
+            }
+            value={this.state.SigInForm.password.value || ""}
             type="password"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "password")}
-            value={this.state.SigInForm.password.value}
-            valid={this.state.SigInForm["password"].valid}
-            touched={this.state.SigInForm["password"].touched}
           />
-          <Button design="raised" type="submit" loading={this.props.loading}>
-            Envoyer
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={this.props.loading}
+            style={{
+              marginTop: "30px",
+            }}
+          >
+            Primary
           </Button>
         </form>
       </Auth>

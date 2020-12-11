@@ -1,9 +1,14 @@
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 import SignupPage from "./pages/Auth/signup";
 import LoginPage from "./pages/Auth/signin";
 //import Annonces from "./pages/Annonce/Annonces";
 //import AddAnnonce from "./pages/Annonce/AddAnonce";
 import React, { Component, Fragment } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+
+const baseTheme = createMuiTheme();
+
 class App extends Component {
   state = {
     showBackdrop: false,
@@ -56,6 +61,7 @@ class App extends Component {
   //-----------------------------
   signInHandler = (event, authData) => {
     event.preventDefault();
+    this.setState({ authLoading: true });
     fetch("http://localhost:5000/user/login", {
       method: "POST",
       headers: {
@@ -175,7 +181,11 @@ class App extends Component {
       </Switch>
     );
 
-    return <Fragment>{routes}</Fragment>;
+    return (
+      <Fragment>
+        <ThemeProvider theme={baseTheme}>{routes}</ThemeProvider>
+      </Fragment>
+    );
   }
 }
 
