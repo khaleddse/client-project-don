@@ -4,10 +4,13 @@ import Auth from "./Auth";
 import TextField from "@material-ui/core/TextField";
 import "./Auth.css";
 import Button from "@material-ui/core/Button";
+import Alert from "@material-ui/lab/Alert";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
 
 const Signin = () => {
+  const [SignupFailedState, setSignupFailed] = useState(false);
   const [formState, setFormState] = useState({
     isValid: false,
     token: null,
@@ -31,6 +34,7 @@ const Signin = () => {
   }, [formState.values]);
 
   const inputChangeHandler = (e) => {
+    setSignupFailed(false);
     e.persist();
     setFormState((formState) => ({
       ...formState,
@@ -49,19 +53,23 @@ const Signin = () => {
     e.preventDefault();
     console.log(formState);
     e.preventDefault();
-
     setisLoading(true);
     const { email, password } = formState.values;
     const response = await signInHandler({
       email,
       password,
     });
+    if (response) {
+      setFormState((formState) => ({
+        ...formState,
+        token: response.token,
+        isAuth: true,
+      }));
+    } else {
+      setSignupFailed(true);
+      
+    }
     setisLoading(false);
-    setFormState((formState) => ({
-      ...formState,
-      token: response.token,
-      isAuth: true,
-    }));
   };
 
   const hasError = (field) =>
@@ -81,7 +89,7 @@ const Signin = () => {
         <TextField
           id="password"
           name="password"
-          label="Password"
+          label="Mot de passe"
           error={hasError("password")}
           helperText={
             hasError("password") ? formState.errors.password[0] : null
@@ -90,6 +98,7 @@ const Signin = () => {
           value={formState.values.password}
           type="password"
         />
+        {SignupFailedState && <Alert severity="error">E-mail où mot de passe incorrect !</Alert>}
         <Button
           variant="contained"
           color="primary"
@@ -101,6 +110,7 @@ const Signin = () => {
         >
           Se connecter
         </Button>
+        {isLoading && <LinearProgress color="primary" />}
       </form>
     </Auth>
   );

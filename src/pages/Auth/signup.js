@@ -1,226 +1,171 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { required, length, email } from "../util/validators";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Alert from "@material-ui/lab/Alert";
 import Auth from "./Auth";
 import "./Auth.css";
 import { signupHandler } from "../../services/auth-service";
-
-class Signup extends Component {
-  state = {
-    signupForm: {
-      nom: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required],
-      },
-      prenom: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required],
-      },
-      tel: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required],
-      },
-      email: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required, email],
-      },
-      password: {
-        value: "",
-        valid: false,
-        touched: false,
-        validators: [required, length({ min: 5 })],
-      },
-      formIsValid: false,
+import { signUpSchema } from "../../pages/util/schema";
+import validate from "validate.js";
+const Signup = () => {
+  let history = useHistory();
+  const [SignupFailedState, setSignupFailed] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
+  const [formState, setFormState] = useState({
+    values: {
+      nom: "",
+      prenom: "",
+      email: "",
+      password: "",
+      tel:"",
+      confirmpassword: "",
     },
-    loading: false,
-  };
+    isValid: false,
+    error: {},
+    touched: {},
+    isAuth: false,
+  });
 
-  inputChangeHandler = (input, value) => {
-    this.setState((prevState) => {
-      let isValid = true;
-      /* for (const validator of prevState.signupForm[input].validators) {
-        isValid = isValid && validator(value);
-      }*/
-      const updatedForm = {
-        ...prevState.signupForm,
-        [input]: {
-          ...prevState.signupForm[input],
-          valid: isValid,
-          value: value,
-        },
-      };
-      let formIsValid = true;
-      for (const inputName in updatedForm) {
-        formIsValid = formIsValid && updatedForm[inputName].valid;
-      }
-      return {
-        signupForm: updatedForm,
-        formIsValid: formIsValid,
-      };
-    });
-  };
+  useEffect(() => {
+    const errors = validate(formState.values, signUpSchema);
+    setFormState((formState) => ({
+      ...formState,
+      isValid: errors ? false : true,
+      error: errors || {},
+    }));
+  }, [formState.values]);
 
-  inputBlurHandler = (input) => {
-    this.setState((prevState) => {
-      return {
-        signupForm: {
-          ...prevState.signupForm,
-          [input]: {
-            ...prevState.signupForm[input],
-            touched: true,
-          },
-        },
-      };
-    });
+  const inputChangeHandler = (e) => {
+    e.target.name === "email" && setSignupFailed(false);
+    e.persist();
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [e.target.name]: e.target.value,
+      },
+      touched: {
+        ...formState.touched,
+        [e.target.name]: true,
+      },
+    }));
   };
-  onSignupHandler = async (e) => {
+  const onSignupHandler = async (e) => {
     e.preventDefault();
-    const { nom, prenom, tel, email, password } = this.state.signupForm;
+    const { nom, prenom, email, password, tel } = formState.values;
     const signupData = {
-      nom: nom.value,
-      prenom: prenom.value,
-      tel: tel.value,
-      email: email.value,
-      password: password.value,
+      nom,
+      prenom,
+      tel,
+      email,
+      password,
     };
-    this.setState({ loading: true });
-    await signupHandler(signupData);
-    this.setState({ loading: false });
-    this.props.history.push("/");
+    setisLoading(true);
+    console.log(signupData);
+    const response = await signupHandler(signupData);
+    if (response) {
+      history.push("/");
+    } else {
+      setSignupFailed(true);
+    }
+    setisLoading(false);
+  };
+  const isValidPassword = () => {
+    return formState.touched["confirmpassword"]
+      ? formState.values.password === formState.values.confirmpassword
+        ? true
+        : false
+      : true;
   };
 
-  render() {
-    return (
-      <Auth>
-        <form onSubmit={(e) => this.onSignupHandler(e)} className="form">
-          <TextField
-            id="nom"
-            label="Nom"
-            onChange={(e) => this.inputChangeHandler("nom", e.target.value)}
-            onBlur={this.inputBlurHandler.bind(this, "nom")}
-            value={this.state.signupForm["nom"].value}
-            valid={this.state.signupForm["nom"].valid}
-            touched={this.state.signupForm["nom"].touched}
-          />
-          {/*<Input
-            id="nom"
-            label="Nom"
-            type="text"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "nom")}
-            value={this.state.signupForm["nom"].value}
-            valid={this.state.signupForm["nom"].valid}
-            touched={this.state.signupForm["nom"].touched}
-         />*/}
-          <TextField
-            id="prenom"
-            label="Prenom"
-            onChange={(e) => this.inputChangeHandler("prenom", e.target.value)}
-            onBlur={this.inputBlurHandler.bind(this, "prenom")}
-            value={this.state.signupForm["prenom"].value}
-            valid={this.state.signupForm["prenom"].valid}
-            touched={this.state.signupForm["prenom"].touched}
-          />
-          {/*<Input
-            id="prenom"
-            label="Prenom"
-            type="text"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "prenom")}
-            value={this.state.signupForm["prenom"].value}
-            valid={this.state.signupForm["prenom"].valid}
-            touched={this.state.signupForm["prenom"].touched}
-          />*/}
-          <TextField
-            id="tel"
-            label="Numéro de mobile"
-            onChange={(e) => this.inputChangeHandler("tel", e.target.value)}
-            onBlur={this.inputBlurHandler.bind(this, "tel")}
-            value={this.state.signupForm["tel"].value}
-            valid={this.state.signupForm["tel"].valid}
-            touched={this.state.signupForm["tel"].touched}
-          />
-          {/*<Input
-            id="tel"
-            label="Numéro de mobile"
-            type="text"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "tel")}
-            value={this.state.signupForm["tel"].value}
-            valid={this.state.signupForm["tel"].valid}
-            touched={this.state.signupForm["tel"].touched}
-          />*/}
-          <TextField
-            id="email"
-            label="E-Mail"
-            type="email"
-            onChange={(e) => this.inputChangeHandler("email", e.target.value)}
-            onBlur={this.inputBlurHandler.bind(this, "email")}
-            value={this.state.signupForm["email"].value}
-            valid={this.state.signupForm["email"].valid}
-            touched={this.state.signupForm["email"].touched}
-          />
-          {/* <Input
-            id="email"
-            label="E-Mail"
-            type="email"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "email")}
-            value={this.state.signupForm["email"].value}
-            valid={this.state.signupForm["email"].valid}
-            touched={this.state.signupForm["email"].touched}
-         />*/}
-          <TextField
-            id="password"
-            label="Password"
-            type="password"
-            onChange={(e) =>
-              this.inputChangeHandler("password", e.target.value)
-            }
-            onBlur={this.inputBlurHandler.bind(this, "password")}
-            value={this.state.signupForm["password"].value}
-            valid={this.state.signupForm["password"].valid}
-            touched={this.state.signupForm["password"].touched}
-          />
-          {/*<Input
-            id="password"
-            label="Password"
-            type="password"
-            control="input"
-            onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, "password")}
-            value={this.state.signupForm["password"].value}
-            valid={this.state.signupForm["password"].valid}
-            touched={this.state.signupForm["password"].touched}
-          />*/}
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={this.props.loading}
-            style={{
-              marginTop: "30px",
-            }}
-          >
-            Signup
-          </Button>
-        </form>
-      </Auth>
-    );
-  }
-}
+  const hasError = (field) =>
+    formState.touched[field] && formState.error[field] ? true : false;
+
+  return (
+    <Auth>
+      <form onSubmit={(e) => onSignupHandler(e)} className="form">
+        <TextField
+          id="nom"
+          name="nom"
+          label="Nom"
+          onChange={inputChangeHandler}
+          value={formState.values.nom}
+          error={hasError("nom")}
+          helperText={hasError("nom") ? formState.error.nom[0] : null}
+        />
+        <TextField
+          id="prenom"
+          name="prenom"
+          label="Prenom"
+          onChange={inputChangeHandler}
+          value={formState.values.prenom}
+          error={hasError("prenom")}
+          helperText={hasError("prenom") ? formState.error.prenom[0] : null}
+        />
+        <TextField
+          id="tel"
+          name="tel"
+          label="Numéro de mobile"
+          onChange={inputChangeHandler}
+          value={formState.values.tel}
+          error={hasError("tel")}
+          helperText={hasError("tel") ? formState.error.tel[0] : null}
+        />
+        <TextField
+          id="email"
+          name="email"
+          label="E-Mail"
+          type="email"
+          onChange={inputChangeHandler}
+          value={formState.values.email}
+          error={hasError("email")}
+          helperText={hasError("email") ? formState.error.email[0] : null}
+        />
+        <TextField
+          id="password"
+          name="password"
+          label="Mot de passe"
+          type="password"
+          onChange={inputChangeHandler}
+          value={formState.values.password}
+          error={hasError("password")}
+          helperText={hasError("password") ? formState.error.password[0] : null}
+        />
+        <TextField
+          id="confirmpassword"
+          name="confirmpassword"
+          label="Confirmer Mot de passe"
+          type="password"
+          onChange={inputChangeHandler}
+          value={formState.values.confirmpassword}
+          error={hasError("confirmpassword") || !isValidPassword()}
+          helperText={
+            hasError("confirmpassword")
+              ? formState.error.confirmpassword[0]
+              : isValidPassword()
+              ? null
+              : "valeur n'est pas identique"
+          }
+        />
+        {SignupFailedState && <Alert severity="error">E-mail existant!</Alert>}
+
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={isLoading || !formState.isValid || !isValidPassword()}
+          style={{
+            marginTop: "30px",
+          }}
+        >
+          Signup
+        </Button>
+        {isLoading && <LinearProgress color="primary" />}
+      </form>
+    </Auth>
+  );
+};
 
 export default Signup;
