@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import "./Auth.css";
 import Button from "@material-ui/core/Button";
 import Alert from "@material-ui/lab/Alert";
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
 
@@ -67,7 +67,6 @@ const Signin = () => {
       }));
     } else {
       setSignupFailed(true);
-      
     }
     setisLoading(false);
   };
@@ -98,7 +97,9 @@ const Signin = () => {
           value={formState.values.password}
           type="password"
         />
-        {SignupFailedState && <Alert severity="error">E-mail où mot de passe incorrect !</Alert>}
+        {SignupFailedState && (
+          <Alert severity="error">E-mail où mot de passe incorrect !</Alert>
+        )}
         <Button
           variant="contained"
           color="primary"

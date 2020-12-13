@@ -19,7 +19,7 @@ const Signup = () => {
       prenom: "",
       email: "",
       password: "",
-      tel:"",
+      tel: "",
       confirmpassword: "",
     },
     isValid: false,
