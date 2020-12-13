@@ -1,2 +1,3 @@
-const Spinner = () => <h1>Loading ...</h1>;
+import "./Spinner.css";
+const Spinner = () => <div className="loader">Loading...</div>;
 export default Spinner;
