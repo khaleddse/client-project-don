@@ -1,7 +1,7 @@
 const signInSchema = {
   email: {
     presence: { allowEmpty: false, message: "est obligatoire!" },
-    email: {message:"n'est pas valide !"},
+    email: { message: "n'est pas valide !" },
     length: {
       maximum: 64,
     },
@@ -13,48 +13,46 @@ const signInSchema = {
     },
   },
 };
-const signUpSchema={
-  nom:{
-    presence:{allowEmpty:false,message:"est obligatoire!"},
+const signUpSchema = {
+  nom: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
       maximum: 15,
     },
   },
-  prenom:{
-    presence:{allowEmpty:false,message:"est obligatoire!"},
+  prenom: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
       maximum: 15,
     },
   },
-  tel:{
-    presence:{allowEmpty:false,message:"est obligatoire!"},
+  tel: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
       maximum: 15,
     },
   },
-  email:{
-    presence:{allowEmpty:false,message:"est obligatoire!"},
-    email:{message:"n'est pas valide !"},
-    length:{ maximum:64}
+  email: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    email: { message: "n'est pas valide !" },
+    length: { maximum: 64 },
   },
   password: {
-    presence:{allowEmpty:false,message:"est obligatoire!"},
+    presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
-      minimum:6,
+      minimum: 6,
       maximum: 128,
-      message:":minimum 6 caractère!"
+      message: ":minimum 6 caractère!",
     },
   },
-  confirmpassword:{
-    presence:{allowEmpty:false,message:"est obligatoire!"},
+  confirmpassword: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
-      minimum:6,
+      minimum: 6,
       maximum: 128,
-      message:":minimum 6 caractère!"
+      message: ":minimum 6 caractère!",
     },
   },
+};
 
-}
-
-
-export { signInSchema,signUpSchema };
+export { signInSchema, signUpSchema };
