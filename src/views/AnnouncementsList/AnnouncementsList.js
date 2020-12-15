@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getPosts } from "../../services/posts";
 import AnnouncementCard from "../../components/UI/AnnouncementCard/AnnouncementCard";
 import Spinner from "../../components/UI/Spinner/Spinner";
-
+import AppBarMur from "../../components/AppBar/AppBarMur";
 const AnnouncementsList = () => {
   useEffect(() => {
     getAllposts();
@@ -19,17 +19,20 @@ const AnnouncementsList = () => {
   };
   return (
     <div>
+      <AppBarMur />
       {isLoading ? (
         <Spinner />
       ) : announcements.length > 0 ? (
         announcements.map(({ id, name, title, image, created }) => (
-          <AnnouncementCard
-            key={id}
-            name={name}
-            title={title}
-            image={image}
-            created={created}
-          />
+          <span>
+            <AnnouncementCard
+              key={id}
+              name={name}
+              title={title}
+              image={image}
+              created={created}
+            />
+          </span>
         ))
       ) : (
         <h1>No announcments found</h1>

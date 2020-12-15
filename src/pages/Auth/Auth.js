@@ -1,7 +1,10 @@
 import React from "react";
-
+import AppBar from "../../components/AppBar/AppBar";
 const auth = (props) => (
-  <section className="auth-form">{props.children}</section>
+  <div>
+    <AppBar />
+    <section className="auth-form">{props.children}</section>
+  </div>
 );
 
 export default auth;

@@ -18,11 +18,13 @@ class App extends Component {
           exact
           render={(props) => <SignupPage {...props} />}
         />
+
         <Route
           path="/announcements"
           exact
           render={(props) => <AnnouncementsList {...props} />}
         />
+
         <Redirect to="/" />
       </Switch>
     );
