@@ -8,6 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
+import AppBarView from "../../views/AppBar/AppBarView";
 
 const Signin = () => {
   const [SignupFailedState, setSignupFailed] = useState(false);
