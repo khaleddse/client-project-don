@@ -211,6 +211,7 @@ export default function PrimarySearchAppBar(props) {
                     input: classes.inputInput,
                   }}
                   inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => props.filterHandler(e.target.value)}
                 />
               </div>
               <div className={classes.grow} />

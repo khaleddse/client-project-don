@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import AppBar from "../../components/AppBar/AppBar";
 
 const render = (props) => {
