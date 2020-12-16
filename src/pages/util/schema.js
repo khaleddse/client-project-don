@@ -54,5 +54,22 @@ const signUpSchema = {
     },
   },
 };
-
-export { signInSchema, signUpSchema };
+const AddAnnouncementSchema={
+  objet:{
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      minimum: 4,
+      maximum: 64,
+      message: "maximum 64 caractére ,minimum 4!",
+    },
+  },
+  detail:{    length: {
+    maximum: 1000,
+    message: "maximum 1000 caractére!",
+  },},
+  adresse:{
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+  },
+  image:{}
+}
+export { signInSchema, signUpSchema ,AddAnnouncementSchema };
