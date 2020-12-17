@@ -15,6 +15,7 @@ const AnnouncementsList = () => {
   const getAllposts = async () => {
     setIsLoading(true);
     const result = await getPosts();
+    console.log("result=",result)
     setAnnouncements(result);
     setIsLoading(false);
   };
@@ -38,33 +39,53 @@ const AnnouncementsList = () => {
       ) : isfiltred ? (
         announcements
           .filter((annonces) => {
-            if (regex.test(annonces.name)) {
+            if (regex.test(annonces.objet)) {
               return annonces;
             }
           })
-          .map(({ id, name, title, image, created }) => (
-            <span>
+          .map(({ id,objet, detail, image, adresse,createdAt,telephone ,user}) => {
+            const imagefromApi= Buffer.from(
+              image.data,
+              "binary"
+            ).toString("base64");
+            const imageSrc="data:image/png;base64," + imagefromApi;
+
+
+            return(<span>
+              <br/>
               <AnnouncementCard
                 key={id}
-                name={name}
-                title={title}
-                image={image}
-                created={created}
+                objet={objet}
+                detail={detail}
+                createdAt={createdAt}
+                telephone={telephone}
+                user={user}
+                image={imageSrc}
+                adresse={adresse}
               />
-            </span>
-          ))
+            </span>)
+          })
       ) : announcements.length > 0 ? (
-        announcements.map(({ id, name, title, image, created }) => (
-          <span>
+        announcements.map(({ id,objet, detail, image, adresse, createdAt,telephone ,user}) => {
+          const imagefromApi= Buffer.from(
+            image.data,
+            "binary"
+          ).toString("base64");
+          const imageSrc="data:image/png;base64," + imagefromApi;
+
+
+          return(<span><br/>
             <AnnouncementCard
               key={id}
-              name={name}
-              title={title}
-              image={image}
-              created={created}
-            />
-          </span>
-        ))
+              objet={objet}
+              detail={detail}
+              createdAt={createdAt}
+              telephone={telephone}
+              user={user}
+              image={imageSrc}
+              adresse={adresse}
+            />          </span>)
+        })
       ) : (
         <h1>No announcments found</h1>
       )}

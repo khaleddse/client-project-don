@@ -70,6 +70,17 @@ const AddAnnouncementSchema={
   adresse:{
     presence: { allowEmpty: false, message: "est obligatoire!" },
   },
-  image:{}
-}
+  image:{},
+  telephone: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      minimum: 8,
+      message: "minimum 8 chiffre !",
+    },
+    format: {
+      pattern:/^(\+?0*216)?\d{8}$/,
+      message: "forme invalide!"
+    },
+
+}}
 export { signInSchema, signUpSchema ,AddAnnouncementSchema };
