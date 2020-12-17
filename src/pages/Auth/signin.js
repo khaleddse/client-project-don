@@ -8,7 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
-import AppBarView from "../../views/AppBar/AppBarView";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
   const [SignupFailedState, setSignupFailed] = useState(false);
@@ -76,6 +76,7 @@ const Signin = () => {
     formState.touched[field] && formState.errors[field] ? true : false;
   return (
     <Auth>
+     
       <form onSubmit={(e) => submitFormHandler(e)} className="form">
         <TextField
           id="email"
@@ -112,6 +113,9 @@ const Signin = () => {
         >
           Se connecter
         </Button>
+        <p><h6>Vous n’avez pas encore de compte ?{ <Link to="/signup">
+          <Button color="inherit">CRÉER MON COMPTE</Button>
+          </Link>}</h6> </p>
         {isLoading && <LinearProgress color="primary" />}
       </form>
     </Auth>
