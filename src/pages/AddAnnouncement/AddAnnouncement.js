@@ -43,13 +43,13 @@ const AddAnnoucement = () => {
     "Kebili",
     "Ttataouine",
   ]);
-  const [ImageState, setImageState] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
     values: {
       objet: "",
       detail: "",
       adresse: "",
+      telephone:"",
       image: null,
     },
     isValid: false,
@@ -87,13 +87,14 @@ const AddAnnoucement = () => {
     form.append("objet", formState.values.objet);
     form.append("detail", formState.values.detail);
     form.append("adresse", formState.values.adresse);
+    form.append("telephone", formState.values.telephone);
+
     const response = await AddPost(form);
     console.log(response.addedAnnonce.image);
     const RSt = Buffer.from(
       response.addedAnnonce.image.data,
       "binary"
     ).toString("base64");
-    setImageState("data:image/png;base64," + RSt);
     setisLoading(false);
   };
 
@@ -138,6 +139,17 @@ const AddAnnoucement = () => {
           multiline
           rows={4}
           variant="outlined"
+        />
+        <br />
+        <TextField
+          id="telephone"
+          name="telephone"
+          label="Numéro de téléphone"
+          variant="outlined"
+          error={hasError("telephone")}
+          helperText={hasError("telephone") ? formState.errors.telephone[0] : null}
+          onChange={inputChangeHandler}
+          value={formState.values.telephone}
         />
         <br />
         <FormControl
@@ -186,7 +198,6 @@ const AddAnnoucement = () => {
           Poster
         </Button>
         {isLoading && <LinearProgress color="primary" />}
-        <img src={ImageState}></img>
       </form>
     </Auth>
   );
