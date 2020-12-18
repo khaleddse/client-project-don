@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory,Link } from "react-router-dom";
-import SvgIcon from '@material-ui/core/SvgIcon';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,15 +19,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
- 
 }));
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
 
 export default function ButtonAppBar() {
   const classes = useStyles();
@@ -48,13 +40,12 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-           
-          <Link to="/announcements">
-          {/*<HomeIcon fontSize="large" />*/}
-      <HomeIcon style={{ fontSize: 40 }} />
-          
+          <Link to="/siginup">
+          <Button color="inherit">Login</Button>
           </Link>
-         
+          <Link to="/announcements">
+          <Button color="inherit"> Accueil</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
