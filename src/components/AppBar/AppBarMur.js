@@ -150,7 +150,7 @@ export default function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>deconnecter</MenuItem>
+      <MenuItem onClick={props.logoutHandler}>déconnecte</MenuItem>
     </Menu>
   );
 
@@ -230,12 +230,12 @@ export default function PrimarySearchAppBar(props) {
               
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
-              <Link to="/AjoutAnnonce">
-                <Fab  style={{ color: green[500] }}  aria-label="add" className={classes.fabButton}>
+              {/*<Link to="/AjoutAnnonce">*/}
+                <Fab  style={{ color: green[500] }}  aria-label="add" className={classes.fabButton}onClick={props.Authorization}>
               <AddIcon />
               
             </Fab>   
-            </Link> 
+            {/* </Link> */}
                 <IconButton aria-label="show 4 new mails" color="inherit">
                   <Badge badgeContent={4} color="secondary">
                     <MailIcon />

@@ -16,6 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { getCategories } from "../../services/categories";
+import { useHistory } from "react-router-dom";
 
 const AddAnnoucement = () => {
   useEffect(() => {
@@ -97,6 +98,8 @@ const AddAnnoucement = () => {
     console.log(picture[0])
   };
 
+  let history=useHistory();
+
   const submitFormHandler = async (e) => {
     e.preventDefault();
     console.log(formState);
@@ -110,15 +113,18 @@ const AddAnnoucement = () => {
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
     const subcategId=formState.values.subcategorie.id;
-    
+    console.log(subcategId)
+    const userid = localStorage.getItem('userId') ;
+    console.log(userid)
 
-    const response = await AddPost(form,subcategId);
+    const response = await AddPost(form,subcategId,userid);
     console.log(response.addedAnnonce.image);
     const RSt = Buffer.from(
       response.addedAnnonce.image.data,
       "binary"
     ).toString("base64");
     setisLoading(false);
+    history.push("/announcements")
   };
 
   const inputChangeHandler = (e) => {

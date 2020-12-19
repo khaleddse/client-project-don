@@ -5,7 +5,8 @@ export const signInHandler = (authData) => {
     .post("http://localhost:5000/user/login", authData)
     .then((resData) => {
       localStorage.setItem("token", resData.data.token);
-      //localStorage.setItem("userId", resData.userId);
+      localStorage.setItem("userId", resData.data.UserId);
+      localStorage.setItem("success", resData.data.success)
       const remainingMilliseconds = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
       localStorage.setItem("expiryDate", expiryDate.toISOString());

@@ -8,7 +8,7 @@ import Alert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Signin = () => {
   const [SignupFailedState, setSignupFailed] = useState(false);
@@ -24,6 +24,23 @@ const Signin = () => {
     touched: {},
   });
   const [isLoading, setisLoading] = useState(false);
+  const logoutChangeHandler=()=>{
+    setFormState((formState)=>({
+      
+        isAuth: false,
+         token: null ,
+         values:{
+          email: "",
+          password: "",
+         },
+         ...formState
+    }));
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiryDate');
+    localStorage.removeItem('userId');
+    history.push("/")
+  }
+
 
   useEffect(() => {
     const errors = validate(formState.values, signInSchema);
@@ -49,7 +66,7 @@ const Signin = () => {
       },
     }));
   };
-
+let history=useHistory();
   const submitFormHandler = async (e) => {
     e.preventDefault();
     console.log(formState);
@@ -66,6 +83,7 @@ const Signin = () => {
         token: response.token,
         isAuth: true,
       }));
+      history.push("/announcements");
     } else {
       setSignupFailed(true);
     }
