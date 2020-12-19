@@ -94,6 +94,7 @@ const AddAnnoucement = () => {
         image: picture,
       },
     }));
+    console.log(picture[0])
   };
 
   const submitFormHandler = async (e) => {

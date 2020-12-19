@@ -17,6 +17,11 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Slide from "@material-ui/core/Slide";
 import PropTypes from "prop-types";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import { Link } from "react-router-dom";
+import { green } from '@material-ui/core/colors';
+
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -30,10 +35,7 @@ function HideOnScroll(props) {
 
 HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+
   window: PropTypes.func,
 };
 
@@ -49,7 +51,16 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    fabButton: {
+      position: 'absolute',
+      zIndex: 1,
+      top: -30,
+      left: 0,
+      right: 0,
+      margin: '0 auto',
+    },
   },
+
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -98,9 +109,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-  },
+  }
 }));
-
+ 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -139,6 +150,7 @@ export default function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>deconnecter</MenuItem>
     </Menu>
   );
 
@@ -213,20 +225,30 @@ export default function PrimarySearchAppBar(props) {
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => props.filterHandler(e.target.value)}
                 />
+                
               </div>
+              
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
+              <Link to="/AjoutAnnonce">
+                <Fab  style={{ color: green[500] }}  aria-label="add" className={classes.fabButton}>
+              <AddIcon />
+              
+            </Fab>   
+            </Link> 
                 <IconButton aria-label="show 4 new mails" color="inherit">
                   <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                   </Badge>
                 </IconButton>
+            
                 <IconButton
                   aria-label="show 17 new notifications"
                   color="inherit"
                 >
                   <Badge badgeContent={17} color="secondary">
                     <NotificationsIcon />
+
                   </Badge>
                 </IconButton>
                 <IconButton
