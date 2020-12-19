@@ -11,12 +11,18 @@ import { AddAnnouncementSchema } from "../util/schema";
 import { AddPost } from "../../services/posts";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { getCategories } from "../../services/categories";
 
 const AddAnnoucement = () => {
+  useEffect(() => {
+  CategLoader();
+  console.log("categs in Annonce", categoriesState);
+}, [])
+  const [categoriesState, setCategories] = useState([]);
   const [regionsState, setRegions] = useState([
     "Tunis",
     "Ariana",
@@ -49,14 +55,28 @@ const AddAnnoucement = () => {
       objet: "",
       detail: "",
       adresse: "",
-      telephone:"",
+      telephone: "",
+      subcategorie: {
+        id:"",
+        nom:""
+      },
       image: null,
     },
     isValid: false,
     errors: {},
     touched: {},
   });
+  const CategLoader = async() => {
+    setisLoading(true);
+    const response=await getCategories();
+    console.log("response",response)
+    setCategories(response)
+    setisLoading(false);
+  };
+
+
   useEffect(() => {
+
     const errors = validate(formState.values, AddAnnouncementSchema);
     setFormState((formState) => ({
       ...formState,
@@ -88,8 +108,10 @@ const AddAnnoucement = () => {
     form.append("detail", formState.values.detail);
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
+    const subcategId=formState.values.subcategorie.id;
+    
 
-    const response = await AddPost(form);
+    const response = await AddPost(form,subcategId);
     console.log(response.addedAnnonce.image);
     const RSt = Buffer.from(
       response.addedAnnonce.image.data,
@@ -100,6 +122,27 @@ const AddAnnoucement = () => {
 
   const inputChangeHandler = (e) => {
     e.persist();
+    const id=e.target.value.slice(e.target.value.indexOf('$')+1,e.target.value.length);
+    const name=e.target.value.slice(0,e.target.value.indexOf('$'))
+    e.target.name==="subcategorie"?
+    
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [e.target.name]: {
+          ["id"]:id,
+          ["nom"]:name,
+        },
+      },
+      touched: {
+        ...formState.touched,
+        [e.target.name]: true,
+      },
+    }))
+
+    :
+    
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -110,8 +153,11 @@ const AddAnnoucement = () => {
         ...formState.touched,
         [e.target.name]: true,
       },
-    }));
+    }))
+
+    console.log(formState.values)
   };
+
 
   const hasError = (field) => {
     return formState.touched[field] && formState.errors[field] ? true : false;
@@ -147,15 +193,14 @@ const AddAnnoucement = () => {
           label="Numéro de téléphone"
           variant="outlined"
           error={hasError("telephone")}
-          helperText={hasError("telephone") ? formState.errors.telephone[0] : null}
+          helperText={
+            hasError("telephone") ? formState.errors.telephone[0] : null
+          }
           onChange={inputChangeHandler}
           value={formState.values.telephone}
         />
         <br />
-        <FormControl
-          variant="outlined"
-          error={hasError("adresse")}
-        >
+        <FormControl variant="outlined" error={hasError("adresse")}>
           <InputLabel htmlFor="outlined-age-native-simple">Ville</InputLabel>
           <Select
             native
@@ -172,7 +217,35 @@ const AddAnnoucement = () => {
               <option value={region}>{region}</option>
             ))}
           </Select>
-          <FormHelperText>{hasError("adresse") ? formState.errors.adresse[0] : null}</FormHelperText>
+          <FormHelperText>
+            {hasError("adresse") ? formState.errors.adresse[0] : null}
+          </FormHelperText>
+        </FormControl>
+        <br />
+        <FormControl variant="outlined" error={hasError("subcategorie")}>
+          <InputLabel htmlFor="outlined-age-native-simple">
+            Catégorie
+          </InputLabel>
+          <Select 
+            native
+            label="Catégorie"
+            inputProps={{
+              name: "subcategorie",
+              id: "outlined-age-native-simple",
+            }}
+            onChange={inputChangeHandler}
+            >
+            <option  value="" />
+            {categoriesState.map((categ) => {
+              let Result = categ.subcategs.map((subcateg) => {
+               return <option  value={subcateg.nom+"$"+subcateg._id}>{subcateg.nom}</option>;
+              });
+              return <optgroup label={categ.nom}>{Result}</optgroup>;
+            })}
+          </Select>
+          <FormHelperText>
+            {hasError("subcategorie") ? formState.errors.subcategorie[0] : null}
+          </FormHelperText>
         </FormControl>
         <ImageUploader
           singleImage={true}
