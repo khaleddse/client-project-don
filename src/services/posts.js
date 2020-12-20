@@ -8,14 +8,14 @@ export const getPosts = () =>
       console.error(err);
     });
 
- export const AddPost = (authData,subcategId) => {
-   console.log(authData)
-        return axios
-      .post("http://localhost:5000/annonce/add/"+subcategId+"/5fd0144ddd7f780a1c6c0bd1", authData)
-       .then((resData) => {
-            return resData.data;
-         })
-      .catch((err) => {
-           console.error(err);
-      });
-  };
+    export const AddPost = (authData,subcategId,userid) => {
+      console.log(authData)
+           return axios
+         .post(`http://localhost:5000/annonce/add/${subcategId}/${userid}`, authData)
+          .then((resData) => {
+               return resData.data;
+            })
+         .catch((err) => {
+              console.error(err);
+         });
+     };

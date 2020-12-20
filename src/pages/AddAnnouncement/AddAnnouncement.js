@@ -5,16 +5,13 @@ import Auth from "../Auth/Auth";
 import TextField from "@material-ui/core/TextField";
 import ImageUploader from "react-images-upload";
 import Button from "@material-ui/core/Button";
-import Alert from "@material-ui/lab/Alert";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { AddAnnouncementSchema } from "../util/schema";
 import { AddPost } from "../../services/posts";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import NativeSelect from "@material-ui/core/NativeSelect";
 import { getCategories } from "../../services/categories";
 import { useHistory } from "react-router-dom";
 
@@ -95,7 +92,7 @@ const AddAnnoucement = () => {
         image: picture,
       },
     }));
-    console.log(picture[0])
+
   };
 
   let history=useHistory();
@@ -118,13 +115,16 @@ const AddAnnoucement = () => {
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
     const subcategId=formState.values.subcategorie.id;
-    console.log(subcategId)
     const userid = localStorage.getItem('userId') ;
+    console.log("UserId=",userid)
+    const response = await AddPost(form,subcategId,userid);
+    console.log(subcategId)
+    
     console.log(userid)
 
-    const response = await AddPost(form,subcategId,userid);
+   
     setisLoading(false);
-    //history.push("/announcements")
+    history.push("/announcements")
   };
 
   const inputChangeHandler = (e) => {

@@ -25,7 +25,6 @@ const AnnouncementsList = () => {
   const getAllposts = async () => {
     setIsLoading(true);
     const result = await getPosts();
-    console.log("result=",result)
     setAnnouncements(result);
     setIsLoading(false);
   };
