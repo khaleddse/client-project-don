@@ -99,15 +99,20 @@ const AddAnnoucement = () => {
   };
 
   let history=useHistory();
-
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
   const submitFormHandler = async (e) => {
     e.preventDefault();
     console.log(formState);
     e.preventDefault();
     setisLoading(true);
-
+    const result = await toBase64(formState.values.image[0]).catch(e => Error(e));
     const form = new FormData();
-    form.append("image", formState.values.image[0]);
+    form.append("image", result);
     form.append("objet", formState.values.objet);
     form.append("detail", formState.values.detail);
     form.append("adresse", formState.values.adresse);
@@ -118,13 +123,8 @@ const AddAnnoucement = () => {
     console.log(userid)
 
     const response = await AddPost(form,subcategId,userid);
-    console.log(response.addedAnnonce.image);
-    const RSt = Buffer.from(
-      response.addedAnnonce.image.data,
-      "binary"
-    ).toString("base64");
     setisLoading(false);
-    history.push("/announcements")
+    //history.push("/announcements")
   };
 
   const inputChangeHandler = (e) => {
@@ -162,7 +162,6 @@ const AddAnnoucement = () => {
       },
     }))
 
-    console.log(formState.values)
   };
 
 

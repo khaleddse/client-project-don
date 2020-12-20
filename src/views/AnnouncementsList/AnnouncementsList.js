@@ -65,11 +65,7 @@ const AnnouncementsList = () => {
             }
           })
           .map(({ id,objet, detail, image, adresse,createdAt,telephone ,user}) => {
-            const imagefromApi= Buffer.from(
-              image.data,
-              "binary"
-            ).toString("base64");
-            const imageSrc="data:image/png;base64," + imagefromApi;
+            const imageSrc= image
 
 
             return(<span>
@@ -88,11 +84,8 @@ const AnnouncementsList = () => {
           })
       ) : announcements.length > 0 ? (
         announcements.map(({ id,objet, detail, image, adresse, createdAt,telephone ,user}) => {
-          const imagefromApi= Buffer.from(
-            image.data,
-            "binary"
-          ).toString("base64");
-          const imageSrc="data:image/png;base64," + imagefromApi;
+
+          const imageSrc=image
 
 
           return(<span><br/>
