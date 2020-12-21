@@ -18,10 +18,9 @@ import { useHistory } from "react-router-dom";
 const AddAnnoucement = () => {
   useEffect(() => {
   CategLoader();
-  console.log("categs in Annonce", categoriesState);
 }, [])
   const [categoriesState, setCategories] = useState([]);
-  const [regionsState, setRegions] = useState([
+  const [regionsState] = useState([
     "Tunis",
     "Ariana",
     "Ben Arous",
@@ -107,22 +106,21 @@ const AddAnnoucement = () => {
     console.log(formState);
     e.preventDefault();
     setisLoading(true);
-    const result = await toBase64(formState.values.image[0]).catch(e => Error(e));
     const form = new FormData();
+    
+    if(formState.values.image){
+    let result = await toBase64(formState.values.image[0]).catch(e => Error(e));
     form.append("image", result);
+     }
+    
+    
     form.append("objet", formState.values.objet);
     form.append("detail", formState.values.detail);
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
     const subcategId=formState.values.subcategorie.id;
     const userid = localStorage.getItem('userId') ;
-    console.log("UserId=",userid)
-    const response = await AddPost(form,subcategId,userid);
-    console.log(subcategId)
-    
-    console.log(userid)
-
-   
+     await AddPost(form,subcategId,userid);
     setisLoading(false);
     history.push("/announcements")
   };
@@ -138,8 +136,8 @@ const AddAnnoucement = () => {
       values: {
         ...formState.values,
         [e.target.name]: {
-          ["id"]:id,
-          ["nom"]:name,
+          id:id,
+          nom:name,
         },
       },
       touched: {

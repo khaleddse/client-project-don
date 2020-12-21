@@ -4,9 +4,28 @@ import AnnouncementCard from "../../components/UI/AnnouncementCard/AnnouncementC
 import Spinner from "../../components/UI/Spinner/Spinner";
 import AppBarMur from "../../components/AppBar/AppBarMur";
 import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import "../AnnouncementsList/AnnoucementsList.css";
+const useStyles = makeStyles((theme) => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.background.paper,
+    },
+  },
+  fab: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+  },
 
-
+}));
 const AnnouncementsList = () => {
+  const classes = useStyles();
   useEffect(() => {
     getAllposts();
   }, []);
@@ -39,6 +58,9 @@ const AnnouncementsList = () => {
     console.log(isfiltred);
     setText({ search: value });
   };
+  const loginPage=()=>{
+    history.push("/");
+  }
   const IsAuth =()=>{
     const succes = localStorage.getItem('success') ;
     if (succes=== 'true'){
@@ -53,7 +75,8 @@ const AnnouncementsList = () => {
   const regex = new RegExp(text.search, "i");
   return (
     <div>
-      <AppBarMur filterHandler={FilterChangeHandler} logoutHandler={logoutChangeHandler} Authorization={IsAuth}/>
+      <AppBarMur filterHandler={FilterChangeHandler} logoutHandler={logoutChangeHandler} Authorization={IsAuth} loginRedirect={loginPage}/>
+      <div>
       {isLoading ? (
         <Spinner />
       ) : isfiltred ? (
@@ -61,16 +84,18 @@ const AnnouncementsList = () => {
           .filter((annonces) => {
             if (regex.test(annonces.objet)) {
               return annonces;
+            }else{
+              return null
             }
           })
           .map(({ id,objet, detail, image, adresse,createdAt,telephone ,user}) => {
             const imageSrc= image
 
 
-            return(<span>
-              <br/>
+            return(
+              
               <AnnouncementCard
-                key={id}
+                id={id}
                 objet={objet}
                 detail={detail}
                 createdAt={createdAt}
@@ -79,7 +104,7 @@ const AnnouncementsList = () => {
                 image={imageSrc}
                 adresse={adresse}
               />
-            </span>)
+           )
           })
       ) : announcements.length > 0 ? (
         announcements.map(({ id,objet, detail, image, adresse, createdAt,telephone ,user}) => {
@@ -87,9 +112,9 @@ const AnnouncementsList = () => {
           const imageSrc=image
 
 
-          return(<span><br/>
+          return(
             <AnnouncementCard
-              key={id}
+              id={id}
               objet={objet}
               detail={detail}
               createdAt={createdAt}
@@ -97,11 +122,15 @@ const AnnouncementsList = () => {
               user={user}
               image={imageSrc}
               adresse={adresse}
-            />          </span>)
+            />         )
         })
       ) : (
         <h1>No announcments found</h1>
       )}
+      <Fab color="secondary" className={classes.fab} onClick={IsAuth}>
+          <AddIcon />
+        </Fab>
+      </div>
     </div>
   );
 };

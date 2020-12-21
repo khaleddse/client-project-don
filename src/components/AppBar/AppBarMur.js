@@ -8,20 +8,16 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Slide from "@material-ui/core/Slide";
 import PropTypes from "prop-types";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import { Link } from "react-router-dom";
-import { green } from '@material-ui/core/colors';
-
+import CustomizedMenus from "./Menu";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -52,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
     fabButton: {
-      position: 'absolute',
+      position: "absolute",
       zIndex: 1,
       top: -30,
       left: 0,
       right: 0,
-      margin: '0 auto',
+      margin: "0 auto",
     },
   },
 
@@ -109,10 +105,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-  }
+  },
 }));
- 
+
 export default function PrimarySearchAppBar(props) {
+  
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -150,7 +147,12 @@ export default function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={props.logoutHandler}>déconnecte</MenuItem>
+      { localStorage.getItem("success")?
+      <MenuItem onClick={props.logoutHandler}>se déconnecter</MenuItem>
+      :<MenuItem onClick={props.loginRedirect}>Se Connecter</MenuItem>
+      }
+      
+      
     </Menu>
   );
 
@@ -164,15 +166,22 @@ export default function PrimarySearchAppBar(props) {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+    ><MenuItem>
+     <IconButton color="inherit" aria-label="Ajouter annonce" onClick={props.Authorization}>
+                  <Badge color="secondary">
+                    <AddToPhotosIcon />
+                  </Badge>
+                </IconButton>
+                <p>Ajouter annonce</p>
+                </MenuItem>
+                <MenuItem>
+                <IconButton aria-label="Contact support" color="inherit">
+                  <Badge  color="secondary">
+                  <ContactSupportIcon/>
+                  </Badge>
+                </IconButton>
+                <p>Contacter support</p>
+                </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
@@ -201,16 +210,10 @@ export default function PrimarySearchAppBar(props) {
         <div className={classes.grow}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="open drawer"
-              >
-                <MenuIcon />
-              </IconButton>
+              <CustomizedMenus />
+
               <Typography className={classes.title} variant="h6" noWrap>
-                Material-UI
+                NajemN3awen
               </Typography>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
@@ -225,30 +228,33 @@ export default function PrimarySearchAppBar(props) {
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => props.filterHandler(e.target.value)}
                 />
-                
               </div>
-              
+
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
-              {/*<Link to="/AjoutAnnonce">*/}
-                <Fab  style={{ color: green[500] }}  aria-label="add" className={classes.fabButton}onClick={props.Authorization}>
+                {/*<Link to="/AjoutAnnonce">
+                <Fab  style={{ color: green[500] }}  aria-label="add" >
               <AddIcon />
               
-            </Fab>   
-            {/* </Link> */}
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon />
+            </Fab>   */}
+                {/* </Link> */}
+                <IconButton color="inherit" aria-label="Ajouter annonce" onClick={props.Authorization}>
+                  <Badge color="secondary">
+                    <AddToPhotosIcon />
                   </Badge>
                 </IconButton>
-            
+                <IconButton aria-label="Contact support" color="inherit">
+                  <Badge  color="secondary">
+                  <ContactSupportIcon/>
+                  </Badge>
+                </IconButton>
+
                 <IconButton
                   aria-label="show 17 new notifications"
                   color="inherit"
                 >
                   <Badge badgeContent={17} color="secondary">
                     <NotificationsIcon />
-
                   </Badge>
                 </IconButton>
                 <IconButton

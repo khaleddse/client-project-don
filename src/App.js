@@ -19,19 +19,19 @@ class App extends Component {
           exact
           render={(props) => <SignupPage {...props} />}
         />
-
-        <Route
+        {localStorage.getItem("success")?<Route
           path="/AjoutAnnonce"
           exact
           render={(props) => <AddAnnoucement {...props} />}
-        />
+        />:<Redirect to="/" />}
+        
         <Route
           path="/announcements"
           exact
           render={(props) => <AnnouncementsList {...props} />}
         />
 
-        <Redirect to="/" />
+        <Redirect to="/announcements" />
       </Switch>
     );
 
