@@ -14,14 +14,17 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    float: "left",
+    width: "23%",
+    margin:"10px"
   },
   media: {
     height: 0,
+    width:"100%", 
     paddingTop: "56.25%", // 16:9
   },
   expand: {
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: red[800],
   },
 }));
 
@@ -59,11 +62,16 @@ export default function RecipeReviewCard(props) {
         title={props.user}
         subheader={props.createdAt.slice(11, 16)+" le "+props.createdAt.slice(0, 10)}
       />
-      <CardMedia
+      {props.image?<CardMedia
         className={classes.media}
         image={props.image}
         title={props.user}
-      />
+      />: <CardMedia
+      className={classes.media}
+      image="https://www.radiobeton.com/www/wp-content/uploads/2017/01/arton17969.jpg"
+      title={props.user}
+    />}
+      
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
          Titre :{props.objet}

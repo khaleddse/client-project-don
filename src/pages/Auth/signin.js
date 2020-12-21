@@ -24,24 +24,6 @@ const Signin = () => {
     touched: {},
   });
   const [isLoading, setisLoading] = useState(false);
-  const logoutChangeHandler=()=>{
-    setFormState((formState)=>({
-      
-        isAuth: false,
-         token: null ,
-         values:{
-          email: "",
-          password: "",
-         },
-         ...formState
-    }));
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiryDate');
-    localStorage.removeItem('userId');
-    history.push("/")
-  }
-
-
   useEffect(() => {
     const errors = validate(formState.values, signInSchema);
     setFormState((formState) => ({
