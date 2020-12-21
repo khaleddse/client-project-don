@@ -23,7 +23,7 @@ class App extends Component {
           path="/AjoutAnnonce"
           exact
           render={(props) => <AddAnnoucement {...props} />}
-        />:<Redirect to="/" />}
+        />:null}
         
         <Route
           path="/announcements"

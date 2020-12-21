@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: "none",
+    marginLeft:"10px",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -213,7 +214,7 @@ export default function PrimarySearchAppBar(props) {
               <CustomizedMenus />
 
               <Typography className={classes.title} variant="h6" noWrap>
-                NajemN3awen
+                    NajemN3awen
               </Typography>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
