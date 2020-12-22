@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,8 +11,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Slide from "@material-ui/core/Slide";
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: "none",
-    marginLeft:"10px",
+    marginLeft: "10px",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -110,16 +111,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
-  
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  let history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const logoutHandler = () => {
+    //localStorage.clear()
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiryDate");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("success");
+    history.push("/");
+  };
+  const loginRedirect = () => {
+    history.push("/");
   };
 
   const handleMobileMenuClose = () => {
@@ -148,12 +159,11 @@ export default function PrimarySearchAppBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      { localStorage.getItem("success")?
-      <MenuItem onClick={props.logoutHandler}>se déconnecter</MenuItem>
-      :<MenuItem onClick={props.loginRedirect}>Se Connecter</MenuItem>
-      }
-      
-      
+      {localStorage.getItem("success") ? (
+        <MenuItem onClick={logoutHandler}>se déconnecter</MenuItem>
+      ) : (
+        <MenuItem onClick={loginRedirect}>Se Connecter</MenuItem>
+      )}
     </Menu>
   );
 
@@ -167,22 +177,38 @@ export default function PrimarySearchAppBar(props) {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    ><MenuItem>
-     <IconButton color="inherit" aria-label="Ajouter annonce" onClick={props.Authorization}>
-                  <Badge color="secondary">
-                    <AddToPhotosIcon />
-                  </Badge>
-                </IconButton>
-                <p>Ajouter annonce</p>
-                </MenuItem>
-                <MenuItem>
-                <IconButton aria-label="Contact support" color="inherit">
-                  <Badge  color="secondary">
-                  <ContactSupportIcon/>
-                  </Badge>
-                </IconButton>
-                <p>Contacter support</p>
-                </MenuItem>
+    >
+      {history.location.pathname !== "/AjoutAnnonce" && (
+        <MenuItem
+          onClick={(e) => {
+            localStorage.getItem("success")
+              ? history.push("/AjoutAnnonce")
+              : history.push("/");
+          }}
+        >
+          <IconButton color="inherit" aria-label="Ajouter annonce">
+            <Badge color="secondary">
+              <AddToPhotosIcon />
+            </Badge>
+          </IconButton>
+          <p>Ajouter annonce</p>
+        </MenuItem>
+      )}
+
+      {history.location.pathname !== "/contactus" && (
+        <MenuItem
+          onClick={(e) => {
+            history.push("/contactus");
+          }}
+        >
+          <IconButton aria-label="Contact support" color="inherit">
+            <Badge color="secondary">
+              <ContactSupportIcon />
+            </Badge>
+          </IconButton>
+          <p>Contacter support</p>
+        </MenuItem>
+      )}
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
@@ -212,24 +238,31 @@ export default function PrimarySearchAppBar(props) {
           <AppBar position="static">
             <Toolbar>
               <CustomizedMenus />
-
-              <Typography className={classes.title} variant="h6" noWrap>
-                    NajemN3awen
+              
+              <IconButton color="inherit" 
+              onClick={(e)=>{history.location.pathname !== "/announcements" &&
+               history.push("/announcements")}}>
+              <Typography className={classes.title} variant="h6"  noWrap>
+               NajemN3awen
               </Typography>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
+              </IconButton> 
+              
+              {history.location.pathname === "/announcements" && (
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ "aria-label": "search" }}
+                    onChange={(e) => props.filterHandler(e.target.value)}
+                  />
                 </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={(e) => props.filterHandler(e.target.value)}
-                />
-              </div>
+              )}
 
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
@@ -239,16 +272,34 @@ export default function PrimarySearchAppBar(props) {
               
             </Fab>   */}
                 {/* </Link> */}
-                <IconButton color="inherit" aria-label="Ajouter annonce" onClick={props.Authorization}>
-                  <Badge color="secondary">
-                    <AddToPhotosIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton aria-label="Contact support" color="inherit">
-                  <Badge  color="secondary">
-                  <ContactSupportIcon/>
-                  </Badge>
-                </IconButton>
+                {history.location.pathname !== "/AjoutAnnonce" && (
+                  <IconButton
+                    color="inherit"
+                    aria-label="Ajouter annonce"
+                    onClick={(e) => {
+                      localStorage.getItem("success")
+                        ? history.push("/AjoutAnnonce")
+                        : history.push("/");
+                    }}
+                  >
+                    <Badge color="secondary">
+                      <AddToPhotosIcon />
+                    </Badge>
+                  </IconButton>
+                )}
+                {history.location.pathname !== "/contactus" && (
+                  <IconButton
+                    aria-label="Contact support"
+                    color="inherit"
+                    onClick={(e) => {
+                      history.push("/contactus");
+                    }}
+                  >
+                    <Badge color="secondary">
+                      <ContactSupportIcon />
+                    </Badge>
+                  </IconButton>
+                )}
 
                 <IconButton
                   aria-label="show 17 new notifications"
