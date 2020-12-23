@@ -2,6 +2,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import SignupPage from "./pages/Auth/signup";
 import LoginPage from "./pages/Auth/signin";
+import ContactUs from "./pages/ContactUs/ContactUs";
 import AddAnnoucement from "./pages/AddAnnouncement/AddAnnouncement"
 import AnnouncementsList from "./views/AnnouncementsList/AnnouncementsList";
 import React, { Component, Fragment } from "react";
@@ -14,6 +15,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/" exact render={(props) => <LoginPage {...props} />} />
+        <Route path="/contactUS" exact render={(props) => <ContactUs {...props} />} />
         <Route
           path="/signup"
           exact

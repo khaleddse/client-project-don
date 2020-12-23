@@ -30,13 +30,7 @@ const AnnouncementsList = () => {
     getAllposts();
   }, []);
   let history=useHistory();
-  const logoutChangeHandler=()=>{
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiryDate');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('success');
-    history.push("/")
-  }
+
 
   const [announcements, setAnnouncements] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,9 +52,7 @@ const AnnouncementsList = () => {
     console.log(isfiltred);
     setText({ search: value });
   };
-  const loginPage=()=>{
-    history.push("/");
-  }
+
   const IsAuth =()=>{
     const succes = localStorage.getItem('success') ;
     if (succes=== 'true'){
@@ -75,7 +67,7 @@ const AnnouncementsList = () => {
   const regex = new RegExp(text.search, "i");
   return (
     <div>
-      <AppBarMur filterHandler={FilterChangeHandler} logoutHandler={logoutChangeHandler} Authorization={IsAuth} loginRedirect={loginPage}/>
+      <AppBarMur filterHandler={FilterChangeHandler} />
       <div>
       {isLoading ? (
         <Spinner />

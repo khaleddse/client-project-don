@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import validate from "validate.js";
-import "../Auth/Auth.css";
-import Auth from "../Auth/Auth";
+import "../ContactUs/LoggedIn.css"
+import LoggedIn from "../ContactUs/LoggedIn";
 import TextField from "@material-ui/core/TextField";
 import ImageUploader from "react-images-upload";
 import Button from "@material-ui/core/Button";
@@ -167,7 +167,7 @@ const AddAnnoucement = () => {
     return formState.touched[field] && formState.errors[field] ? true : false;
   };
   return (
-    <Auth>
+    <LoggedIn>
       <form onSubmit={(e) => submitFormHandler(e)} className="form">
         <TextField
           id="object"
@@ -276,7 +276,7 @@ const AddAnnoucement = () => {
         </Button>
         {isLoading && <LinearProgress color="primary" />}
       </form>
-    </Auth>
+    </LoggedIn>
   );
 };
 export default AddAnnoucement;
