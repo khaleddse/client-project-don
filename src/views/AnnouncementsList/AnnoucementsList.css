@@ -1,17 +1,21 @@
-.row {margin: 0 -5px;}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.flex-container > div {
+  flex: 1 0 20%;
+}
 
-/* Responsive columns - one column layout (vertical) on small screens */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }}
+@media ( max-width: 768px) {
+  .flex-container > div {
+    flex-basis: 34%;
+  }
+}
+
+@media ( max-width: 320px) {
+  .flex-container > div {
+    flex-basis: 80%;
+  }
+}
+

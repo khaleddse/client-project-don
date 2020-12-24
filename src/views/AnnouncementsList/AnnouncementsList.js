@@ -68,7 +68,7 @@ const AnnouncementsList = () => {
   return (
     <div>
       <AppBarMur filterHandler={FilterChangeHandler} />
-      <div>
+      <div  className="flex-container">
       {isLoading ? (
         <Spinner />
       ) : isfiltred ? (
