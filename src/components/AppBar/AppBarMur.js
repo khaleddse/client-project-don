@@ -237,7 +237,7 @@ export default function PrimarySearchAppBar(props) {
         <div className={classes.grow}>
           <AppBar position="static">
             <Toolbar>
-              <CustomizedMenus selectedCateg={props.selectedCateg} />
+              {history.location.pathname === "/announcements" && <CustomizedMenus selectedCateg={props.selectedCateg} />}
               
               <IconButton color="inherit" 
               onClick={(e)=>{history.location.pathname !== "/announcements" &&
