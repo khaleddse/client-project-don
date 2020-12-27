@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
     float: "left",
     width: "23%",
-    margin:"10px"
+    margin:"10px",
+    height:"100%",
   },
   media: {
     height: 0,
@@ -95,8 +96,8 @@ export default function RecipeReviewCard(props) {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+      <Collapse in={expanded} timeout="auto" unmountOnExit >
+        <CardContent  className={classes.fixed}>
           <Typography paragraph>Détail:</Typography>
           <Typography paragraph>
              {props.detail}

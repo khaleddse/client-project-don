@@ -1,5 +1,23 @@
 import axios from "axios";
 
+export const getPostsBySubCateg = (id) =>
+  axios
+    .get(`http://localhost:5000/subcategorie/${id}`)
+    .then(({ data }) => data.annonces)
+    .catch((err) => {
+      console.error(err);
+    });
+    export const getPostsByCateg = (id) =>
+  axios
+    .get(`http://localhost:5000/categorie/${id}`)
+    .then(({ data }) => {
+      console.log(data)
+     return data.subcategs
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
 export const getPosts = () =>
   axios
     .get("http://localhost:5000/annonce/")

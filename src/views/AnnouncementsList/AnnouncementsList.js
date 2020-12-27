@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPosts } from "../../services/posts";
+import { getPosts,getPostsBySubCateg } from "../../services/posts";
 import AnnouncementCard from "../../components/UI/AnnouncementCard/AnnouncementCard";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import AppBarMur from "../../components/AppBar/AppBarMur";
@@ -38,13 +38,22 @@ const AnnouncementsList = () => {
   const getAllposts = async () => {
     setIsLoading(true);
     const result = await getPosts();
-    setAnnouncements(result);
+    //get annnonces by ordre (date)
+    setAnnouncements(result.reverse());
     setIsLoading(false);
   };
   //let history=useHistory();
  
   const [isfiltred, setIsFiltred] = useState(false);
+
   const [text, setText] = useState({ search: "" });
+  const selectedCateg =async(id)=>{
+    setIsLoading(true)
+    const result= await getPostsBySubCateg(id);
+    setAnnouncements(result.reverse())
+    setIsLoading(false)
+  }
+
   const FilterChangeHandler = async (value) => {
     if (value.trim().length > 0) setIsFiltred(true);
     else setIsFiltred(false);
@@ -67,10 +76,10 @@ const AnnouncementsList = () => {
   const regex = new RegExp(text.search, "i");
   return (
     <div>
-      <AppBarMur filterHandler={FilterChangeHandler} />
+      <AppBarMur filterHandler={FilterChangeHandler} selectedCateg={selectedCateg} />
       <div  className="flex-container">
       {isLoading ? (
-        <Spinner />
+        <div><Spinner  ></Spinner></div>
       ) : isfiltred ? (
         announcements
           .filter((annonces) => {
