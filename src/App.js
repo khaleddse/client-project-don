@@ -7,7 +7,7 @@ import AddAnnoucement from "./pages/AddAnnouncement/AddAnnouncement"
 import AnnouncementsList from "./views/AnnouncementsList/AnnouncementsList";
 import React, { Component, Fragment } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-
+import EditView from "./views/EditView/EditView";
 const baseTheme = createMuiTheme();
 
 class App extends Component {
@@ -31,6 +31,11 @@ class App extends Component {
           path="/announcements"
           exact
           render={(props) => <AnnouncementsList {...props} />}
+        />
+        <Route
+          path="/edit"
+          exact
+          render={(props) => <EditView {...props} />}
         />
 
         <Redirect to="/announcements" />

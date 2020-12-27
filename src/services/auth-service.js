@@ -28,3 +28,15 @@ export const signupHandler = (authData) => {
       console.error(err);
     });
 };
+
+export const FindUser = (UserId)=>{
+ return axios
+  .get(`http://localhost:5000/user/${UserId}`)
+  .then((resData)=>{
+   
+    return resData.data;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
