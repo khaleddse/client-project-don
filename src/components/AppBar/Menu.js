@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from "@material-ui/icons/Menu";
+import {getCategories  } from "../../services/categories";
 
 const StyledMenu = withStyles({
   paper: {
@@ -36,7 +37,16 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+export default function CustomizedMenus(props) {
+  const [categoriesState, setCategstate] = useState([])
+  useEffect(() => {
+    CategList();
+  }, [])
+  const CategList= async ()=>{
+    const categories=await getCategories();
+    setCategstate(categories)
+  }
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -61,18 +71,21 @@ export default function CustomizedMenus() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
-
-          <ListItemText primary="Sent mail" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-
-          <ListItemText primary="Drafts" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-
-          <ListItemText primary="Inbox" />
-        </StyledMenuItem>
+        
+        {categoriesState.map((categ) => {
+              let Result = categ.subcategs.map((subcateg) => {
+               return (
+                 <StyledMenuItem id={subcateg._id} onClick={()=>props.selectedCateg(subcateg._id)}><ListItemText id={subcateg._id} secondary={"• "+subcateg.nom} /></StyledMenuItem>);
+              });
+              return (
+                <>
+              <StyledMenuItem id={categ._id}>
+              <ListItemText id={categ._id} primary={categ.nom} />
+            </StyledMenuItem>
+            {Result}</>
+            )
+            })}
+        
       </StyledMenu>
     </div>
   );
