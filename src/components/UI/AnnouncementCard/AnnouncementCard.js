@@ -14,6 +14,8 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
+import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +77,7 @@ export default function RecipeReviewCard(props) {
       
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-         Titre :{props.objet}
+         <b>Titre:</b> {props.objet}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -98,12 +100,10 @@ export default function RecipeReviewCard(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit >
         <CardContent  className={classes.fixed}>
-          <Typography paragraph>Détail:</Typography>
+          <Typography paragraph>Détail: {props.detail}</Typography> 
           <Typography paragraph>
-             {props.detail}
-          </Typography>
-          <Typography paragraph>
-          Contact : {props.telephone} 
+          <RoomOutlinedIcon style={{ fontSize: 15 }}/> : {props.adresse} <br/>
+          <CallOutlinedIcon style={{ fontSize: 15 }}/> : {props.telephone} 
           </Typography>
         </CardContent>
       </Collapse>

@@ -19,7 +19,9 @@ import Slide from "@material-ui/core/Slide";
 import PropTypes from "prop-types";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import CustomizedMenus from "./Menu";
-
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 function HideOnScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
@@ -157,18 +159,22 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      
       {localStorage.getItem("success") ? (
-        <MenuItem onClick={logoutHandler}>se déconnecter</MenuItem>
+        <div>
+          <MenuItem onClick={handleMenuClose} onClick={(e)=>{history.push("/edit")}}><AccountBoxOutlinedIcon/>My account</MenuItem>
+          <MenuItem onClick={logoutHandler}> <LockOutlinedIcon/> se déconnecter</MenuItem>
+        </div>
+        
       ) : (
-        <MenuItem onClick={loginRedirect}>Se Connecter</MenuItem>
+        <MenuItem onClick={loginRedirect}><LockOpenOutlinedIcon/>Se Connecter</MenuItem>
       )}
     </Menu>
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
+    
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
