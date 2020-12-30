@@ -5,7 +5,7 @@ export const signInHandler = (authData) => {
     .post("http://localhost:5000/user/login", authData)
     .then((resData) => {
       localStorage.setItem("token", resData.data.token);
-      localStorage.setItem("userId", resData.data.UserId);
+      //localStorage.setItem("userId", resData.data.UserId);
       const remainingMilliseconds = 60 * 60 * 10000;
       const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
       localStorage.setItem("expiryDate", expiryDate.toISOString());
@@ -28,7 +28,7 @@ export const signupHandler = (authData) => {
     });
 };
 
-export const FindUser = (UserId) => {
+/*export const FindUser = (UserId) => {
   return axios
     .get(`http://localhost:5000/user/${UserId}`)
     .then((resData) => {
@@ -37,4 +37,4 @@ export const FindUser = (UserId) => {
     .catch((err) => {
       console.error(err);
     });
-};
+};*/

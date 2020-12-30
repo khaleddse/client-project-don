@@ -45,7 +45,7 @@ const AddAnnoucement = () => {
   const CategLoader = async () => {
     setisLoading(true);
     const response = await getCategories();
-    console.log("response", response);
+    //  console.log("response", response);
     setCategories(response);
     setisLoading(false);
   };
@@ -60,7 +60,7 @@ const AddAnnoucement = () => {
   }, [formState.values]);
 
   const onDrop = (picture) => {
-    console.log(picture);
+    //console.log(picture);
     setFormState((prevState) => ({
       ...prevState,
       values: {
@@ -80,7 +80,7 @@ const AddAnnoucement = () => {
     });
   const submitFormHandler = async (e) => {
     e.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     e.preventDefault();
     setisLoading(true);
     const form = new FormData();
@@ -97,8 +97,7 @@ const AddAnnoucement = () => {
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
     const subcategId = formState.values.subcategorie.id;
-    const userid = localStorage.getItem("userId");
-    await AddPost(form, subcategId, userid);
+    await AddPost(form, subcategId, user.userId);
     setisLoading(false);
     history.push("/announcements");
   };

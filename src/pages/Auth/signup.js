@@ -68,7 +68,7 @@ const Signup = () => {
     console.log(signupData);
     const response = await signupHandler(signupData);
     if (response) {
-      history.push("/");
+      history.push("/sigin");
     } else {
       setSignupFailed(true);
     }
@@ -86,10 +86,7 @@ const Signup = () => {
     formState.touched[field] && formState.error[field] ? true : false;
 
   return (
-    
     <Auth>
-    
-      
       <form onSubmit={(e) => onSignupHandler(e)} className="form">
         <TextField
           id="nom"
@@ -167,14 +164,15 @@ const Signup = () => {
         >
           Signup
         </Button>
-        <h6>Vous avez une compte?<Link to="/">
-          <Button color="inherit">ME CONNECTER</Button>
-          </Link></h6>
+        <h6>
+          Vous avez une compte?
+          <Link to="/">
+            <Button color="inherit">ME CONNECTER</Button>
+          </Link>
+        </h6>
         {isLoading && <LinearProgress color="primary" />}
       </form>
-     
     </Auth>
-   
   );
 };
 
