@@ -16,7 +16,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
-
+import './AnnouncementCard.css'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -66,7 +66,7 @@ export default function RecipeReviewCard(props) {
         subheader={props.createdAt.slice(11, 16)+" le "+props.createdAt.slice(0, 10)}
       />
       {props.image?<CardMedia
-        className={classes.media}
+        className="imag"
         image={props.image}
         title={props.user}
       />: <CardMedia

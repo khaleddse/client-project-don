@@ -248,9 +248,9 @@ export default function PrimarySearchAppBar(props) {
               <IconButton color="inherit" 
               onClick={(e)=>{history.location.pathname !== "/announcements" &&
                history.push("/announcements")}}>
-              <Typography className={classes.title} variant="h6"  noWrap>
-               NajemN3awen
-              </Typography>
+              
+               <img src="https://mail.google.com/mail/u/0?ui=2&ik=e42c220111&attid=0.1&permmsgid=msg-f:1687365682627642274&th=176aba25f73483a2&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ9t2MpSDXxBSJxwztrSmb2Cc-aV03_X74HN8-Pm6IwNch9b03EFNf73yJyfztiVYDePhOefyyDPNm2XvUsGDg1BBcJ3-TFlf4qXXNwLvn4qHLFK1o3lCPpznHA&disp=emb&realattid=ii_kj96irxs0"></img>
+              
               </IconButton> 
               
               {history.location.pathname === "/announcements" && (

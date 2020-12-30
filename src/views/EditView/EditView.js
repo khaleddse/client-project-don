@@ -37,6 +37,8 @@ const EditView=()=>{
         
     <AppBar/>
     {/*<Edit Nom={userinfo.nom} Prenom={userinfo.prenom} Email={userinfo.email} Telephone={userinfo.Telephone} update={<TextField/>}/>*/}
+    <img src="https://mail.google.com/mail/u/0?ui=2&ik=e42c220111&attid=0.2&permmsgid=msg-a:r-4148000398611388426&th=176abb0e36343e9f&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ8td9v04iGy3LsV1L1I5HO5ZrG-E459vuAZUtKX2UdRMFV9EBAkqVz2D6sqCMJsMAp9QiklrSVKceX9WZJg3Z3u8viMm5_LMLnOxgpHq-StB1WGwa9M_WujoLY&disp=emb&realattid=ii_kj973ftl1"></img>
+
     <Edit Type={"Nom"} Value={userinfo.nom} update={<TextField  id="Nom" 
           label={userinfo.nom}
           />}/>

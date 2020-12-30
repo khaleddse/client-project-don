@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from "@material-ui/icons/Menu";
 import {getCategories  } from "../../services/categories";
-
+import './Menu.css';
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -75,7 +75,7 @@ export default function CustomizedMenus(props) {
         {categoriesState.map((categ) => {
               let Result = categ.subcategs.map((subcateg) => {
                return (
-                 <StyledMenuItem id={subcateg._id} onClick={()=>props.selectedCateg(subcateg._id)}><ListItemText id={subcateg._id} secondary={"• "+subcateg.nom} /></StyledMenuItem>);
+                 <StyledMenuItem className="mys"  id={subcateg._id} onClick={()=>props.selectedCateg(subcateg._id)}><ListItemText id={subcateg._id} secondary={"• "+subcateg.nom} /></StyledMenuItem>);
               });
               return (
                 <>
