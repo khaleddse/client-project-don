@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
     float: "left",
     width: "23%",
-    margin:"10px",
-    height:"100%",
+    margin: "10px",
+    height: "100%",
   },
   media: {
     height: 0,
-    width:"100%", 
+    width: "100%",
     paddingTop: "56.25%", // 16:9
   },
   expand: {
@@ -59,23 +59,28 @@ export default function RecipeReviewCard(props) {
             {props.user[0]}
           </Avatar>
         }
-
         title={props.user}
-        subheader={props.createdAt.slice(11, 16)+" le "+props.createdAt.slice(0, 10)}
+        subheader={
+          props.createdAt.slice(11, 16) + " le " + props.createdAt.slice(0, 10)
+        }
       />
-      {props.image?<CardMedia
-        className={classes.media}
-        image={props.image}
-        title={props.user}
-      />: <CardMedia
-      className={classes.media}
-      image="https://www.radiobeton.com/www/wp-content/uploads/2017/01/arton17969.jpg"
-      title={props.user}
-    />}
-      
+      {props.image ? (
+        <CardMedia
+          className={classes.media}
+          image={props.image}
+          title={props.user}
+        />
+      ) : (
+        <CardMedia
+          className={classes.media}
+          image="https://www.radiobeton.com/www/wp-content/uploads/2017/01/arton17969.jpg"
+          title={props.user}
+        />
+      )}
+
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-         Titre :{props.objet}
+          Titre :{props.objet}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -96,15 +101,11 @@ export default function RecipeReviewCard(props) {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit >
-        <CardContent  className={classes.fixed}>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent className={classes.fixed}>
           <Typography paragraph>Détail:</Typography>
-          <Typography paragraph>
-             {props.detail}
-          </Typography>
-          <Typography paragraph>
-          Contact : {props.telephone} 
-          </Typography>
+          <Typography paragraph>{props.detail}</Typography>
+          <Typography paragraph>Contact : {props.telephone}</Typography>
         </CardContent>
       </Collapse>
     </Card>

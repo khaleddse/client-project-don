@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { DonContext } from "../../contexte/donContexte";
 import validate from "validate.js";
 import Auth from "./Auth";
 import TextField from "@material-ui/core/TextField";
@@ -9,13 +10,13 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { signInHandler } from "../../services/auth-service";
 import { signInSchema } from "../util/schema";
 import { Link, useHistory } from "react-router-dom";
+import decode from "jwt-decode";
 
 const Signin = () => {
+  const { setAuthHandler, setUserHandler } = useContext(DonContext);
   const [SignupFailedState, setSignupFailed] = useState(false);
   const [formState, setFormState] = useState({
     isValid: false,
-    token: null,
-    isAuth: false,
     values: {
       email: "",
       password: "",
@@ -48,35 +49,31 @@ const Signin = () => {
       },
     }));
   };
-let history=useHistory();
+  let history = useHistory();
   const submitFormHandler = async (e) => {
-    e.preventDefault();
-    console.log(formState);
     e.preventDefault();
     setisLoading(true);
     const { email, password } = formState.values;
-    const response = await signInHandler({
-      email,
-      password,
-    });
-    if (response) {
-      setFormState((formState) => ({
-        ...formState,
-        token: response.token,
-        isAuth: true,
-      }));
+    try {
+      const { token } = await signInHandler({
+        email,
+        password,
+      });
+      setAuthHandler(true);
+      setUserHandler(decode(token));
+      console.log(decode(token));
+
+      setisLoading(false);
       history.push("/announcements");
-    } else {
+    } catch (error) {
       setSignupFailed(true);
     }
-    setisLoading(false);
   };
 
   const hasError = (field) =>
     formState.touched[field] && formState.errors[field] ? true : false;
   return (
     <Auth>
-     
       <form onSubmit={(e) => submitFormHandler(e)} className="form">
         <TextField
           id="email"
@@ -113,9 +110,16 @@ let history=useHistory();
         >
           Se connecter
         </Button>
-        <p><h6>Vous n’avez pas encore de compte ?{ <Link to="/signup">
-          <Button color="inherit">CRÉER MON COMPTE</Button>
-          </Link>}</h6> </p>
+        <p>
+          <h6>
+            Vous n’avez pas encore de compte ?
+            {
+              <Link to="/signup">
+                <Button color="inherit">CRÉER MON COMPTE</Button>
+              </Link>
+            }
+          </h6>{" "}
+        </p>
         {isLoading && <LinearProgress color="primary" />}
       </form>
     </Auth>
