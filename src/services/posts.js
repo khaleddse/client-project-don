@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setToken } from "./utils";
 
 export const getPostsBySubCateg = (id) =>
   axios

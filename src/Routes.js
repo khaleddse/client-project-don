@@ -68,7 +68,7 @@ const Routes = () => {
           exact
           render={(props) => <AnnouncementsList {...props} />}
         />
-        {/* <Redirect to="/announcements" /> */}
+        <Redirect to="/announcements" />
       </Switch>
     );
   }

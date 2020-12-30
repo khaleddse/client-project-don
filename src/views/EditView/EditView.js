@@ -1,85 +1,87 @@
 import AppBar from "../../components/AppBar/AppBar";
 import Edit from "../../components/UI/editpage/EditPage";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TextField } from "@material-ui/core";
 import { DonContext } from "../../contexte/donContexte";
-
+import Button from "@material-ui/core/Button";
+import decode from "jwt-decode";
+import { updateUser } from "../../services/UserServices";
 const EditView = () => {
-  const { user } = useContext(DonContext);
+  const { user, setUserHandler } = useContext(DonContext);
   const { nom, prenom, email, tel } = user;
+  const [formupdate, setFormUpDate] = useState({
+    nom: {
+      value: nom,
+      name: "nom",
+    },
+    prenom: {
+      value: prenom,
+      name: "prenom",
+    },
+    email: {
+      value: email,
+      name: "email",
+    },
+    tel: {
+      value: tel,
+      name: "tel",
+    },
+  });
+
+  const onChangeHandler = (e) => {
+    console.log(e.target.value);
+    setFormUpDate((formupdate) => ({
+      ...formupdate,
+      [e.target.name]: {
+        ...formupdate[e.target.name],
+        value: e.target.value,
+      },
+    }));
+  };
+  const updateHandler = async (e) => {
+    e.preventDefault();
+    const { nom, prenom, email, tel } = formupdate;
+    try {
+      const { token } = await updateUser({
+        nom: nom.value,
+        prenom: prenom.value,
+        email: email.value,
+        tel: tel.value,
+      });
+
+      setUserHandler(decode(token));
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  let fieldsArray = [];
+  for (let key in formupdate) {
+    fieldsArray.push({
+      id: key,
+      value: formupdate[key].value,
+      name: formupdate[key].name,
+    });
+  }
   return (
     <div>
       <AppBar />
-      {/*<Edit Nom={nom} Prenom={userinfo.prenom} Email={userinfo.email} Telephone={userinfo.Telephone} update={<TextField/>}/>*/}
-      <Edit
-        Type={"Nom"}
-        Value={nom}
-        update={<TextField id="Nom" label="Nom" value={nom} />}
-      />
-      <Edit
-        Type={"Prenom"}
-        Value={prenom}
-        update={<TextField id="Prenom" label={prenom} />}
-      />
-      <Edit
-        Type={"E-mail"}
-        Value={email}
-        update={<TextField id="Email" label={email} />}
-      />
-      <Edit
-        Type={"Telephone"}
-        Value={tel}
-        update={<TextField id="Telephone" label={tel} />}
-      />
-
-      {/* <div>
-        [] // state
-      (nom, prenom, email, tel )=> array => map(
-          <Accordion>
-            <input> 
-            <button></button>
-          </Accordion>
-        )
-      </div> */}
-
-      {/* exports.updateInformation = async (req, res, next) => {
-  const { firstName, lastName, email, phoneNumber, agency, post } = req.body;
-  const userId = req.params.userId;
-  const updatedUser = {
-    email: email,
-    firstName: firstName,
-    lastName: lastName,
-    phoneNumber: phoneNumber,
-    agency: agency,
-    post: post
-  };
-  try {
-    const user = await User.findOneAndUpdate(
-      { _id: userId },
-      { $set: updatedUser },
-      { new: true }
-    );
-    const payload = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      post: user.post,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      agency: user.agency,
-      date: user.date,
-      imageUrl: user.imageUrl
-    };
-    const token = await jwt.sign(payload, "keys.secretOrKey", {
-      expiresIn: 3600
-    });
-    if (token) {
-      res.status(200).json({ success: true, token: "Bearer " + token });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}; */}
+      <form onSubmit={(e) => updateHandler(e)}>
+        {fieldsArray.map(({ name, value }) => (
+          <Edit Type={name} Value={value} key={name}>
+            <TextField
+              name={name}
+              id={name}
+              label={name}
+              value={value}
+              onChange={(e) => onChangeHandler(e)}
+            />
+          </Edit>
+        ))}
+        <Button variant="contained" color="primary" type="submit">
+          change
+        </Button>
+      </form>
     </div>
   );
 };
