@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DonContext } from "../../contexte/donContexte";
 import { useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -113,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
+  const { isAuth, user, setAuthHandler } = useContext(DonContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -128,11 +130,11 @@ export default function PrimarySearchAppBar(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
-    localStorage.removeItem("success");
-    history.push("/");
+    setAuthHandler(false);
+    history.push("/signin");
   };
   const loginRedirect = () => {
-    history.push("/");
+    history.push("/signin");
   };
 
   const handleMobileMenuClose = () => {
@@ -159,13 +161,12 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      
-      {localStorage.getItem("success") ? (
+      <MenuItem onClick={handleMenuClose}>Profile {user.nom}</MenuItem>
+      {isAuth ? (
         <div>
-          <MenuItem onClick={handleMenuClose} onClick={(e)=>{history.push("/edit")}}><AccountBoxOutlinedIcon/>My account</MenuItem>
-          <MenuItem onClick={logoutHandler}> <LockOutlinedIcon/> se déconnecter</MenuItem>
+        <MenuItem onClick={() => history.push("/edit")}><AccountBoxOutlinedIcon/>My account</MenuItem>
+        <MenuItem onClick={logoutHandler}><LockOutlinedIcon/>se déconnecter</MenuItem>
         </div>
-        
       ) : (
         <MenuItem onClick={loginRedirect}><LockOpenOutlinedIcon/>Se Connecter</MenuItem>
       )}
@@ -187,9 +188,7 @@ export default function PrimarySearchAppBar(props) {
       {history.location.pathname !== "/AjoutAnnonce" && (
         <MenuItem
           onClick={(e) => {
-            localStorage.getItem("success")
-              ? history.push("/AjoutAnnonce")
-              : history.push("/");
+            isAuth ? history.push("/AjoutAnnonce") : history.push("/signin");
           }}
         >
           <IconButton color="inherit" aria-label="Ajouter annonce">
@@ -238,111 +237,113 @@ export default function PrimarySearchAppBar(props) {
   );
 
   return (
-    <React.Fragment>
-      <HideOnScroll {...props}>
-        <div className={classes.grow}>
-          <AppBar position="static">
-            <Toolbar>
-              {history.location.pathname === "/announcements" && <CustomizedMenus selectedCateg={props.selectedCateg} />}
-              
-              <IconButton color="inherit" 
-              onClick={(e)=>{history.location.pathname !== "/announcements" &&
-               history.push("/announcements")}}>
-              
-               <img src="https://mail.google.com/mail/u/0?ui=2&ik=e42c220111&attid=0.1&permmsgid=msg-f:1687365682627642274&th=176aba25f73483a2&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ9t2MpSDXxBSJxwztrSmb2Cc-aV03_X74HN8-Pm6IwNch9b03EFNf73yJyfztiVYDePhOefyyDPNm2XvUsGDg1BBcJ3-TFlf4qXXNwLvn4qHLFK1o3lCPpznHA&disp=emb&realattid=ii_kj96irxs0"></img>
-              
-              </IconButton> 
-              
-              {history.location.pathname === "/announcements" && (
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ "aria-label": "search" }}
-                    onChange={(e) => props.filterHandler(e.target.value)}
-                  />
-                </div>
-              )}
+    <HideOnScroll {...props}>
+      <div className={classes.grow}>
+        <AppBar position="static">
+          <Toolbar>
+            {history.location.pathname === "/announcements" && (
+              <CustomizedMenus selectedCateg={props.selectedCateg} />
+            )}
 
-              <div className={classes.grow} />
-              <div className={classes.sectionDesktop}>
-                {/*<Link to="/AjoutAnnonce">
+            <IconButton
+              color="inherit"
+              onClick={(e) => {
+                history.location.pathname !== "/announcements" &&
+                  history.push("/announcements");
+              }}
+            >
+              <Typography className={classes.title} variant="h6" noWrap>
+                NajemN3awen
+              </Typography>
+            </IconButton>
+
+            {history.location.pathname === "/announcements" && (
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => props.filterHandler(e.target.value)}
+                />
+              </div>
+            )}
+
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              {/*<Link to="/AjoutAnnonce">
                 <Fab  style={{ color: green[500] }}  aria-label="add" >
               <AddIcon />
               
             </Fab>   */}
-                {/* </Link> */}
-                {history.location.pathname !== "/AjoutAnnonce" && (
-                  <IconButton
-                    color="inherit"
-                    aria-label="Ajouter annonce"
-                    onClick={(e) => {
-                      localStorage.getItem("success")
-                        ? history.push("/AjoutAnnonce")
-                        : history.push("/");
-                    }}
-                  >
-                    <Badge color="secondary">
-                      <AddToPhotosIcon />
-                    </Badge>
-                  </IconButton>
-                )}
-                {history.location.pathname !== "/contactus" && (
-                  <IconButton
-                    aria-label="Contact support"
-                    color="inherit"
-                    onClick={(e) => {
-                      history.push("/contactus");
-                    }}
-                  >
-                    <Badge color="secondary">
-                      <ContactSupportIcon />
-                    </Badge>
-                  </IconButton>
-                )}
-
+              {/* </Link> */}
+              {history.location.pathname !== "/AjoutAnnonce" && (
                 <IconButton
-                  aria-label="show 17 new notifications"
                   color="inherit"
+                  aria-label="Ajouter annonce"
+                  onClick={(e) => {
+                    isAuth ? history.push("/AjoutAnnonce") : history.push("/");
+                  }}
                 >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
+                  <Badge color="secondary">
+                    <AddToPhotosIcon />
                   </Badge>
                 </IconButton>
+              )}
+              {history.location.pathname !== "/contactus" && (
                 <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
+                  aria-label="Contact support"
                   color="inherit"
+                  onClick={(e) => {
+                    history.push("/contactus");
+                  }}
                 >
-                  <AccountCircle />
+                  <Badge color="secondary">
+                    <ContactSupportIcon />
+                  </Badge>
                 </IconButton>
-              </div>
-              <div className={classes.sectionMobile}>
-                <IconButton
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div>
-            </Toolbar>
-          </AppBar>
-          {renderMobileMenu}
-          {renderMenu}
-        </div>
-      </HideOnScroll>
-    </React.Fragment>
+              )}
+
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </div>
+    </HideOnScroll>
   );
 }

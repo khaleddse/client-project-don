@@ -1,26 +1,26 @@
-import React,{useEffect,useState} from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import React, { useEffect, useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import {getCategories  } from "../../services/categories";
 import './Menu.css';
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
+    border: "1px solid #d3d4d5",
   },
 })((props) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
+      vertical: "bottom",
+      horizontal: "center",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
+      vertical: "top",
+      horizontal: "center",
     }}
     {...props}
   />
@@ -28,9 +28,9 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
-    '&:focus': {
+    "&:focus": {
       backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white,
       },
     },
@@ -38,14 +38,14 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus(props) {
-  const [categoriesState, setCategstate] = useState([])
+  const [categoriesState, setCategstate] = useState([]);
   useEffect(() => {
     CategList();
-  }, [])
-  const CategList= async ()=>{
-    const categories=await getCategories();
-    setCategstate(categories)
-  }
+  }, []);
+  const CategList = async () => {
+    const categories = await getCategories();
+    setCategstate(categories);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -58,12 +58,9 @@ export default function CustomizedMenus(props) {
   };
 
   return (
-    <div >
-      
-        <MenuIcon 
-        onClick={handleClick}
-         />
-      
+    <div>
+      <MenuIcon onClick={handleClick} />
+
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
@@ -71,21 +68,31 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        
         {categoriesState.map((categ) => {
-              let Result = categ.subcategs.map((subcateg) => {
-               return (
-                 <StyledMenuItem className="mys"  id={subcateg._id} onClick={()=>props.selectedCateg(subcateg._id)}><ListItemText id={subcateg._id} secondary={"• "+subcateg.nom} /></StyledMenuItem>);
-              });
-              return (
-                <>
+          let Result = categ.subcategs.map((subcateg) => {
+            return (
+              <StyledMenuItem
+                className="mys"
+                key={subcateg._id}
+                id={subcateg._id}
+                onClick={() => props.selectedCateg(subcateg._id)}
+              >
+                <ListItemText
+                  id={subcateg._id}
+                  secondary={"• " + subcateg.nom}
+                />
+              </StyledMenuItem>
+            );
+          });
+          return (
+            <div key={categ._id}>
               <StyledMenuItem id={categ._id}>
-              <ListItemText id={categ._id} primary={categ.nom} />
-            </StyledMenuItem>
-            {Result}</>
-            )
-            })}
-        
+                <ListItemText id={categ._id} primary={categ.nom} />
+              </StyledMenuItem>
+              {Result}
+            </div>
+          );
+        })}
       </StyledMenu>
     </div>
   );

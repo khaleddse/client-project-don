@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { DonContext } from "../../contexte/donContexte";
 import validate from "validate.js";
-import "../ContactUs/LoggedIn.css"
+import { regions } from "./data";
+import "../ContactUs/LoggedIn.css";
 import LoggedIn from "../ContactUs/LoggedIn";
 import TextField from "@material-ui/core/TextField";
 import ImageUploader from "react-images-upload";
@@ -16,36 +18,13 @@ import { getCategories } from "../../services/categories";
 import { useHistory } from "react-router-dom";
 
 const AddAnnoucement = () => {
+  const { isAuth, user } = useContext(DonContext);
+
   useEffect(() => {
-  CategLoader();
-}, [])
+    CategLoader();
+  }, []);
   const [categoriesState, setCategories] = useState([]);
-  const [regionsState] = useState([
-    "Tunis",
-    "Ariana",
-    "Ben Arous",
-    "Mannouba",
-    "Bizerte",
-    "Nabeul",
-    "Béja",
-    "Jendouba",
-    "Zaghouan",
-    "Siliana",
-    "Le Kef",
-    "Sousse",
-    "Monastir",
-    "Mahdia",
-    "Kasserine",
-    "Sidi Bouzid",
-    "Kairouan",
-    "Gafsa",
-    "Sfax",
-    "Gabès",
-    "Médenine",
-    "Tozeur",
-    "Kebili",
-    "Ttataouine",
-  ]);
+
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
     values: {
@@ -54,8 +33,8 @@ const AddAnnoucement = () => {
       adresse: "",
       telephone: "",
       subcategorie: {
-        id:"",
-        nom:""
+        id: "",
+        nom: "",
       },
       image: null,
     },
@@ -63,17 +42,15 @@ const AddAnnoucement = () => {
     errors: {},
     touched: {},
   });
-  const CategLoader = async() => {
+  const CategLoader = async () => {
     setisLoading(true);
-    const response=await getCategories();
-    console.log("response",response)
-    setCategories(response)
+    const response = await getCategories();
+    //  console.log("response", response);
+    setCategories(response);
     setisLoading(false);
   };
 
-
   useEffect(() => {
-
     const errors = validate(formState.values, AddAnnouncementSchema);
     setFormState((formState) => ({
       ...formState,
@@ -83,7 +60,7 @@ const AddAnnoucement = () => {
   }, [formState.values]);
 
   const onDrop = (picture) => {
-    console.log(picture);
+    //console.log(picture);
     setFormState((prevState) => ({
       ...prevState,
       values: {
@@ -91,77 +68,74 @@ const AddAnnoucement = () => {
         image: picture,
       },
     }));
-
   };
 
-  let history=useHistory();
-  const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-});
+  let history = useHistory();
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   const submitFormHandler = async (e) => {
     e.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     e.preventDefault();
     setisLoading(true);
     const form = new FormData();
-    
-    if(formState.values.image){
-    let result = await toBase64(formState.values.image[0]).catch(e => Error(e));
-    form.append("image", result);
-     }
-    
-    
+
+    if (formState.values.image) {
+      let result = await toBase64(formState.values.image[0]).catch((e) =>
+        Error(e)
+      );
+      form.append("image", result);
+    }
+
     form.append("objet", formState.values.objet);
     form.append("detail", formState.values.detail);
     form.append("adresse", formState.values.adresse);
     form.append("telephone", formState.values.telephone);
-    const subcategId=formState.values.subcategorie.id;
-    const userid = localStorage.getItem('userId') ;
-     await AddPost(form,subcategId,userid);
+    const subcategId = formState.values.subcategorie.id;
+    await AddPost(form, subcategId, user.userId);
     setisLoading(false);
-    history.push("/announcements")
+    history.push("/announcements");
   };
 
   const inputChangeHandler = (e) => {
     e.persist();
-    const id=e.target.value.slice(e.target.value.indexOf('$')+1,e.target.value.length);
-    const name=e.target.value.slice(0,e.target.value.indexOf('$'))
-    e.target.name==="subcategorie"?
-    
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [e.target.name]: {
-          id:id,
-          nom:name,
-        },
-      },
-      touched: {
-        ...formState.touched,
-        [e.target.name]: true,
-      },
-    }))
-
-    :
-    
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [e.target.name]: e.target.value,
-      },
-      touched: {
-        ...formState.touched,
-        [e.target.name]: true,
-      },
-    }))
-
+    const id = e.target.value.slice(
+      e.target.value.indexOf("$") + 1,
+      e.target.value.length
+    );
+    const name = e.target.value.slice(0, e.target.value.indexOf("$"));
+    e.target.name === "subcategorie"
+      ? setFormState((formState) => ({
+          ...formState,
+          values: {
+            ...formState.values,
+            [e.target.name]: {
+              id: id,
+              nom: name,
+            },
+          },
+          touched: {
+            ...formState.touched,
+            [e.target.name]: true,
+          },
+        }))
+      : setFormState((formState) => ({
+          ...formState,
+          values: {
+            ...formState.values,
+            [e.target.name]: e.target.value,
+          },
+          touched: {
+            ...formState.touched,
+            [e.target.name]: true,
+          },
+        }));
   };
-
 
   const hasError = (field) => {
     return formState.touched[field] && formState.errors[field] ? true : false;
@@ -217,8 +191,10 @@ const AddAnnoucement = () => {
             onChange={inputChangeHandler}
           >
             <option aria-label="None" value="" />
-            {regionsState.map((region) => (
-              <option value={region}>{region}</option>
+            {regions.map((region) => (
+              <option key={region} value={region}>
+                {region}
+              </option>
             ))}
           </Select>
           <FormHelperText>
@@ -230,7 +206,7 @@ const AddAnnoucement = () => {
           <InputLabel htmlFor="outlined-age-native-simple">
             Catégorie
           </InputLabel>
-          <Select 
+          <Select
             native
             label="Catégorie"
             inputProps={{
@@ -238,11 +214,15 @@ const AddAnnoucement = () => {
               id: "outlined-age-native-simple",
             }}
             onChange={inputChangeHandler}
-            >
-            <option  value="" />
+          >
+            <option value="" />
             {categoriesState.map((categ) => {
               let Result = categ.subcategs.map((subcateg) => {
-               return <option  value={subcateg.nom+"$"+subcateg._id}>{subcateg.nom}</option>;
+                return (
+                  <option value={subcateg.nom + "$" + subcateg._id}>
+                    {subcateg.nom}
+                  </option>
+                );
               });
               return <optgroup label={categ.nom}>{Result}</optgroup>;
             })}
