@@ -14,7 +14,9 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
+import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
+import './AnnouncementCard.css'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -101,11 +103,13 @@ export default function RecipeReviewCard(props) {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent className={classes.fixed}>
-          <Typography paragraph>Détail:</Typography>
-          <Typography paragraph>{props.detail}</Typography>
-          <Typography paragraph>Contact : {props.telephone}</Typography>
+      <Collapse in={expanded} timeout="auto" unmountOnExit >
+        <CardContent  className={classes.fixed}>
+          <Typography paragraph>Détail: {props.detail}</Typography> 
+          <Typography paragraph>
+          <RoomOutlinedIcon style={{ fontSize: 15 }}/> : {props.adresse} <br/>
+          <CallOutlinedIcon style={{ fontSize: 15 }}/> : {props.telephone} 
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>

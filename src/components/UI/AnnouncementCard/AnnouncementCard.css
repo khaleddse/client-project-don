@@ -1,0 +1,14 @@
+.imag:hover {
+    opacity: 1;
+    background: #f5f3ff;
+    transform: scale(1.1);
+    height: 0;
+    width:100%; 
+    padding-top:100% ;
+}
+.imag{
+    height: 0;
+    width:100%; 
+    padding-top:56.25% ;
+    
+}
