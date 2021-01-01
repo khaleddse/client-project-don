@@ -267,7 +267,8 @@ export default function PrimarySearchAppBar(props) {
               </Typography>
             </IconButton>
 
-            {history.location.pathname === "/announcements" && (
+            {(history.location.pathname === "/announcements" ||
+              history.location.pathname === "/profile") && (
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
