@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     left: "auto",
     position: "fixed",
   },
-}));
+}));  
 const AnnouncementsList = () => {
   const { isAuth, announcementscontexte, setAnnonceHandler } = useContext(
     DonContext
@@ -72,10 +72,10 @@ const AnnouncementsList = () => {
     if (isAuth) {
       history.push("/AjoutAnnonce");
     } else {
-      alert(" pour ajouter une annonce il faut connctée ");
       history.push("/signin");
     }
   };
+  let i=1;
   const regex = new RegExp(text.search, "i");
   return (
     <div>
@@ -85,8 +85,9 @@ const AnnouncementsList = () => {
       />
       <div className="flex-container">
         {isLoading ? (
-          <div>
+          <div className="img-container">
             <Spinner />
+            <h2>Chargement...</h2>
           </div>
         ) : isfiltred ? (
           announcements
@@ -109,7 +110,7 @@ const AnnouncementsList = () => {
                 user,
               }) => (
                 <AnnouncementCard
-                  key={_id}
+                  key={i++}
                   id={_id}
                   objet={objet}
                   detail={detail}
@@ -134,7 +135,7 @@ const AnnouncementsList = () => {
               user,
             }) => (
               <AnnouncementCard
-                key={_id}
+                key={i++}
                 id={_id}
                 objet={objet}
                 detail={detail}
@@ -147,7 +148,11 @@ const AnnouncementsList = () => {
             )
           )
         ) : (
-          <h1>No announcments found</h1>
+          <div className="img-container">
+          <h1>Oops!</h1>
+          <img height="280" width="300" src="https://cdn.dribbble.com/users/1365063/screenshots/3979985/na_vrhova__plocha_1.png"/>
+         <h2>Aucune annonce trouvée !</h2>
+         </div>
         )}
         <Fab color="secondary" className={classes.fab} onClick={Auth}>
           <AddIcon />

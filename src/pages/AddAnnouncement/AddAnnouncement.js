@@ -18,12 +18,12 @@ import { getCategories } from "../../services/categories";
 import { useHistory } from "react-router-dom";
 
 const AddAnnoucement = () => {
-  const { isAuth, user } = useContext(DonContext);
+  const { isAuth, user,ListCategories } = useContext(DonContext);
 
-  useEffect(() => {
+ /* useEffect(() => {
     CategLoader();
   }, []);
-  const [categoriesState, setCategories] = useState([]);
+  const [categoriesState, setCategories] = useState([]);*/
 
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
@@ -42,13 +42,13 @@ const AddAnnoucement = () => {
     errors: {},
     touched: {},
   });
-  const CategLoader = async () => {
+ /* const CategLoader = async () => {
     setisLoading(true);
     const response = await getCategories();
     //  console.log("response", response);
     setCategories(response);
     setisLoading(false);
-  };
+  };*/
 
   useEffect(() => {
     const errors = validate(formState.values, AddAnnouncementSchema);
@@ -216,7 +216,7 @@ const AddAnnoucement = () => {
             onChange={inputChangeHandler}
           >
             <option value="" />
-            {categoriesState.map((categ) => {
+            {ListCategories.map((categ) => {
               let Result = categ.subcategs.map((subcateg) => {
                 return (
                   <option value={subcateg.nom + "$" + subcateg._id}>

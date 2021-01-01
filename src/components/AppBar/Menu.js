@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect ,useContext} from "react";
+import { DonContext } from "../../contexte/donContexte";
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -38,13 +39,15 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus(props) {
-  const [categoriesState, setCategstate] = useState([]);
+  const { ListCategories,setListCategHandler } = useContext(
+    DonContext
+  );
   useEffect(() => {
     CategList();
   }, []);
   const CategList = async () => {
     const categories = await getCategories();
-    setCategstate(categories);
+    setListCategHandler(categories)
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,7 +71,7 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {categoriesState.map((categ) => {
+        {ListCategories.map((categ) => {
           let Result = categ.subcategs.map((subcateg) => {
             return (
               <StyledMenuItem
@@ -79,6 +82,7 @@ export default function CustomizedMenus(props) {
               >
                 <ListItemText
                   id={subcateg._id}
+                  key={subcateg._id}
                   secondary={"• " + subcateg.nom}
                 />
               </StyledMenuItem>

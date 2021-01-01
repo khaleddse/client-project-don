@@ -62,11 +62,12 @@ const Signin = () => {
       setAuthHandler(true);
       setUserHandler(decode(token));
 
-      setisLoading(false);
+      
       history.push("/announcements");
     } catch (error) {
       setSignupFailed(true);
     }
+    setisLoading(false);
   };
 
   const hasError = (field) =>

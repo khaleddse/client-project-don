@@ -161,11 +161,12 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => history.push("/profile")}>
-        Profile {user.nom}
-      </MenuItem>
+      
       {isAuth ? (
         <div>
+        <MenuItem onClick={() => history.push("/profile")}>
+        Profile {user.nom}
+      </MenuItem>
           <MenuItem onClick={() => history.push("/edit")}>
             <AccountBoxOutlinedIcon />
             My account
@@ -298,7 +299,7 @@ export default function PrimarySearchAppBar(props) {
                   color="inherit"
                   aria-label="Ajouter annonce"
                   onClick={(e) => {
-                    isAuth ? history.push("/AjoutAnnonce") : history.push("/");
+                    isAuth ? history.push("/AjoutAnnonce") : history.push("/signin");
                   }}
                 >
                   <Badge color="secondary">

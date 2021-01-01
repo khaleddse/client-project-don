@@ -54,7 +54,7 @@ export default function RecipeReviewCard(props) {
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} id={props._id} key={props._id}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>

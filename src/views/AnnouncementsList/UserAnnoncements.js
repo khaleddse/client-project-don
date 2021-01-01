@@ -1,10 +1,10 @@
 import AnnouncementCard from "../../components/UI/AnnouncementCard/AnnouncementCard";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import AppBarMur from "../../components/AppBar/AppBarMur";
-import { useHistory } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { DonContext } from "../../contexte/donContexte";
-
+import "../AnnouncementsList/AnnoucementsList.css";
+import Button from "@material-ui/core/Button";
+import { Link} from "react-router-dom";
 const UserAnnouncements = () => {
   useEffect(() => {
     getAnnoncebyUser();
@@ -14,7 +14,7 @@ const UserAnnouncements = () => {
   const [text, setText] = useState({ search: "" });
   const regex = new RegExp(text.search, "i");
 
-  const { user, isAuth, announcementscontexte, setAnnonceHandler } = useContext(
+  const { user, isAuth, announcementscontexte } = useContext(
     DonContext
   );
 
@@ -37,18 +37,13 @@ const UserAnnouncements = () => {
 
     setText({ search: value });
   };
-
+let i=1;
   return (
     <div>
       <AppBarMur
         filterHandler={FilterChangeHandler}
-        // selectedCateg={selectedCateg}
       />
       <div className="flex-container">
-        {/*isLoading ? (
-          <div>
-            <Spinner />
-          </div>*/}
         {isfiltred ? (
           announcements
             .filter((annonces) => {
@@ -70,7 +65,7 @@ const UserAnnouncements = () => {
                 user,
               }) => (
                 <AnnouncementCard
-                  key={_id}
+                  key={i++}
                   id={_id}
                   objet={objet}
                   detail={detail}
@@ -95,7 +90,7 @@ const UserAnnouncements = () => {
               user,
             }) => (
               <AnnouncementCard
-                key={_id}
+                key={i++}
                 id={_id}
                 objet={objet}
                 detail={detail}
@@ -108,7 +103,16 @@ const UserAnnouncements = () => {
             )
           )
         ) : (
-          <h1>No announcments found</h1>
+          <div className="img-container">
+          <h1>Oops!</h1>
+          <img alt="notFound" height="280" width="300" src="https://cdn.dribbble.com/users/1365063/screenshots/3979985/na_vrhova__plocha_1.png"/>
+         <h2>Vous avez aucune annonce !</h2>
+         {
+              <Link to="/AjoutAnnonce">
+                <Button color="inherit">Créer une</Button>
+              </Link>
+            }
+         </div>
         )}
       </div>
     </div>

@@ -19,3 +19,12 @@
   }
 }
 
+.img-container {
+  margin-top: 5%;
+  text-align: center;
+  display: block;
+  
+}
+.img-container > h2{
+  color:dimgrey;
+}
