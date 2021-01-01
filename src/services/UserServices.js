@@ -9,6 +9,7 @@ export const updateUser = (updateData) => {
     .then((resData) => {
       localStorage.removeItem("token");
       localStorage.setItem("token", resData.data.token);
+
       return resData.data;
     })
     .catch((err) => {

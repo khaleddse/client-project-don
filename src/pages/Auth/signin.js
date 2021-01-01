@@ -61,7 +61,6 @@ const Signin = () => {
       });
       setAuthHandler(true);
       setUserHandler(decode(token));
-      console.log(decode(token));
 
       setisLoading(false);
       history.push("/announcements");
