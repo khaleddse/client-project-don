@@ -11,7 +11,6 @@ export const getPostsByCateg = (id) =>
   axios
     .get(`http://localhost:5000/categorie/${id}`)
     .then(({ data }) => {
-      console.log(data);
       return data.subcategs;
     })
     .catch((err) => {

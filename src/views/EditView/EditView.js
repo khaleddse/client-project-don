@@ -29,7 +29,6 @@ const EditView = () => {
   });
 
   const onChangeHandler = (e) => {
-    console.log(e.target.value);
     setFormUpDate((formupdate) => ({
       ...formupdate,
       [e.target.name]: {

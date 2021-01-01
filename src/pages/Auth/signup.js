@@ -65,7 +65,7 @@ const Signup = () => {
       password,
     };
     setisLoading(true);
-    console.log(signupData);
+
     const response = await signupHandler(signupData);
     if (response) {
       history.push("/sigin");
