@@ -166,7 +166,7 @@ const Signup = () => {
         </Button>
         <h6>
           Vous avez une compte?
-          <Link to="/">
+          <Link to="/signin">
             <Button color="inherit">ME CONNECTER</Button>
           </Link>
         </h6>
