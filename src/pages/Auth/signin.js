@@ -111,14 +111,14 @@ const Signin = () => {
           Se connecter
         </Button>
         <p>
-          <h6>
-            Vous n’avez pas encore de compte ?
+          <h3 style={{textAlign:  "center",color:"dimgrey"}}>
+            Vous n’avez pas de compte ?
             {
               <Link to="/signup">
                 <Button color="inherit">CRÉER MON COMPTE</Button>
               </Link>
             }
-          </h6>{" "}
+          </h3>{" "}
         </p>
         {isLoading && <LinearProgress color="primary" />}
       </form>
