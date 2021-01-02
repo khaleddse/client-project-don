@@ -23,6 +23,7 @@ import CustomizedMenus from "./Menu";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
 import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
+import ListAltOutlinedIcon from "@material-ui/icons/ListAltOutlined";
 function HideOnScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
@@ -161,12 +162,15 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      
       {isAuth ? (
         <div>
-        <MenuItem onClick={() => history.push("/profile")}>
-        Profile {user.nom}
-      </MenuItem>
+          <MenuItem onClick={() => history.push("/profile")}>
+            Profile {user.nom}
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/ListAvis")}>
+            <ListAltOutlinedIcon />
+            List des Avis
+          </MenuItem>
           <MenuItem onClick={() => history.push("/edit")}>
             <AccountBoxOutlinedIcon />
             My account
@@ -275,7 +279,7 @@ export default function PrimarySearchAppBar(props) {
                   <SearchIcon />
                 </div>
                 <InputBase
-                  placeholder="Search…"
+                  placeholder="Rechercher…"
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
@@ -299,7 +303,9 @@ export default function PrimarySearchAppBar(props) {
                   color="inherit"
                   aria-label="Ajouter annonce"
                   onClick={(e) => {
-                    isAuth ? history.push("/AjoutAnnonce") : history.push("/signin");
+                    isAuth
+                      ? history.push("/AjoutAnnonce")
+                      : history.push("/signin");
                   }}
                 >
                   <Badge color="secondary">

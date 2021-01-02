@@ -10,6 +10,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import EditView from "./views/EditView/EditView";
 import decode from "jwt-decode";
 import UserAnnouncements from "./views/AnnouncementsList/UserAnnoncements";
+import ListAvis from "./views/AvisList/ListAvis";
 const Routes = () => {
   const { isAuth, setAuthHandler, setUserHandler } = useContext(DonContext);
   useEffect(() => {
@@ -24,6 +25,11 @@ const Routes = () => {
   if (isAuth) {
     routes = (
       <Switch>
+        <Route
+          path="/ListAvis"
+          exact
+          render={(props) => <ListAvis {...props} />}
+        />
         <Route
           path="/profile"
           exact

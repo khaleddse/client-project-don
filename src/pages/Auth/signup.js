@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -10,9 +10,15 @@ import { signupHandler } from "../../services/auth-service";
 import { signUpSchema } from "../../pages/util/schema";
 import validate from "validate.js";
 import { Link } from "react-router-dom";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const Signup = () => {
   let history = useHistory();
+  const [open, setOpen] = useState(false);
   const [SignupFailedState, setSignupFailed] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
@@ -71,6 +77,7 @@ const Signup = () => {
       history.push("/sigin");
     } else {
       setSignupFailed(true);
+      setOpen(false);
     }
     setisLoading(false);
   };
@@ -81,13 +88,27 @@ const Signup = () => {
         : false
       : true;
   };
-
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
   const hasError = (field) =>
     formState.touched[field] && formState.error[field] ? true : false;
 
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (open) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [open]);
   return (
     <Auth>
-      <form onSubmit={(e) => onSignupHandler(e)} className="form">
+      <form className="form">
         <TextField
           id="nom"
           name="nom"
@@ -151,26 +172,63 @@ const Signup = () => {
               : "valeur n'est pas identique"
           }
         />
+        {/*<Button > </Button>*/}
         {SignupFailedState && <Alert severity="error">E-mail existant!</Alert>}
 
         <Button
           variant="contained"
           color="primary"
-          type="submit"
+          onClick={handleClickOpen}
           disabled={isLoading || !formState.isValid || !isValidPassword()}
           style={{
             marginTop: "30px",
           }}
         >
-          Signup
+          S'inscrire
         </Button>
-        <h6>
+        <h3 style={{ textAlign: "center", color: "dimgrey" }}>
           Vous avez une compte?
           <Link to="/signin">
             <Button color="inherit">ME CONNECTER</Button>
           </Link>
-        </h6>
+        </h3>
         {isLoading && <LinearProgress color="primary" />}
+
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll={"paper"}
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+        >
+          <DialogTitle id="scroll-dialog-title">
+            Termes d'utilisation
+          </DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              {[...new Array(50)]
+                .map(
+                  () => `Cras mattis consectetur purus sit amet fermentum.
+Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
+                )
+                .join("\n")}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+            </Button>
+            <Button color="primary" onClick={(e) => onSignupHandler(e)}>
+              Confirmer
+            </Button>
+          </DialogActions>
+        </Dialog>
       </form>
     </Auth>
   );

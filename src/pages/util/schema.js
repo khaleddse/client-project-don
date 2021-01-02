@@ -24,7 +24,7 @@ const ContactUsSchema = {
   detail: {
     presence: { allowEmpty: false, message: "est obligatoire!" },
     length: {
-      maximum: 128,
+      maximum: 1000,
     },
   },
 };
