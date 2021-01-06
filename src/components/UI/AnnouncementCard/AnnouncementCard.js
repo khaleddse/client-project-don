@@ -18,12 +18,10 @@ import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import "./AnnouncementCard.css";
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-    float: "left",
-    width: "23%",
-    margin: "10px",
-    height: "100%",
+  root:  {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
   media: {
     height: 0,
@@ -54,6 +52,7 @@ export default function RecipeReviewCard(props) {
   };
 
   return (
+    
     <Card className={classes.root} id={props._id} key={props._id}>
       <CardHeader
         avatar={
