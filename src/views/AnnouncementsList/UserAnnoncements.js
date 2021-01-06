@@ -105,7 +105,7 @@ let i=1;
         ) : (
           <div className="img-container">
           <h1>Oops!</h1>
-          <img alt="notFound" height="280" width="300" src="https://cdn.dribbble.com/users/1365063/screenshots/3979985/na_vrhova__plocha_1.png"/>
+          <img alt="notFound" height="280" width="300" src="https://rivasdev.tech/assets/img/no-data-found.png"/>
          <h2>Vous avez aucune annonce !</h2>
          {
               <Link to="/AjoutAnnonce">

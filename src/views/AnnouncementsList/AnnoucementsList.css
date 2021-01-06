@@ -20,11 +20,14 @@
 }
 
 .img-container {
-  margin-top: 5%;
   text-align: center;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
   
 }
 .img-container > h2{
+  text-align: center;
   color:dimgrey;
 }
