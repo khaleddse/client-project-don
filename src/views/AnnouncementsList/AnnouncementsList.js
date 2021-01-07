@@ -174,7 +174,7 @@ export default function AnnouncementsList() {
               }) => (
                 <Grid item key={i++} xs={12} sm={6} md={4}>
                 <AnnouncementCard
-                  key={i++}
+                  key={_id}
                   id={_id}
                   objet={objet}
                   detail={detail}
@@ -201,7 +201,7 @@ export default function AnnouncementsList() {
             }) => (
               <Grid item key={i++} xs={12} sm={6} md={4}>
               <AnnouncementCard
-                key={i++}
+                key={_id}
                 id={_id}
                 objet={objet}
                 detail={detail}

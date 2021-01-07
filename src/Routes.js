@@ -5,6 +5,7 @@ import SignupPage from "./pages/Auth/signup";
 import LoginPage from "./pages/Auth/signin";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import AddAnnoucement from "./pages/AddAnnouncement/AddAnnouncement";
+import AnnoncePage from "./pages/AnnoncePage/AnnoncePage";
 import AnnouncementsList from "./views/AnnouncementsList/AnnouncementsList";
 import { Route, Switch, Redirect } from "react-router-dom";
 import EditView from "./views/EditView/EditView";
@@ -48,6 +49,11 @@ const Routes = () => {
           render={(props) => <AddAnnoucement {...props} />}
         />
         <Route
+          path='/annonce'
+          exact
+          render={(props) => <AnnoncePage {...props} />}
+        />
+        <Route
           path="/announcements"
           exact
           render={(props) => <AnnouncementsList {...props} />}
@@ -78,6 +84,11 @@ const Routes = () => {
           path="/announcements"
           exact
           render={(props) => <AnnouncementsList {...props} />}
+        />
+        <Route
+          path='/annonce'
+          exact
+          render={(props) => <AnnoncePage {...props} />}
         />
         <Redirect to="/announcements" />
       </Switch>

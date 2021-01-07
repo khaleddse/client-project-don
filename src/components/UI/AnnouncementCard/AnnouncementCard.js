@@ -17,6 +17,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import "./AnnouncementCard.css";
+import { useHistory } from "react-router-dom";
+import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root:  {
     height: '100%',
@@ -46,10 +48,13 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  let history = useHistory();
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const annoncePageHandler=()=>{
+    history.push("/annonce?_id="+props.id)
+  }
 
   return (
     
@@ -95,7 +100,7 @@ export default function RecipeReviewCard(props) {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={annoncePageHandler}
           aria-expanded={expanded}
           aria-label="show more"
         >
