@@ -331,7 +331,7 @@ export default function PrimarySearchAppBar(props) {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={17} color="secondary">
+                <Badge  onClick={(e)=>history.push("ListUser")} badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
