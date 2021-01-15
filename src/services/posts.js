@@ -16,7 +16,13 @@ export const getPostsByCateg = (id) =>
     .catch((err) => {
       console.error(err);
     });
-
+    export const getPostByid = (id) =>
+    axios
+      .get("http://localhost:5000/annonce/"+id)
+      .then(({ data }) => data)
+      .catch((err) => {
+        console.error(err);
+      });
 export const getPosts = () =>
   axios
     .get("http://localhost:5000/annonce/")
