@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionActions from "@material-ui/core/AccordionActions";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -57,7 +57,7 @@ export default function AvisCard(props) {
   const deleteAvisHandler = async (id) => {
     if (window.confirm("êtes-vous sûr de supprimer ce message ?")) {
       setisLoading(true);
-      const result = await DeleteAvis(id);
+      await DeleteAvis(id);
       setisLoading(false);
       history.push("/contactus");
     }
@@ -72,17 +72,19 @@ export default function AvisCard(props) {
           id="panel1c-header"
         >
           <div className={classes.columnFirst}>
-            <Typography  className={classes.heading}>Email </Typography>
+            <Typography className={classes.heading}>Email </Typography>
           </div>
           <div className={classes.columnSecond}>
-            <Typography variant="caption" className={classes.secondaryHeading} >
+            <Typography variant="caption" className={classes.secondaryHeading}>
               {props.email}
             </Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails aria-controls="panel1c-content" id="panel1c-header">
           <div className={classes.columnFirst}>
-            <Typography variant="caption" className={classes.heading}>Message </Typography>
+            <Typography variant="caption" className={classes.heading}>
+              Message{" "}
+            </Typography>
           </div>
           <div className={classes.columnSecond}>
             <Typography className={classes.secondaryHeading}>

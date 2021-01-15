@@ -20,10 +20,10 @@ import "./AnnouncementCard.css";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
-  root:  {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+  root: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   media: {
     height: 0,
@@ -52,12 +52,11 @@ export default function RecipeReviewCard(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const annoncePageHandler=()=>{
-    history.push("/annonce?_id="+props.id)
-  }
+  const annoncePageHandler = () => {
+    history.push("/annonce?_id=" + props.id);
+  };
 
   return (
-    
     <Card className={classes.root} id={props._id} key={props._id}>
       <CardHeader
         avatar={
@@ -96,6 +95,11 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
+        {history.location.pathname === "/profile" && (
+          <Button color="secondary" onClick={() => props.deleteannonce()}>
+            Supprimer
+          </Button>
+        )}
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
