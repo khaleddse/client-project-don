@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setToken } from "./utils";
 
 export const getPostsBySubCateg = (id) =>
   axios
@@ -16,13 +17,13 @@ export const getPostsByCateg = (id) =>
     .catch((err) => {
       console.error(err);
     });
-    export const getPostByid = (id) =>
-    axios
-      .get("http://localhost:5000/annonce/"+id)
-      .then(({ data }) => data)
-      .catch((err) => {
-        console.error(err);
-      });
+export const getPostByid = (id) =>
+  axios
+    .get("http://localhost:5000/annonce/" + id)
+    .then(({ data }) => data)
+    .catch((err) => {
+      console.error(err);
+    });
 export const getPosts = () =>
   axios
     .get("http://localhost:5000/annonce/")
@@ -38,6 +39,18 @@ export const AddPost = (authData, subcategId, userid) => {
     .post(`http://localhost:5000/annonce/add/${subcategId}/${userid}`, authData)
     .then((resData) => {
       return resData.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+export const deltePost = (annonceid) => {
+  const token = localStorage.getItem("token");
+  setToken(token);
+  return axios
+    .delete(`http://localhost:5000/annonce/${annonceid}`)
+    .then((resdata) => {
+      return resdata;
     })
     .catch((err) => {
       console.error(err);

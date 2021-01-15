@@ -14,17 +14,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { getCategories } from "../../services/categories";
 import { useHistory } from "react-router-dom";
 
 const AddAnnoucement = () => {
-  const { isAuth, user,ListCategories } = useContext(DonContext);
-
- /* useEffect(() => {
-    CategLoader();
-  }, []);
-  const [categoriesState, setCategories] = useState([]);*/
-
+  const { user, ListCategories } = useContext(DonContext);
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
     values: {
@@ -42,13 +35,6 @@ const AddAnnoucement = () => {
     errors: {},
     touched: {},
   });
- /* const CategLoader = async () => {
-    setisLoading(true);
-    const response = await getCategories();
-    //  console.log("response", response);
-    setCategories(response);
-    setisLoading(false);
-  };*/
 
   useEffect(() => {
     const errors = validate(formState.values, AddAnnouncementSchema);
@@ -60,7 +46,6 @@ const AddAnnoucement = () => {
   }, [formState.values]);
 
   const onDrop = (picture) => {
-    //console.log(picture);
     setFormState((prevState) => ({
       ...prevState,
       values: {

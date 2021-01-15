@@ -1,13 +1,13 @@
-import React, { useEffect ,useContext} from "react";
+import React, { useEffect, useContext } from "react";
 import { DonContext } from "../../contexte/donContexte";
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
-import {getCategories  } from "../../services/categories";
-import './Menu.css';
-import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
+import { getCategories } from "../../services/categories";
+import "./Menu.css";
+
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -40,15 +40,13 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function CustomizedMenus(props) {
-  const { ListCategories,setListCategHandler } = useContext(
-    DonContext
-  );
+  const { ListCategories, setListCategHandler } = useContext(DonContext);
   useEffect(() => {
     CategList();
   }, []);
   const CategList = async () => {
     const categories = await getCategories();
-    setListCategHandler(categories)
+    setListCategHandler(categories);
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -72,9 +70,9 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-                <StyledMenuItem onClick={() => props.selectedCateg(null,"all")} >
-                <ListItemText primary={"Toutes les catégories"} />
-              </StyledMenuItem>
+        <StyledMenuItem onClick={() => props.selectedCateg(null, "all")}>
+          <ListItemText primary={"Toutes les catégories"} />
+        </StyledMenuItem>
         {ListCategories.map((categ) => {
           let Result = categ.subcategs.map((subcateg) => {
             return (
@@ -82,7 +80,7 @@ export default function CustomizedMenus(props) {
                 className="mys"
                 key={subcateg._id}
                 id={subcateg._id}
-                onClick={() => props.selectedCateg(subcateg._id,"subcateg")}
+                onClick={() => props.selectedCateg(subcateg._id, "subcateg")}
               >
                 <ListItemText
                   id={subcateg._id}
@@ -94,7 +92,7 @@ export default function CustomizedMenus(props) {
           });
           return (
             <div key={categ._id}>
-                <ListItemText id={categ._id} primary={"✦ "+categ.nom} />
+              <ListItemText id={categ._id} primary={"✦ " + categ.nom} />
               {Result}
             </div>
           );

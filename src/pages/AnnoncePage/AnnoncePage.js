@@ -15,8 +15,6 @@ import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import { red } from "@material-ui/core/colors";
-import Spinner from "../../components/UI/Spinner/Spinner";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   header: {
-    alignContent:"center",
-    alignSelf:"center"
-   },
+    alignContent: "center",
+    alignSelf: "center",
+  },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -159,7 +157,6 @@ export default function SignInSide(props) {
           className={classes.infoContainer}
         >
           <div className={classes.paper}>
-            
             <CardHeader
               className={classes.header}
               avatar={
@@ -175,7 +172,6 @@ export default function SignInSide(props) {
               }
             />
             <CardContent>
-              
               <Typography
                 gutterBottom
                 color="textSecondary"
@@ -196,7 +192,7 @@ export default function SignInSide(props) {
               </Typography>
               <Typography variant="body2" component="p">
                 &nbsp;&nbsp;{"  • "}
-                  {annonceState.detail} 
+                {annonceState.detail}
               </Typography>
             </CardContent>
             <CardContent>
@@ -214,12 +210,11 @@ export default function SignInSide(props) {
                 {annonceState.telephone}
                 <hr />
               </Typography>
-              
             </CardContent>
-            <h4 className={classes.header} style={{color:"grey"}}> Contenu indésirable ?  
-            <Link to="/contactus">
-            &nbsp;contacter nous .
-            </Link>
+            <h4 className={classes.header} style={{ color: "grey" }}>
+              {" "}
+              Contenu indésirable ?
+              <Link to="/contactus">&nbsp;contacter nous .</Link>
             </h4>
           </div>
         </Grid>

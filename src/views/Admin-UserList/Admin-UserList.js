@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AppBar from "../../components/AppBar/AppBar";
 import Table from "../../components/UI/Table/Table";
 import { getAlluser } from "../../services/UserServices";
 import AppBarMur from "../../components/AppBar/AppBarMur";

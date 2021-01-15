@@ -4,8 +4,9 @@ import { useState, useEffect, useContext } from "react";
 import { DonContext } from "../../contexte/donContexte";
 import "../AnnouncementsList/AnnoucementsList.css";
 import Button from "@material-ui/core/Button";
-import { Link} from "react-router-dom";
-const UserAnnouncements = () => {
+import { Link } from "react-router-dom";
+import { deltePost } from "../../services/posts";
+const UserAnnouncements = (props) => {
   useEffect(() => {
     getAnnoncebyUser();
   }, []);
@@ -14,9 +15,7 @@ const UserAnnouncements = () => {
   const [text, setText] = useState({ search: "" });
   const regex = new RegExp(text.search, "i");
 
-  const { user, isAuth, announcementscontexte } = useContext(
-    DonContext
-  );
+  const { user, isAuth, announcementscontexte } = useContext(DonContext);
 
   const [announcements, setAnnouncements] = useState([]);
 
@@ -30,19 +29,26 @@ const UserAnnouncements = () => {
       setAnnouncements(Rst);
     }
   };
+  const deleteannonces = async (id) => {
+    await deltePost(id);
+    const Rst = announcements.filter((annonce) => {
+      if (annonce._id !== id) {
+        return annonce;
+      }
+    });
 
+    setAnnouncements(Rst);
+  };
   const FilterChangeHandler = async (value) => {
     if (value.trim().length > 0) setIsFiltred(true);
     else setIsFiltred(false);
 
     setText({ search: value });
   };
-let i=1;
+  let i = 1;
   return (
     <div>
-      <AppBarMur
-        filterHandler={FilterChangeHandler}
-      />
+      <AppBarMur filterHandler={FilterChangeHandler} />
       <div className="flex-container">
         {isfiltred ? (
           announcements
@@ -67,6 +73,7 @@ let i=1;
                 <AnnouncementCard
                   key={i++}
                   id={_id}
+                  deleteannonce={() => deleteannonces(_id)}
                   objet={objet}
                   detail={detail}
                   createdAt={createdAt}
@@ -92,6 +99,7 @@ let i=1;
               <AnnouncementCard
                 key={i++}
                 id={_id}
+                deleteannonce={() => deleteannonces(_id)}
                 objet={objet}
                 detail={detail}
                 createdAt={createdAt}
@@ -104,15 +112,20 @@ let i=1;
           )
         ) : (
           <div className="img-container">
-          <h1>Oops!</h1>
-          <img alt="notFound" height="280" width="300" src="https://rivasdev.tech/assets/img/no-data-found.png"/>
-         <h2>Vous avez aucune annonce !</h2>
-         {
+            <h1>Oops!</h1>
+            <img
+              alt="notFound"
+              height="280"
+              width="300"
+              src="https://rivasdev.tech/assets/img/no-data-found.png"
+            />
+            <h2>Vous avez aucune annonce !</h2>
+            {
               <Link to="/AjoutAnnonce">
                 <Button color="inherit">Créer une</Button>
               </Link>
             }
-         </div>
+          </div>
         )}
       </div>
     </div>
