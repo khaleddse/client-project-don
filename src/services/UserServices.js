@@ -20,8 +20,17 @@ export const getAlluser = () => {
   return axios
     .get("http://localhost:5000/user/")
     .then((resuser) => {
-      console.log(resuser);
       return resuser.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+export const delteuser = (userid) => {
+  return axios
+    .delete(`http://localhost:5000/user/${userid}`)
+    .then((message) => {
+      return message;
     })
     .catch((err) => {
       console.error(err);
