@@ -56,6 +56,7 @@ const UserAnnouncements = (props) => {
     }
   };
   const deleteannonces = async (id) => {
+    if (window.confirm("Êtes vous sûr de supprimer cet annonce ?")) {
     await deltePost(id);
     const Rst = announcements.filter((annonce) => {
       if (annonce._id !== id) {
@@ -64,6 +65,7 @@ const UserAnnouncements = (props) => {
     });
 
     setAnnouncements(Rst);
+  }
   };
   const FilterChangeHandler = async (value) => {
     if (value.trim().length > 0) setIsFiltred(true);

@@ -69,15 +69,8 @@ export default function AnnouncementsList() {
   const getAllposts = async () => {
     setIsLoading(true);
     const result = await getPosts();
-
-    const annoncefiltred = result.filter((annonce) => {
-      if (annonce.user !== null) {
-        return annonce;
-      }
-    });
-
-    setAnnonceHandler(annoncefiltred);
-    setAnnouncements(annoncefiltred.reverse());
+    setAnnonceHandler(result);
+    setAnnouncements(result.reverse());
     setIsLoading(false);
   };
 

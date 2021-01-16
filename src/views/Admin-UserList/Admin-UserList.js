@@ -10,13 +10,13 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
-      margin: theme.spacing(20),
-    },
+    marginTop:"10px",
+    textAlign: "center"
   },
 }));
 
 const UserList = () => {
+  const classes = useStyles();
   const [rowstate, setRowState] = useState([]);
   const [formState, setFormState] = useState({
     values: {
@@ -43,15 +43,19 @@ const UserList = () => {
   };
   const submitFormHandler = async (e) => {
     e.preventDefault();
+    if (window.confirm("Êtes vous sûr de supprimer cet utilisateur ?\ntous les annonces reliés vont être supprimés !")) {
     const { userid } = formState.values;
-
     await delteuser(userid);
     const rst = rowstate.filter((resultat) => {
       if (resultat.id !== userid) {
         return resultat;
       }
     });
+    setFormState({values: {
+      userid: "",
+    }})
     setRowState(rst);
+  }
   };
   const inputChangeHandler = (e) => {
     e.persist();
@@ -68,20 +72,20 @@ const UserList = () => {
       <AppBarMur />
       <Table rows={rowstate} />
       <form
-        className={useStyles.root}
+        className={classes.root}
         noValidate
         autoComplete="off"
         onSubmit={(e) => submitFormHandler(e)}
       >
         <TextField
-          id="filled-secondary"
-          label="Filled secondary"
+          id="custom-css-standard-input" 
+          label="ID Utilisteur"
           name="userid"
           variant="filled"
           color="secondary"
           value={formState.values.userid}
           onChange={inputChangeHandler}
-        />
+        /><br/><br/>
         <Button variant="contained" color="secondary" type="submit">
           Supprimer
         </Button>
