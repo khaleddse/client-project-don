@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const signInHandler = (authData) => {
   return axios
-    .post("http://localhost:5000/user/login", authData)
+    .post("http://localhost:5000/auth/login", authData)
     .then((resData) => {
       localStorage.setItem("token", resData.data.token);
       //localStorage.setItem("userId", resData.data.UserId);

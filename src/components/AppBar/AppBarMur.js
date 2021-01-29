@@ -115,7 +115,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar(props) {
-  const { isAuth, user, setAuthHandler } = useContext(DonContext);
+  const {
+    isAuth,
+    user,
+    setAuthHandler,
+    isAuthAdmin,
+    setAuthHandlerAdmin,
+    setUserHandler,
+  } = useContext(DonContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -131,7 +138,9 @@ export default function PrimarySearchAppBar(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
+    setUserHandler();
     setAuthHandler(false);
+    setAuthHandlerAdmin(false);
     history.push("/signin");
   };
   const loginRedirect = () => {
@@ -162,15 +171,31 @@ export default function PrimarySearchAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {isAuth ? (
+      {isAuthAdmin ? (
         <div>
-          <MenuItem onClick={() => history.push("/profile")}>
-            Profile {user.nom}
-          </MenuItem>
           <MenuItem onClick={() => history.push("/ListAvis")}>
             <ListAltOutlinedIcon />
             List des Avis
           </MenuItem>
+          <MenuItem onClick={() => history.push("/Listuser")}>
+            <ListAltOutlinedIcon />
+            List des User
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/updatecompte")}>
+            <AccountBoxOutlinedIcon />
+            My account
+          </MenuItem>
+          <MenuItem onClick={logoutHandler}>
+            <LockOutlinedIcon />
+            se déconnecter
+          </MenuItem>
+        </div>
+      ) : isAuth ? (
+        <div>
+          <MenuItem onClick={() => history.push("/profile")}>
+            Profile {user.nom}
+          </MenuItem>
+
           <MenuItem onClick={() => history.push("/edit")}>
             <AccountBoxOutlinedIcon />
             My account
@@ -331,7 +356,11 @@ export default function PrimarySearchAppBar(props) {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge  onClick={(e)=>history.push("ListUser")} badgeContent={17} color="secondary">
+                <Badge
+                  onClick={(e) => history.push("ListUser")}
+                  badgeContent={17}
+                  color="secondary"
+                >
                   <NotificationsIcon />
                 </Badge>
               </IconButton>

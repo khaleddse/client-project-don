@@ -1,6 +1,6 @@
 import { DonContext } from "./contexte/donContexte";
 import { useContext, useEffect } from "react";
-
+import EditViewAdmin from "./views/EditView/EditViewAdmin";
 import SignupPage from "./pages/Auth/signup";
 import LoginPage from "./pages/Auth/signin";
 import ContactUs from "./pages/ContactUs/ContactUs";
@@ -12,14 +12,28 @@ import EditView from "./views/EditView/EditView";
 import decode from "jwt-decode";
 import UserAnnouncements from "./views/AnnouncementsList/UserAnnoncements";
 import ListAvis from "./views/AvisList/ListAvis";
-import UserList from "./views/Admin-UserList/Admin-UserList" 
+import UserList from "./views/Admin-UserList/Admin-UserList";
 const Routes = () => {
-  const { isAuth, setAuthHandler, setUserHandler } = useContext(DonContext);
+  const {
+    isAuth,
+    setAuthHandler,
+    setUserHandler,
+    isAuthAdmin,
+    setAuthHandlerAdmin,
+  } = useContext(DonContext);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUserHandler(decode(token));
-      setAuthHandler(true);
+      const info = decode(token);
+      if (
+        info.grade.toUpperCase() === "ADMIN-PRINCIPALE" ||
+        info.grade.toUpperCase() === "ADMIN"
+      ) {
+        setAuthHandlerAdmin(true);
+      } else {
+        setUserHandler(decode(token));
+        setAuthHandler(true);
+      }
     }
   }, []);
 
@@ -27,16 +41,6 @@ const Routes = () => {
   if (isAuth) {
     routes = (
       <Switch>
-      <Route
-          path="/Listuser"
-          exact
-          render={(props) => <UserList {...props} />}
-        />
-        <Route
-          path="/ListAvis"
-          exact
-          render={(props) => <ListAvis {...props} />}
-        />
         <Route
           path="/profile"
           exact
@@ -55,7 +59,7 @@ const Routes = () => {
           render={(props) => <AddAnnoucement {...props} />}
         />
         <Route
-          path='/annonce'
+          path="/annonce"
           exact
           render={(props) => <AnnoncePage {...props} />}
         />
@@ -66,6 +70,43 @@ const Routes = () => {
         />
 
         {/* <Redirect to="/announcements" /> */}
+      </Switch>
+    );
+  } else if (isAuthAdmin) {
+    routes = (
+      <Switch>
+        <Route
+          path="/updatecompte"
+          exact
+          render={(props) => <EditViewAdmin {...props} />}
+        />
+        <Route
+          path="/Listuser"
+          exact
+          render={(props) => <UserList {...props} />}
+        />
+        <Route path="/edit" exact render={(props) => <EditView {...props} />} />
+        <Route
+          path="/ListAvis"
+          exact
+          render={(props) => <ListAvis {...props} />}
+        />
+        <Route
+          path="/signup"
+          exact
+          render={(props) => <SignupPage {...props} />}
+        />
+
+        <Route
+          path="/announcements"
+          exact
+          render={(props) => <AnnouncementsList {...props} />}
+        />
+        <Route
+          path="/annonce"
+          exact
+          render={(props) => <AnnoncePage {...props} />}
+        />
       </Switch>
     );
   } else {
@@ -92,7 +133,7 @@ const Routes = () => {
           render={(props) => <AnnouncementsList {...props} />}
         />
         <Route
-          path='/annonce'
+          path="/annonce"
           exact
           render={(props) => <AnnoncePage {...props} />}
         />

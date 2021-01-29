@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Footer from "../../components/Footer/Footer";
+import { deltePost } from "../../services/posts";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -55,9 +56,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnnouncementsList() {
   const classes = useStyles();
-  const { isAuth, announcementscontexte, setAnnonceHandler } = useContext(
-    DonContext
-  );
+  const {
+    isAuth,
+    announcementscontexte,
+    setAnnonceHandler,
+    isAuthAdmin,
+  } = useContext(DonContext);
   useEffect(() => {
     getAllposts();
   }, []);
@@ -108,6 +112,22 @@ export default function AnnouncementsList() {
   };
   let i = 1;
   const regex = new RegExp(text.search, "i");
+
+  const deleteannonces = async (id) => {
+    if (isAuthAdmin) {
+      if (window.confirm("Êtes vous sûr de supprimer cet annonce ?")) {
+        await deltePost(id);
+        const Rst = announcements.filter((annonce) => {
+          if (annonce._id !== id) {
+            return annonce;
+          }
+        });
+
+        setAnnouncements(Rst);
+      }
+    }
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -193,6 +213,7 @@ export default function AnnouncementsList() {
                       <AnnouncementCard
                         key={_id}
                         id={_id}
+                        deleteannonce={() => deleteannonces(_id)}
                         objet={objet}
                         detail={detail}
                         createdAt={createdAt}
@@ -220,6 +241,7 @@ export default function AnnouncementsList() {
                     <AnnouncementCard
                       key={_id}
                       id={_id}
+                      deleteannonce={() => deleteannonces(_id)}
                       objet={objet}
                       detail={detail}
                       createdAt={createdAt}
