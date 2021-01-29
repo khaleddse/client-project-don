@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import validate from "validate.js";
+import AppBarMur from "../../components/AppBar/AppBarMur";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Grid from "@material-ui/core/Grid";
 import "./LoggedIn.css";
-import LoggedIn from "./LoggedIn";
 import { ContactUsSchema } from "../util/schema";
 import { AddAvis } from "../../services/avis";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import Footer from "../../components/Footer/Footer";
 const ContactUs = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSucceed, setIsSucceed] = useState(false);
@@ -68,7 +71,10 @@ const ContactUs = () => {
     formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
-    <LoggedIn>
+    <div>
+    <AppBarMur/>
+      <CssBaseline/>
+
       <form onSubmit={(e) => submitFormHandler(e)} className="form">
         <TextField
           variant="outlined"
@@ -115,7 +121,8 @@ const ContactUs = () => {
           </Alert>
         </Snackbar>
       </form>
-    </LoggedIn>
+      <Footer/>
+      </div>
   );
 };
 function Alert(props) {

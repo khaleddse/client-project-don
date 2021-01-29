@@ -2,8 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { DonContext } from "../../contexte/donContexte";
 import validate from "validate.js";
 import { regions } from "./data";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import "../ContactUs/LoggedIn.css";
-import LoggedIn from "../ContactUs/LoggedIn";
+import Typography from "@material-ui/core/Typography";
+import AppBarMur from "../../components/AppBar/AppBarMur";
 import TextField from "@material-ui/core/TextField";
 import ImageUploader from "react-images-upload";
 import Button from "@material-ui/core/Button";
@@ -15,8 +17,42 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { useHistory } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundImage: "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  image:{
+    marginTop:"10%",
+    width:"80%",
+    display: "block",
+  marginLeft:"auto",
+  marginRight: "auto",
+  },
+  LogoGrid:{
+    backgroundPosition: "center",
+    textAlign:"center"
+  },
+  form:{
+    width: "90%",
+    display: "flex",
+    flexDirection: "column",
+    margin: " auto",
+
+    },
+  formGrid: {
+    backgroundColor: "rgba(125, 138, 255, 0.1)",
+  },
+}));
 
 const AddAnnoucement = () => {
+  const classes = useStyles();
   const { user, ListCategories } = useContext(DonContext);
   const [isLoading, setisLoading] = useState(false);
   const [formState, setFormState] = useState({
@@ -126,8 +162,16 @@ const AddAnnoucement = () => {
     return formState.touched[field] && formState.errors[field] ? true : false;
   };
   return (
-    <LoggedIn>
-      <form onSubmit={(e) => submitFormHandler(e)} className="form">
+    <div  >
+    <AppBarMur />
+    <Grid container component="main" className={classes.root}>
+    <CssBaseline />
+    <Grid item xs={12} sm={6} className={classes.LogoGrid}>
+      <img  className={classes.image} src="https://www.123argent.com/wp-content/uploads/2019/08/motif-arbre-version-2019.png" />
+    </Grid>
+    <Grid item xs={12} sm={6}  className={classes.formGrid}>
+    <img style={{marginLeft:"40%"}} height="140" src="https://nsa39.casimages.com/img/2018/02/14/180214085310739388.png" />
+      <form onSubmit={(e) => submitFormHandler(e)} className={classes.form}>
         <TextField
           id="object"
           name="objet"
@@ -240,8 +284,12 @@ const AddAnnoucement = () => {
           Poster
         </Button>
         {isLoading && <LinearProgress color="primary" />}
-      </form>
-    </LoggedIn>
+      </form><br/><br/>
+      </Grid>
+    <br/>
+    </Grid>
+    <Footer/>
+    </div>
   );
 };
 export default AddAnnoucement;

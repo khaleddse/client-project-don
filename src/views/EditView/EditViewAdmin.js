@@ -1,4 +1,4 @@
-import AppBar from "../../components/AppBar/AppBar";
+import AppBarMur from "../../components/AppBar/AppBarMur";
 import Edit from "../../components/UI/editpage/EditPage";
 import { useContext, useState } from "react";
 import { TextField } from "@material-ui/core";
@@ -65,7 +65,7 @@ const EditViewAdmin = () => {
   }
   return (
     <div>
-      <AppBar />
+      <AppBarMur />
       <form onSubmit={(e) => updateHandler(e)}>
         {fieldsArray.map(({ name, value }) => (
           <Edit Type={name} Value={value} key={name}>
