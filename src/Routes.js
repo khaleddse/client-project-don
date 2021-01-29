@@ -20,6 +20,7 @@ const Routes = () => {
     setUserHandler,
     isAuthAdmin,
     setAuthHandlerAdmin,
+    setAdminHandler,
   } = useContext(DonContext);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,6 +31,7 @@ const Routes = () => {
         info.grade.toUpperCase() === "ADMIN"
       ) {
         setAuthHandlerAdmin(true);
+        setAdminHandler(info);
       } else {
         setUserHandler(decode(token));
         setAuthHandler(true);
