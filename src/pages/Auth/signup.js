@@ -4,8 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Alert from "@material-ui/lab/Alert";
-import Auth from "./Auth";
-import "./Auth.css";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
 import { signupHandler } from "../../services/auth-service";
 import { signUpSchema } from "../../pages/util/schema";
 import validate from "validate.js";
@@ -15,8 +15,50 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import AppBar from "../../components/AppBar/AppBar";
+import Footer from "../../components/Footer/Footer";
+import Avatar from "@material-ui/core/Avatar";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Typography from "@material-ui/core/Typography";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "91vh",
+    backgroundImage: "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  gridForm:{
+    backgroundColor: "rgba(0, 0, 155, 0.1)",
+    
+  },
+  form:{
+  width: "90%",
+  display: "flex",
+  flexDirection: "column",
+  margin: "50px auto"
+  },
+  avatar: {
+    margin: " auto",
+    backgroundColor: theme.palette.secondary.main,
+  },
+  image: {
+    backgroundImage: "url(https://source.unsplash.com/1600x900/?nature,water)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  formHead:{
+    textAlign:"center"
+  }
+}));
 const Signup = () => {
+  const classes = useStyles();
   let history = useHistory();
   const [open, setOpen] = useState(false);
   const [SignupFailedState, setSignupFailed] = useState(false);
@@ -107,8 +149,22 @@ const Signup = () => {
     }
   }, [open]);
   return (
-    <Auth>
-      <form className="form">
+    <div>
+    <AppBar />
+    <Grid container component="main" className={classes.root}>
+    <Grid item xs={false} sm={4} md={7} className={classes.image} />
+
+    <Grid item xs={12} sm={8} md={5} elevation={6} square className={classes.gridForm}>
+    
+      <form className={classes.form} >
+        <div className={classes.formHead} >
+        <Avatar className={classes.avatar}>
+              <PersonAddIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">          
+            Rejoignez-nous
+            </Typography>
+            </div>
         <TextField
           id="nom"
           name="nom"
@@ -230,7 +286,10 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
           </DialogActions>
         </Dialog>
       </form>
-    </Auth>
+      </Grid>
+      </Grid>
+      <Footer/>
+    </div>
   );
 };
 
