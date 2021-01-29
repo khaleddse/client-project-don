@@ -68,7 +68,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Signin() {
   const classes = useStyles();
-  const { setAuthHandler, setUserHandler } = useContext(DonContext);
+  const {
+    setAuthHandler,
+    setUserHandler,
+    setAuthHandlerAdmin,
+    setAdminHandler,
+  } = useContext(DonContext);
   const [SignupFailedState, setSignupFailed] = useState(false);
   const [formState, setFormState] = useState({
     isValid: false,
@@ -114,10 +119,19 @@ export default function Signin() {
         email,
         password,
       });
-      setAuthHandler(true);
-      setUserHandler(decode(token));
-
-      history.push("/announcements");
+      const info = decode(token);
+      if (info.grade === "user") {
+        setAuthHandler(true);
+        setUserHandler(info);
+        history.push("/announcements");
+      } else if (
+        info.grade.toUpperCase() === "ADMIN" ||
+        info.grade.toUpperCase() === "ADMIN-PRINCIPALE"
+      ) {
+        setAuthHandlerAdmin(true);
+        setAdminHandler(info);
+        history.push("/announcements");
+      }
     } catch (error) {
       setSignupFailed(true);
     }
@@ -126,6 +140,7 @@ export default function Signin() {
 
   const hasError = (field) =>
     formState.touched[field] && formState.errors[field] ? true : false;
+
   return (
     <div>
       <AppBar />

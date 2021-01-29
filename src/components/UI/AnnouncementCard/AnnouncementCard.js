@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DonContext } from "../../../contexte/donContexte";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -19,6 +20,7 @@ import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import "./AnnouncementCard.css";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeReviewCard(props) {
+  const { isAuthAdmin } = useContext(DonContext);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   let history = useHistory();
@@ -95,6 +98,11 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
+        {isAuthAdmin ? (
+          <Button color="secondary" onClick={() => props.deleteannonce()}>
+            Supprimer
+          </Button>
+        ) : null}
         {history.location.pathname === "/profile" && (
           <Button color="secondary" onClick={() => props.deleteannonce()}>
             Supprimer

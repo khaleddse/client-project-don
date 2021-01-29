@@ -105,9 +105,7 @@ export default function SignInSide(props) {
 
   useEffect(() => {
     const id = new URLSearchParams(props.location.search).get("_id");
-    console.log("myid", id);
     GetPostHandler(id);
-    console.log("state", annonceState);
   }, []);
 
   const GetPostHandler = async (id) => {
