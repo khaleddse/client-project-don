@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
@@ -29,10 +30,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
-  gridForm:{
-    backgroundColor: "rgba(0, 0, 155, 0.1)",
-    
-  },
+
   form:{
   width: "90%",
   display: "flex",
@@ -116,7 +114,7 @@ const Signup = () => {
 
     const response = await signupHandler(signupData);
     if (response) {
-      history.push("/sigin");
+      history.push("/signin");
     } else {
       setSignupFailed(true);
       setOpen(false);
@@ -152,6 +150,7 @@ const Signup = () => {
     <div>
     <AppBar />
     <Grid container component="main" className={classes.root}>
+      <CssBaseline/>
     <Grid item xs={false} sm={4} md={7} className={classes.image} />
 
     <Grid item xs={12} sm={8} md={5} elevation={6} square className={classes.gridForm}>

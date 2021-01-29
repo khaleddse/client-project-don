@@ -9,7 +9,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -36,6 +35,11 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "91vh",
+    backgroundImage: "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/1600x900/?nature,water)",
@@ -48,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
   },
   paper: {
+    
     margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
@@ -147,7 +152,7 @@ export default function Signin() {
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5}  elevation={6} square>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />

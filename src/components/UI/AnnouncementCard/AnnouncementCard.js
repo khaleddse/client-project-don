@@ -108,16 +108,12 @@ export default function RecipeReviewCard(props) {
             Supprimer
           </Button>
         )}
-        <IconButton
-          className={clsx(classes.expand, {
+
+          <Typography variant="body2" color="textSecondary" component="p"  className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
-          })}
-          onClick={annoncePageHandler}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+          })}>
+          <a style={{color:"grey",textDecoration:"none"}} href={"/annonce?_id=" + props.id}> Voir plus...</a>
+        </Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent className={classes.fixed}>
