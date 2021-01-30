@@ -3,9 +3,9 @@ import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 220 },
-  { field: "firstName", headerName: "First name", width: 130 },
-  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "id", headerName: "ID", width: 240 },
+  { field: "firstName", headerName: "First name", width: 160 },
+  { field: "lastName", headerName: "Last name", width: 160 },
   {
     field: "email",
     headerName: "email",

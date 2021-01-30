@@ -12,7 +12,9 @@ import EditView from "./views/EditView/EditView";
 import decode from "jwt-decode";
 import UserAnnouncements from "./views/AnnouncementsList/UserAnnoncements";
 import ListAvis from "./views/AvisList/ListAvis";
+import AdminList from "./views/Admin-UserList/Admin-ListAdmin";
 import UserList from "./views/Admin-UserList/Admin-UserList";
+import AddAdmin from "./pages/Auth/AddAdmin";
 const Routes = () => {
   const {
     isAuth,
@@ -78,9 +80,19 @@ const Routes = () => {
     routes = (
       <Switch>
         <Route
+          path="/addadmin"
+          exact
+          render={(props) => <AddAdmin {...props} />}
+        />
+        <Route
           path="/updatecompte"
           exact
           render={(props) => <EditViewAdmin {...props} />}
+        />
+        <Route
+          path="/AdminList"
+          exact
+          render={(props) => <AdminList {...props} />}
         />
         <Route
           path="/Listuser"
