@@ -181,6 +181,14 @@ export default function PrimarySearchAppBar(props) {
             <ListAltOutlinedIcon />
             List des User
           </MenuItem>
+          <MenuItem onClick={() => history.push("/AdminList")}>
+            <ListAltOutlinedIcon />
+            List des Admin
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/addadmin")}>
+            <ListAltOutlinedIcon />
+            Ajouter personel
+          </MenuItem>
           <MenuItem onClick={() => history.push("/updatecompte")}>
             <AccountBoxOutlinedIcon />
             My account
@@ -357,7 +365,7 @@ export default function PrimarySearchAppBar(props) {
                 color="inherit"
               >
                 <Badge
-                  onClick={(e) => history.push("ListUser")}
+                  onClick={(e) => history.push("/ListAvis")}
                   badgeContent={17}
                   color="secondary"
                 >
