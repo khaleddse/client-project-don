@@ -69,6 +69,53 @@ const signUpSchema = {
     },
   },
 };
+const AddAdminSchema = {
+  nom: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      maximum: 15,
+    },
+  },
+  prenom: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      maximum: 15,
+    },
+  },
+  tel: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      maximum: 15,
+    },
+  },
+  email: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    email: { message: "n'est pas valide !" },
+    length: { maximum: 64 },
+  },
+  password: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      minimum: 6,
+      maximum: 128,
+      message: ":minimum 6 caractère!",
+    },
+  },
+  confirmpassword: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      minimum: 6,
+      maximum: 128,
+      message: ":minimum 6 caractère!",
+    },
+  },
+  grade: {
+    presence: { allowEmpty: false, message: "est obligatoire!" },
+    length: {
+      maximum: 40,
+    },
+  },
+};
 const AddAnnouncementSchema = {
   objet: {
     presence: { allowEmpty: false, message: "est obligatoire!" },
@@ -103,4 +150,4 @@ const AddAnnouncementSchema = {
     presence: { allowEmpty: false, message: "est obligatoire!" },
   },
 };
-export { signInSchema, signUpSchema, AddAnnouncementSchema ,ContactUsSchema};
+export { signInSchema, signUpSchema, AddAnnouncementSchema ,ContactUsSchema,AddAdminSchema};

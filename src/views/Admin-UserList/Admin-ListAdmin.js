@@ -7,6 +7,8 @@ import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { deltadmin } from "../../services/admin-service";
 import { useHistory } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Footer from "../../components/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,9 +82,22 @@ const AdminList = () => {
     }));
   };
   return (
-    <div>
+    <div style={{backgroundColor: "#f2f2f2"}} >
       <AppBarMur />
-      <Table rows={rowstate} />
+      <CssBaseline />
+      <h1
+        style={{
+          display: "block",
+          color: "#34495e",
+          textAlign: "center",
+          height: "40px",
+        }}
+      >
+        List des Administrateurs
+      </h1>
+      <div style={{ margin: "10px 40px" ,backgroundColor: "#ffffff",boxShadow: "4px 4px  #ccc"}}>
+        <Table rows={rowstate}  />
+      </div>
       <form
         className={classes.root}
         noValidate
@@ -103,7 +118,8 @@ const AdminList = () => {
         <Button variant="contained" color="secondary" type="submit">
           Supprimer
         </Button>
-      </form>
+      </form><br/><br/><br/>
+      <Footer/>
     </div>
   );
 };

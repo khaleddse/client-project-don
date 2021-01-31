@@ -7,6 +7,8 @@ import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { delteuser } from "../../services/UserServices";
 import { useHistory } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Footer from "../../components/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,9 +70,22 @@ const UserList = () => {
     }));
   };
   return (
-    <div>
+    <div style={{backgroundColor: "#f2f2f2"}} >
       <AppBarMur />
+      <CssBaseline />
+      <h1
+        style={{
+          display: "block",
+          color: "#34495e",
+          textAlign: "center",
+          height: "40px",
+        }}
+      >
+        List des Utilisteurs
+      </h1>
+      <div style={{ margin: "10px 40px" ,backgroundColor: "#ffffff",boxShadow: "4px 4px  #ccc"}}>
       <Table rows={rowstate} />
+      </div>
       <form
         className={classes.root}
         noValidate
@@ -90,6 +105,8 @@ const UserList = () => {
           Supprimer
         </Button>
       </form>
+      <br/><br/><br/>
+      <Footer/>
     </div>
   );
 };
