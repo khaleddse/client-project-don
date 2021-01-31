@@ -6,6 +6,7 @@ import { DonContext } from "../../contexte/donContexte";
 import Button from "@material-ui/core/Button";
 import decode from "jwt-decode";
 import { updateadmin } from "../../services/admin-service";
+import { useHistory } from "react-router-dom";
 
 const EditViewAdmin = () => {
   const { admin, setAdminHandler } = useContext(DonContext);
@@ -38,6 +39,7 @@ const EditViewAdmin = () => {
       },
     }));
   };
+  let history = useHistory();
   const updateHandler = async (e) => {
     e.preventDefault();
     const { nom, prenom, email, tel } = formupdatead;
@@ -50,6 +52,8 @@ const EditViewAdmin = () => {
       });
 
       setAdminHandler(decode(token));
+      alert("votre compte est mofifier avec succes");
+      history.push("/announcements");
     } catch (err) {
       throw err;
     }
