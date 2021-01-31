@@ -7,9 +7,16 @@ import Button from "@material-ui/core/Button";
 import decode from "jwt-decode";
 import { updateUser } from "../../services/UserServices";
 import { useHistory } from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const EditView = () => {
   const { user, setUserHandler } = useContext(DonContext);
   const { nom, prenom, email, tel } = user;
+  const [isSucceed, setIsSucceed] = useState(false);
   const [formupdate, setFormUpDate] = useState({
     nom: {
       value: nom,
@@ -50,8 +57,7 @@ const EditView = () => {
       });
 
       setUserHandler(decode(token));
-      alert("votre compte est mofifier avec succes");
-      history.push("/announcements");
+      setIsSucceed(true);
     } catch (err) {
       throw err;
     }
@@ -65,6 +71,14 @@ const EditView = () => {
       name: formupdate[key].name,
     });
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setIsSucceed(false);
+  };
+
   return (
     <div>
       <AppBarMur />
@@ -84,6 +98,11 @@ const EditView = () => {
           change
         </Button>
       </form>
+      <Snackbar open={isSucceed} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Votre Compte a éte modifié avec succes !
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
