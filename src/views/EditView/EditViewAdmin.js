@@ -7,9 +7,15 @@ import Button from "@material-ui/core/Button";
 import decode from "jwt-decode";
 import { updateadmin } from "../../services/admin-service";
 import { useHistory } from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const EditViewAdmin = () => {
   const { admin, setAdminHandler } = useContext(DonContext);
+  const [isSucceed, setIsSucceed] = useState(false);
   const { nom, prenom, email, tel } = admin;
   const [formupdatead, setFormUpDatead] = useState({
     nom: {
@@ -39,7 +45,9 @@ const EditViewAdmin = () => {
       },
     }));
   };
+
   let history = useHistory();
+
   const updateHandler = async (e) => {
     e.preventDefault();
     const { nom, prenom, email, tel } = formupdatead;
@@ -52,8 +60,8 @@ const EditViewAdmin = () => {
       });
 
       setAdminHandler(decode(token));
-      alert("votre compte est mofifier avec succes");
-      history.push("/announcements");
+      setIsSucceed(true);
+      //history.push("/announcements");
     } catch (err) {
       throw err;
     }
@@ -67,6 +75,12 @@ const EditViewAdmin = () => {
       name: formupdatead[key].name,
     });
   }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setIsSucceed(false);
+  };
   return (
     <div>
       <AppBarMur />
@@ -86,6 +100,11 @@ const EditViewAdmin = () => {
           change
         </Button>
       </form>
+      <Snackbar open={isSucceed} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Votre Compte a éte modifié avec succes !
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

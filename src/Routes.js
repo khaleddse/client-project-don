@@ -75,7 +75,7 @@ const Routes = () => {
           render={(props) => <AnnouncementsList {...props} />}
         />
 
-        {/* <Redirect to="/announcements" /> */}
+        {/*<Redirect to="/announcements" />*/}
       </Switch>
     );
   } else if (isAuthAdmin) {
@@ -123,6 +123,7 @@ const Routes = () => {
           exact
           render={(props) => <AnnoncePage {...props} />}
         />
+        <Redirect to="/announcements" />
       </Switch>
     );
   } else if (isAuthempl) {
@@ -161,6 +162,7 @@ const Routes = () => {
           exact
           render={(props) => <AnnoncePage {...props} />}
         />
+        <Redirect to="/announcements" />
       </Switch>
     );
   } else {

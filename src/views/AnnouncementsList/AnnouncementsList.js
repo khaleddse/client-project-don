@@ -61,6 +61,7 @@ export default function AnnouncementsList() {
     announcementscontexte,
     setAnnonceHandler,
     isAuthAdmin,
+    isAuthempl,
   } = useContext(DonContext);
   useEffect(() => {
     getAllposts();
@@ -114,7 +115,7 @@ export default function AnnouncementsList() {
   const regex = new RegExp(text.search, "i");
 
   const deleteannonces = async (id) => {
-    if (isAuthAdmin) {
+    if (isAuthAdmin || isAuthempl) {
       if (window.confirm("Êtes vous sûr de supprimer cet annonce ?")) {
         await deltePost(id);
         const Rst = announcements.filter((annonce) => {

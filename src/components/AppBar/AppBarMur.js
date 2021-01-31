@@ -287,14 +287,16 @@ export default function PrimarySearchAppBar(props) {
           <p>Contacter support</p>
         </MenuItem>
       )}
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      {(isAuthAdmin || isAuthempl) && (
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+      )}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -379,18 +381,20 @@ export default function PrimarySearchAppBar(props) {
                 </IconButton>
               )}
 
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge
-                  onClick={(e) => history.push("/ListAvis")}
-                  badgeContent={17}
-                  color="secondary"
+              {(isAuthAdmin || isAuthempl) && (
+                <IconButton
+                  aria-label="show 17 new notifications"
+                  color="inherit"
                 >
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+                  <Badge
+                    onClick={(e) => history.push("/ListAvis")}
+                    badgeContent={17}
+                    color="secondary"
+                  >
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              )}
               <IconButton
                 edge="end"
                 aria-label="account of current user"

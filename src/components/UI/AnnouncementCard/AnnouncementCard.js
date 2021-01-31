@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RecipeReviewCard(props) {
-  const { isAuthAdmin } = useContext(DonContext);
+  const { isAuthAdmin, isAuthempl } = useContext(DonContext);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   let history = useHistory();
@@ -98,7 +98,7 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        {isAuthAdmin ? (
+        {isAuthAdmin || isAuthempl ? (
           <Button color="secondary" onClick={() => props.deleteannonce()}>
             Supprimer
           </Button>
@@ -109,10 +109,21 @@ export default function RecipeReviewCard(props) {
           </Button>
         )}
 
-          <Typography variant="body2" color="textSecondary" component="p"  className={clsx(classes.expand, {
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
-          })}>
-          <a style={{color:"grey",textDecoration:"none"}} href={"/annonce?_id=" + props.id}> Voir plus...</a>
+          })}
+        >
+          <a
+            style={{ color: "grey", textDecoration: "none" }}
+            href={"/annonce?_id=" + props.id}
+          >
+            {" "}
+            Voir plus...
+          </a>
         </Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

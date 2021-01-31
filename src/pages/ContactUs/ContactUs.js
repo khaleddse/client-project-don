@@ -20,17 +20,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "4.5%",
   },
   image: {
-    textAlign:"center",
-    backgroundColor:"#495C6A"
+    textAlign: "center",
+    backgroundColor: "#495C6A",
   },
   formGrid: {
-    backgroundColor:"white",
-
+    backgroundColor: "white",
   },
   form: {
     width: "90%",
-    marginLeft:"auto",
-    marginRight:"auto",
+    marginLeft: "auto",
+    marginRight: "auto",
     display: "flex",
     flexDirection: "column",
     marginBottom: "10%",
@@ -111,15 +110,34 @@ const ContactUs = () => {
       <CssBaseline />
       <Grid container component="main" className={classes.root}>
         <Grid item xs={false} sm={2} />
-        <Grid item xs={false} sm={3} className={classes.image} >
-          <br/>
-          <img style={{marginRight:"auto",marginLeft:"auto",display:"block"}} height="200"src="https://riskcontrolacademy.com/wp-content/uploads/2018/02/contact.png"/>
-          <h3 style={{margin:"10px 30px",color:"white"}}>si vous avez des questions ou souhaitez simplement nous contacter,n'hésitez pas de remplir la formuliare.</h3>
-          <h4 style={{marginBottom:"0px",color:"#A2BCE0"}} > Télephone : +216 28 437 349</h4>
-          <h4 style={{marginBottom:"0px ",color:"#A2BCE0"}}>E-mail : contact@NajemN3awen.tn</h4>
-        </Grid>
-        <Grid item xs={12} sm={5} className={classes.formGrid} square><br/>
+        <Grid item xs={false} sm={3} className={classes.image}>
+          <br />
           <img
+            alt="image2"
+            style={{
+              marginRight: "auto",
+              marginLeft: "auto",
+              display: "block",
+            }}
+            height="200"
+            src="https://riskcontrolacademy.com/wp-content/uploads/2018/02/contact.png"
+          />
+          <h3 style={{ margin: "10px 30px", color: "white" }}>
+            si vous avez des questions ou souhaitez simplement nous
+            contacter,n'hésitez pas de remplir la formuliare.
+          </h3>
+          <h4 style={{ marginBottom: "0px", color: "#A2BCE0" }}>
+            {" "}
+            Télephone : +216 28 437 349
+          </h4>
+          <h4 style={{ marginBottom: "0px ", color: "#A2BCE0" }}>
+            E-mail : contact@NajemN3awen.tn
+          </h4>
+        </Grid>
+        <Grid item xs={12} sm={5} className={classes.formGrid} square>
+          <br />
+          <img
+            alt="image1"
             style={{
               display: "block",
               marginLeft: "auto",
@@ -130,7 +148,7 @@ const ContactUs = () => {
           />
           <form onSubmit={(e) => submitFormHandler(e)} className={classes.form}>
             <TextField
-            style={{backgroundColor:"#f2f2f2"}}
+              style={{ backgroundColor: "#f2f2f2" }}
               variant="outlined"
               id="email"
               name="email"
@@ -142,8 +160,7 @@ const ContactUs = () => {
             />
             <br />
             <TextField
-                        style={{backgroundColor:"#f2f2f2"}}
-
+              style={{ backgroundColor: "#f2f2f2" }}
               value={formState.values.detail}
               onChange={inputChangeHandler}
               id="detail"
