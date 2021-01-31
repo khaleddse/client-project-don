@@ -4,7 +4,6 @@ import validate from "validate.js";
 import { regions } from "./data";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "../ContactUs/LoggedIn.css";
-import Typography from "@material-ui/core/Typography";
 import AppBarMur from "../../components/AppBar/AppBarMur";
 import TextField from "@material-ui/core/TextField";
 import ImageUploader from "react-images-upload";

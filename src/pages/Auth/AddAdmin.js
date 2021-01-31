@@ -8,13 +8,18 @@ import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { addAdmin } from "../../services/admin-service";
-import { signUpSchema } from "../../pages/util/schema";
+import { AddAdminSchema } from "../../pages/util/schema";
 import validate from "validate.js";
-import AppBar from "../../components/AppBar/AppBar";
+import AppBarMur from "../../components/AppBar/AppBarMur";
 import Footer from "../../components/Footer/Footer";
 import Avatar from "@material-ui/core/Avatar";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Typography from "@material-ui/core/Typography";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/1600x900/?nature,water)",
+    backgroundImage: "url(https://i.dlpng.com/static/png/1541571-vector-cartoon-figures-of-office-vector-cartoon-office-png-and-vector-office-png-650_632_preview.png)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -73,7 +78,7 @@ const AddAdmin = () => {
   });
 
   useEffect(() => {
-    const errors = validate(formState.values, signUpSchema);
+    const errors = validate(formState.values, AddAdminSchema);
     setFormState((formState) => ({
       ...formState,
       isValid: errors ? false : true,
@@ -130,7 +135,7 @@ const AddAdmin = () => {
 
   return (
     <div>
-      <AppBar />
+      <AppBarMur />
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -147,10 +152,10 @@ const AddAdmin = () => {
           <form className={classes.form}>
             <div className={classes.formHead}>
               <Avatar className={classes.avatar}>
-                <PersonAddIcon />
+                <AssignmentIndIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Rejoignez-nous
+                Ajouter Admin
               </Typography>
             </div>
             <TextField
@@ -218,16 +223,27 @@ const AddAdmin = () => {
                   : "valeur n'est pas identique"
               }
             />
-            <TextField
-              id="grade"
-              name="grade"
-              label="Grade"
-              onChange={inputChangeHandler}
-              value={formState.values.grade}
-              error={hasError("grade")}
-              helperText={hasError("grade") ? formState.error.grade[0] : null}
-            />
-
+          <FormControl error={hasError("grade")}>
+          <InputLabel htmlFor="outlined-age-native-simple">Grade</InputLabel>
+          <Select
+            native
+            label="Grade"
+            inputProps={{
+              name: "grade",
+              id: "outlined-age-native-simple",
+            }}
+            value={formState.values.grade}
+            onChange={inputChangeHandler}
+          >
+            <option aria-label="None" value="" />
+            <option value="admin-principale">
+            Admin Principale
+            </option>
+            <option value="admin">
+            Admin
+            </option>
+          </Select>
+        </FormControl>
             {/*<Button > </Button>*/}
             {SignupFailedState && (
               <Alert severity="error">E-mail existant!</Alert>

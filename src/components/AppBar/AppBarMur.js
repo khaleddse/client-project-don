@@ -24,6 +24,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
 import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import ListAltOutlinedIcon from "@material-ui/icons/ListAltOutlined";
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
+import SettingsIcon from '@material-ui/icons/Settings';
 function HideOnScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
@@ -172,26 +176,26 @@ export default function PrimarySearchAppBar(props) {
       onClose={handleMenuClose}
     >
       {isAuthAdmin ? (
-        <div>
+        <div >
+          <MenuItem onClick={() => history.push("/Listuser")}>
+            <PeopleAltOutlinedIcon />
+            List des Users
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/AdminList")}>
+            <SupervisorAccountOutlinedIcon />
+            List des Admins
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/addadmin")}>
+            <PersonAddOutlinedIcon />
+            Ajouter personel
+          </MenuItem>
           <MenuItem onClick={() => history.push("/ListAvis")}>
             <ListAltOutlinedIcon />
             List des Avis
           </MenuItem>
-          <MenuItem onClick={() => history.push("/Listuser")}>
-            <ListAltOutlinedIcon />
-            List des User
-          </MenuItem>
-          <MenuItem onClick={() => history.push("/AdminList")}>
-            <ListAltOutlinedIcon />
-            List des Admin
-          </MenuItem>
-          <MenuItem onClick={() => history.push("/addadmin")}>
-            <ListAltOutlinedIcon />
-            Ajouter personel
-          </MenuItem>
           <MenuItem onClick={() => history.push("/updatecompte")}>
             <AccountBoxOutlinedIcon />
-            My account
+            Mon Compte
           </MenuItem>
           <MenuItem onClick={logoutHandler}>
             <LockOutlinedIcon />
@@ -206,7 +210,7 @@ export default function PrimarySearchAppBar(props) {
 
           <MenuItem onClick={() => history.push("/edit")}>
             <AccountBoxOutlinedIcon />
-            My account
+            Mon Compte
           </MenuItem>
           <MenuItem onClick={logoutHandler}>
             <LockOutlinedIcon />
@@ -277,9 +281,9 @@ export default function PrimarySearchAppBar(props) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <SettingsIcon />
         </IconButton>
-        <p>Profile</p>
+        <p>Paramètre</p>
       </MenuItem>
     </Menu>
   );
@@ -380,7 +384,7 @@ export default function PrimarySearchAppBar(props) {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <SettingsIcon />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
