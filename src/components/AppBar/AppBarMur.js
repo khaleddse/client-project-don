@@ -35,6 +35,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import { addCateg } from "../../services/categories";
+import PostAddIcon from "@material-ui/icons/PostAdd";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -239,7 +240,7 @@ export default function PrimarySearchAppBar(props) {
           </MenuItem>
 
           <MenuItem onClick={() => handleClickOpen()}>
-            <PersonAddOutlinedIcon />
+            <PostAddIcon />
             Ajouter Categorie
           </MenuItem>
 
@@ -263,7 +264,7 @@ export default function PrimarySearchAppBar(props) {
             List des Users
           </MenuItem>
           <MenuItem onClick={() => handleClickOpen()}>
-            <PersonAddOutlinedIcon />
+            <PostAddIcon />
             Ajouter Categorie
           </MenuItem>
           <MenuItem onClick={() => history.push("/ListAvis")}>
@@ -504,7 +505,7 @@ export default function PrimarySearchAppBar(props) {
               <TextField
                 id="nom"
                 name="nom"
-                label="categ"
+                label="Nom-Catégorie"
                 onChange={inputChangeHandler}
                 value={formState.values.nom}
               />
@@ -515,7 +516,7 @@ export default function PrimarySearchAppBar(props) {
               Annuler
             </Button>
             <Button color="primary" onClick={(e) => categorieadd()}>
-              Confirmer
+              Ajouter
             </Button>
           </DialogActions>
         </Dialog>

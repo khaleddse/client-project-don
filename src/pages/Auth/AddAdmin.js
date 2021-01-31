@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      "url(https://i.dlpng.com/static/png/1541571-vector-cartoon-figures-of-office-vector-cartoon-office-png-and-vector-office-png-650_632_preview.png)",
+      "url(https://d34u8crftukxnk.cloudfront.net/slackpress/prod/sites/6/admin-app-management-hero%402x.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
