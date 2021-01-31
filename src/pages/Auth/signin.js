@@ -35,11 +35,11 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "91vh",
-    backgroundImage: "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    backgroundImage:
+      "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/1600x900/?nature,water)",
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
   },
   paper: {
-    
     margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
@@ -78,6 +77,7 @@ export default function Signin() {
     setUserHandler,
     setAuthHandlerAdmin,
     setAdminHandler,
+    setAuthHandlerEmpl,
   } = useContext(DonContext);
   const [SignupFailedState, setSignupFailed] = useState(false);
   const [formState, setFormState] = useState({
@@ -129,11 +129,12 @@ export default function Signin() {
         setAuthHandler(true);
         setUserHandler(info);
         history.push("/announcements");
-      } else if (
-        info.grade.toUpperCase() === "ADMIN" ||
-        info.grade.toUpperCase() === "ADMIN-PRINCIPALE"
-      ) {
+      } else if (info.grade.toUpperCase() === "ADMIN-PRINCIPALE") {
         setAuthHandlerAdmin(true);
+        setAdminHandler(info);
+        history.push("/announcements");
+      } else if (info.grade.toUpperCase() === "ADMIN") {
+        setAuthHandlerEmpl(true);
         setAdminHandler(info);
         history.push("/announcements");
       }
@@ -152,7 +153,7 @@ export default function Signin() {
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5}  elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} elevation={6} square>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />

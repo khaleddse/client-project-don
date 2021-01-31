@@ -6,6 +6,7 @@ import { DonContext } from "../../contexte/donContexte";
 import Button from "@material-ui/core/Button";
 import decode from "jwt-decode";
 import { updateUser } from "../../services/UserServices";
+import { useHistory } from "react-router-dom";
 const EditView = () => {
   const { user, setUserHandler } = useContext(DonContext);
   const { nom, prenom, email, tel } = user;
@@ -27,7 +28,7 @@ const EditView = () => {
       name: "tel",
     },
   });
-
+  let history = useHistory();
   const onChangeHandler = (e) => {
     setFormUpDate((formupdate) => ({
       ...formupdate,
@@ -49,6 +50,8 @@ const EditView = () => {
       });
 
       setUserHandler(decode(token));
+      alert("votre compte est mofifier avec succes");
+      history.push("/announcements");
     } catch (err) {
       throw err;
     }

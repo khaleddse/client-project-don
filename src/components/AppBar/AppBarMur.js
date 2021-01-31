@@ -11,7 +11,6 @@ import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -24,10 +23,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import AccountBoxOutlinedIcon from "@material-ui/icons/AccountBoxOutlined";
 import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import ListAltOutlinedIcon from "@material-ui/icons/ListAltOutlined";
-import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
-import SettingsIcon from '@material-ui/icons/Settings';
+import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
+import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
+import SupervisorAccountOutlinedIcon from "@material-ui/icons/SupervisorAccountOutlined";
+import SettingsIcon from "@material-ui/icons/Settings";
 function HideOnScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
@@ -124,8 +123,10 @@ export default function PrimarySearchAppBar(props) {
     user,
     setAuthHandler,
     isAuthAdmin,
+    isAuthempl,
     setAuthHandlerAdmin,
     setUserHandler,
+    setAuthHandlerEmpl,
   } = useContext(DonContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -138,11 +139,11 @@ export default function PrimarySearchAppBar(props) {
     setAnchorEl(event.currentTarget);
   };
   const logoutHandler = () => {
-    //localStorage.clear()
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
     localStorage.removeItem("userId");
     setUserHandler();
+    setAuthHandlerEmpl(false);
     setAuthHandler(false);
     setAuthHandlerAdmin(false);
     history.push("/signin");
@@ -176,7 +177,7 @@ export default function PrimarySearchAppBar(props) {
       onClose={handleMenuClose}
     >
       {isAuthAdmin ? (
-        <div >
+        <div>
           <MenuItem onClick={() => history.push("/Listuser")}>
             <PeopleAltOutlinedIcon />
             List des Users
@@ -189,6 +190,26 @@ export default function PrimarySearchAppBar(props) {
             <PersonAddOutlinedIcon />
             Ajouter personel
           </MenuItem>
+          <MenuItem onClick={() => history.push("/ListAvis")}>
+            <ListAltOutlinedIcon />
+            List des Avis
+          </MenuItem>
+          <MenuItem onClick={() => history.push("/updatecompte")}>
+            <AccountBoxOutlinedIcon />
+            Mon Compte
+          </MenuItem>
+          <MenuItem onClick={logoutHandler}>
+            <LockOutlinedIcon />
+            se déconnecter
+          </MenuItem>
+        </div>
+      ) : isAuthempl ? (
+        <div>
+          <MenuItem onClick={() => history.push("/Listuser")}>
+            <PeopleAltOutlinedIcon />
+            List des Users
+          </MenuItem>
+
           <MenuItem onClick={() => history.push("/ListAvis")}>
             <ListAltOutlinedIcon />
             List des Avis
@@ -329,12 +350,6 @@ export default function PrimarySearchAppBar(props) {
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              {/*<Link to="/AjoutAnnonce">
-                <Fab  style={{ color: green[500] }}  aria-label="add" >
-              <AddIcon />
-              
-            </Fab>   */}
-              {/* </Link> */}
               {history.location.pathname !== "/AjoutAnnonce" && (
                 <IconButton
                   color="inherit"

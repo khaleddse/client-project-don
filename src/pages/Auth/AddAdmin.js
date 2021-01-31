@@ -13,13 +13,12 @@ import validate from "validate.js";
 import AppBarMur from "../../components/AppBar/AppBarMur";
 import Footer from "../../components/Footer/Footer";
 import Avatar from "@material-ui/core/Avatar";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   image: {
-    backgroundImage: "url(https://i.dlpng.com/static/png/1541571-vector-cartoon-figures-of-office-vector-cartoon-office-png-and-vector-office-png-650_632_preview.png)",
+    backgroundImage:
+      "url(https://i.dlpng.com/static/png/1541571-vector-cartoon-figures-of-office-vector-cartoon-office-png-and-vector-office-png-650_632_preview.png)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -116,7 +116,7 @@ const AddAdmin = () => {
 
     const response = await addAdmin(signupData);
     if (response) {
-      history.push("/ListUser");
+      history.push("/AdminList");
     } else {
       setSignupFailed(true);
     }
@@ -223,27 +223,25 @@ const AddAdmin = () => {
                   : "valeur n'est pas identique"
               }
             />
-          <FormControl error={hasError("grade")}>
-          <InputLabel htmlFor="outlined-age-native-simple">Grade</InputLabel>
-          <Select
-            native
-            label="Grade"
-            inputProps={{
-              name: "grade",
-              id: "outlined-age-native-simple",
-            }}
-            value={formState.values.grade}
-            onChange={inputChangeHandler}
-          >
-            <option aria-label="None" value="" />
-            <option value="admin-principale">
-            Admin Principale
-            </option>
-            <option value="admin">
-            Admin
-            </option>
-          </Select>
-        </FormControl>
+            <FormControl error={hasError("grade")}>
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Grade
+              </InputLabel>
+              <Select
+                native
+                label="Grade"
+                inputProps={{
+                  name: "grade",
+                  id: "outlined-age-native-simple",
+                }}
+                value={formState.values.grade}
+                onChange={inputChangeHandler}
+              >
+                <option aria-label="None" value="" />
+                <option value="admin-principale">Admin Principale</option>
+                <option value="admin">Admin</option>
+              </Select>
+            </FormControl>
             {/*<Button > </Button>*/}
             {SignupFailedState && (
               <Alert severity="error">E-mail existant!</Alert>

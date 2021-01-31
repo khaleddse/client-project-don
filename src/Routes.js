@@ -23,16 +23,18 @@ const Routes = () => {
     isAuthAdmin,
     setAuthHandlerAdmin,
     setAdminHandler,
+    setAuthHandlerEmpl,
+    isAuthempl,
   } = useContext(DonContext);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const info = decode(token);
-      if (
-        info.grade.toUpperCase() === "ADMIN-PRINCIPALE" ||
-        info.grade.toUpperCase() === "ADMIN"
-      ) {
+      if (info.grade.toUpperCase() === "ADMIN-PRINCIPALE") {
         setAuthHandlerAdmin(true);
+        setAdminHandler(info);
+      } else if (info.grade.toUpperCase() === "ADMIN") {
+        setAuthHandlerEmpl(true);
         setAdminHandler(info);
       } else {
         setUserHandler(decode(token));
@@ -94,6 +96,44 @@ const Routes = () => {
           exact
           render={(props) => <AdminList {...props} />}
         />
+        <Route
+          path="/Listuser"
+          exact
+          render={(props) => <UserList {...props} />}
+        />
+        <Route path="/edit" exact render={(props) => <EditView {...props} />} />
+        <Route
+          path="/ListAvis"
+          exact
+          render={(props) => <ListAvis {...props} />}
+        />
+        <Route
+          path="/signup"
+          exact
+          render={(props) => <SignupPage {...props} />}
+        />
+
+        <Route
+          path="/announcements"
+          exact
+          render={(props) => <AnnouncementsList {...props} />}
+        />
+        <Route
+          path="/annonce"
+          exact
+          render={(props) => <AnnoncePage {...props} />}
+        />
+      </Switch>
+    );
+  } else if (isAuthempl) {
+    routes = (
+      <Switch>
+        <Route
+          path="/updatecompte"
+          exact
+          render={(props) => <EditViewAdmin {...props} />}
+        />
+
         <Route
           path="/Listuser"
           exact

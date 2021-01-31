@@ -5,6 +5,7 @@ export const DonContext = createContext({});
 const DonAppContext = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [isAuthAdmin, setIsAuthAdmin] = useState(false);
+  const [isAuthempl, setIsAuthEmpl] = useState(false);
   const [user, setUser] = useState({});
   const [admin, setAdmin] = useState({});
   const [announcementscontexte, setAnnouncementsContexte] = useState([]);
@@ -14,12 +15,14 @@ const DonAppContext = ({ children }) => {
       value={{
         user,
         isAuth,
+        isAuthempl,
         admin,
         announcementscontexte,
         ListCategories,
         isAuthAdmin,
         setAuthHandler: (state) => setIsAuth(state),
         setAuthHandlerAdmin: (state) => setIsAuthAdmin(state),
+        setAuthHandlerEmpl: (state) => setIsAuthEmpl(state),
         setUserHandler: (user) => setUser(user),
         setAdminHandler: (admin) => setAdmin(admin),
         setAnnonceHandler: (annonce) => setAnnouncementsContexte(annonce),
