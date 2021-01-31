@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { DonContext } from "../../contexte/donContexte";
 import { useHistory } from "react-router-dom";
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -27,6 +27,15 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import SupervisorAccountOutlinedIcon from "@material-ui/icons/SupervisorAccountOutlined";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
+import { addCateg } from "../../services/categories";
+
 function HideOnScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({ target: window ? window() : undefined });
@@ -127,10 +136,21 @@ export default function PrimarySearchAppBar(props) {
     setAuthHandlerAdmin,
     setUserHandler,
     setAuthHandlerEmpl,
+    setValideHandler,
+    valide,
   } = useContext(DonContext);
+
   const classes = useStyles();
+  const [formState, setFormState] = useState({
+    values: {
+      nom: "",
+    },
+  });
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
   let history = useHistory();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -138,6 +158,7 @@ export default function PrimarySearchAppBar(props) {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiryDate");
@@ -148,6 +169,7 @@ export default function PrimarySearchAppBar(props) {
     setAuthHandlerAdmin(false);
     history.push("/signin");
   };
+
   const loginRedirect = () => {
     history.push("/signin");
   };
@@ -164,6 +186,30 @@ export default function PrimarySearchAppBar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleClose = () => {
+    setValideHandler(false);
+  };
+  const handleClickOpen = () => {
+    setValideHandler(true);
+  };
+
+  const categorieadd = async () => {
+    const { nom } = formState.values;
+    console.log(nom);
+    await addCateg({ nom });
+    document.location.reload();
+  };
+
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (valide) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [valide]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -186,10 +232,17 @@ export default function PrimarySearchAppBar(props) {
             <SupervisorAccountOutlinedIcon />
             List des Admins
           </MenuItem>
+
           <MenuItem onClick={() => history.push("/addadmin")}>
             <PersonAddOutlinedIcon />
             Ajouter personel
           </MenuItem>
+
+          <MenuItem onClick={() => handleClickOpen()}>
+            <PersonAddOutlinedIcon />
+            Ajouter Categorie
+          </MenuItem>
+
           <MenuItem onClick={() => history.push("/ListAvis")}>
             <ListAltOutlinedIcon />
             List des Avis
@@ -209,7 +262,10 @@ export default function PrimarySearchAppBar(props) {
             <PeopleAltOutlinedIcon />
             List des Users
           </MenuItem>
-
+          <MenuItem onClick={() => handleClickOpen()}>
+            <PersonAddOutlinedIcon />
+            Ajouter Categorie
+          </MenuItem>
           <MenuItem onClick={() => history.push("/ListAvis")}>
             <ListAltOutlinedIcon />
             List des Avis
@@ -310,6 +366,16 @@ export default function PrimarySearchAppBar(props) {
       </MenuItem>
     </Menu>
   );
+  const inputChangeHandler = (e) => {
+    e.persist();
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [e.target.name]: e.target.value,
+      },
+    }));
+  };
 
   return (
     <HideOnScroll {...props}>
@@ -421,6 +487,38 @@ export default function PrimarySearchAppBar(props) {
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
+        <Dialog
+          open={valide}
+          onClose={handleClose}
+          scroll={"paper"}
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+        >
+          <DialogTitle id="scroll-dialog-title">Ajouter categorie</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              <TextField
+                id="nom"
+                name="nom"
+                label="categ"
+                onChange={inputChangeHandler}
+                value={formState.values.nom}
+              />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+            </Button>
+            <Button color="primary" onClick={(e) => categorieadd()}>
+              Confirmer
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </HideOnScroll>
   );
