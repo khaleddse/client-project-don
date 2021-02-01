@@ -142,7 +142,9 @@ export default function SignInSide(props) {
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.Imagecontainer}>
+        { annonceState.image ? 
           <img className={classes.image} src={annonceState.image} />
+        :<img className={classes.image} src="https://www.radiobeton.com/www/wp-content/uploads/2017/01/arton17969.jpg"/>}
         </Grid>
         <Grid
           item

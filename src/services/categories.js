@@ -16,3 +16,12 @@ export const addCateg = (authData) => {
       console.error(err);
     });
 };
+export const addSubCateg = (authData) => {
+  const nom=authData.subcateg
+  axios
+    .post("http://localhost:5000/subcategorie/add/"+authData.id,{nom})
+    .then(({ data }) => data)
+    .catch((err) => {
+      console.error(err);
+    });
+};

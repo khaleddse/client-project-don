@@ -120,6 +120,7 @@ export default function RecipeReviewCard(props) {
           <a
             style={{ color: "grey", textDecoration: "none" }}
             href={"/annonce?_id=" + props.id}
+            target="_blank"
           >
             {" "}
             Voir plus...
