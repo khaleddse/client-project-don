@@ -34,8 +34,12 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
-import { addCateg } from "../../services/categories";
+import { addCateg,addSubCateg } from "../../services/categories";
 import PostAddIcon from "@material-ui/icons/PostAdd";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -139,12 +143,20 @@ export default function PrimarySearchAppBar(props) {
     setAuthHandlerEmpl,
     setValideHandler,
     valide,
+    ListCategories,
+    setListCategHandler
   } = useContext(DonContext);
 
   const classes = useStyles();
   const [formState, setFormState] = useState({
     values: {
       nom: "",
+      selected_categorie:{
+        id:"",
+        nom:""
+        
+      },
+      subcateg:"",
     },
   });
 
@@ -197,9 +209,54 @@ export default function PrimarySearchAppBar(props) {
 
   const categorieadd = async () => {
     const { nom } = formState.values;
-    console.log(nom);
-    await addCateg({ nom });
-    document.location.reload();
+    if(nom){
+      await addCateg({ nom });
+      document.location.reload();
+    }
+    else
+    alert("entrer un nom !")
+    
+  };
+  const SubCategorieadd = async () => {
+    const { id,nom } = formState.values.selected_categorie;
+    const {subcateg} =formState.values
+if(id && subcateg ){
+  await addSubCateg({ subcateg ,id});
+  document.location.reload();
+}else{
+  alert("Vous devez selectionnez une categorie de la sous categorie choisi !")
+}
+    
+    
+  };
+  const inputChangeHandler = (e) => {
+    e.persist();
+    const name = e.target.value.slice(0, e.target.value.indexOf("$"));
+    const id = e.target.value.slice(
+      e.target.value.indexOf("$") + 1,
+      e.target.value.length
+    );
+    e.target.name === "selected_categorie"?
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [e.target.name]: {
+          id:id,
+          nom:name
+        },
+      },
+    }))
+    :
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [e.target.name]: e.target.value,
+      },
+    }))
+
+    console.log(formState)
   };
 
   const descriptionElementRef = useRef(null);
@@ -367,16 +424,6 @@ export default function PrimarySearchAppBar(props) {
       </MenuItem>
     </Menu>
   );
-  const inputChangeHandler = (e) => {
-    e.persist();
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [e.target.name]: e.target.value,
-      },
-    }));
-  };
 
   return (
     <HideOnScroll {...props}>
@@ -516,6 +563,53 @@ export default function PrimarySearchAppBar(props) {
               Annuler
             </Button>
             <Button color="primary" onClick={(e) => categorieadd()}>
+              Ajouter
+            </Button>
+          </DialogActions>
+
+
+          <DialogTitle id="scroll-dialog-title">Ajouter Sous-Categ</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
+            >
+              <TextField
+                id="subcateg"
+                name="subcateg"
+                label="Nom-Sous-Catégorie"
+                onChange={inputChangeHandler}
+                value={formState.values.subcateg}
+              /><br/>
+          <FormControl style={{width:"100%"}}>
+          <InputLabel htmlFor="outlined-age-native-simple">
+            Select Catégorie
+          </InputLabel>
+          <Select
+            native
+            label="Select Catégorie"
+            inputProps={{
+              name: "selected_categorie",
+              id: "outlined-age-native-simple",
+            }}
+            onChange={inputChangeHandler}
+          >
+            <option value="" />
+            {ListCategories.map((categ) => {
+              return <option value={categ.nom + "$" + categ._id}>
+              {categ.nom}
+            </option>
+            })}
+          </Select>
+        </FormControl>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+            </Button>
+            <Button color="primary" onClick={(e) => SubCategorieadd()}>
               Ajouter
             </Button>
           </DialogActions>
