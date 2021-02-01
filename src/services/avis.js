@@ -22,6 +22,18 @@ export const GetAllAvis = () => {
         return err
    });
 };
+
+export const repondreAvis = (data) => {
+     return axios
+   .post(`http://localhost:5000/admin/repondavis`,data)
+    .then((resData) => {
+         return resData;
+      })
+   .catch((err) => {
+        console.error(err);
+        return err
+   });
+};
 export const DeleteAvis = (id) => {
      return axios
    .delete(`http://localhost:5000/avis/${id}`)

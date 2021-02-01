@@ -5,6 +5,7 @@ import AvisCard from "../../components/UI/AvisCard/AvisCard";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Footer from "../../components/Footer/Footer";
+import background from"../../assets/images/background.png"
 
 export default function ListAvis() {
   const [ListAvis, setListAvis] = useState([{}]);
@@ -24,7 +25,7 @@ export default function ListAvis() {
       style={{
         minHeight: "600px",
         backgroundImage:
-          "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+        `url(${background})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",

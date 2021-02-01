@@ -20,6 +20,7 @@ import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import "./AnnouncementCard.css";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import NotFound from '../../../assets/images/NotFound.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,7 @@ export default function RecipeReviewCard(props) {
       ) : (
         <CardMedia
           className={classes.media}
-          image="https://www.radiobeton.com/www/wp-content/uploads/2017/01/arton17969.jpg"
+          image={NotFound}
           title={props.user}
         />
       )}

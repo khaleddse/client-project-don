@@ -19,10 +19,14 @@ import { useHistory } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import background from"../../assets/images/background.png"
+import addAnnonceImage from"../../assets/images/addAnnonce.png"
+import donate from"../../assets/images/donate.png"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    backgroundImage: `url(${background})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -166,10 +170,10 @@ const AddAnnoucement = () => {
     <Grid container component="main" className={classes.root}>
     <CssBaseline />
     <Grid item xs={12} sm={6} className={classes.LogoGrid}>
-      <img  className={classes.image} src="https://www.123argent.com/wp-content/uploads/2019/08/motif-arbre-version-2019.png" />
+      <img  className={classes.image} src={addAnnonceImage} />
     </Grid>
     <Grid item xs={12} sm={6}  className={classes.formGrid}>
-    <img style={{marginLeft:"40%"}} height="140" src="https://nsa39.casimages.com/img/2018/02/14/180214085310739388.png" />
+    <img style={{marginLeft:"40%"}} height="140" src={donate}/>
       <form onSubmit={(e) => submitFormHandler(e)} className={classes.form}>
         <TextField
           id="object"
