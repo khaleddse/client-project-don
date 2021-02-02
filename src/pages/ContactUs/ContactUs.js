@@ -13,7 +13,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Footer from "../../components/Footer/Footer";
 import { makeStyles } from "@material-ui/core/styles";
-
+import contactus1 from"../../assets/images/contactus1.png"
+import contactus2 from"../../assets/images/contactus2.png"
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: "6%",
@@ -120,7 +121,7 @@ const ContactUs = () => {
               display: "block",
             }}
             height="200"
-            src="https://riskcontrolacademy.com/wp-content/uploads/2018/02/contact.png"
+            src={contactus1}
           />
           <h3 style={{ margin: "10px 30px", color: "white" }}>
             si vous avez des questions ou souhaitez simplement nous
@@ -144,7 +145,7 @@ const ContactUs = () => {
               marginRight: "auto",
               height: "100px",
             }}
-            src="https://desl-art.com/wp-content/uploads/2019/03/contact-bouton-1.png"
+            src={contactus2}
           />
           <form onSubmit={(e) => submitFormHandler(e)} className={classes.form}>
             <TextField

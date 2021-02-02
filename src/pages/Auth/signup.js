@@ -21,12 +21,13 @@ import Footer from "../../components/Footer/Footer";
 import Avatar from "@material-ui/core/Avatar";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Typography from "@material-ui/core/Typography";
+import background from"../../assets/images/background.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "91vh",
     backgroundImage:
-      "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+    `url(${background})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",

@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Footer from "../../components/Footer/Footer";
 import { deltePost } from "../../services/posts";
+import Home from '../../assets/images/Home.jpg';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundImage:
-      "url(https://www.pixelstalk.net/wp-content/uploads/2015/01/Snow-winter-landscape-wallpaper-widescreen.jpg)",
+      `url(${Home})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "0px -350px",

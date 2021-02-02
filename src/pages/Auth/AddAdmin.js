@@ -19,12 +19,14 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import background from"../../assets/images/background.png"
+import addAdminBackground from"../../assets/images/addAdminBackground.jpg"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "91vh",
     backgroundImage:
-      "url(https://www.teahub.io/photos/full/21-211580_stunning-white-polygon-wallpaper-images-for-free-download.png)",
+      `url(${background})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      "url(https://d34u8crftukxnk.cloudfront.net/slackpress/prod/sites/6/admin-app-management-hero%402x.jpg)",
+    `url(${addAdminBackground})`,
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
