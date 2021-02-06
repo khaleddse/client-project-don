@@ -4,8 +4,8 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,12 +32,18 @@ export default function ControlledAccordions(props) {
 
   return (
     <div className={classes.root}>
+      <CssBaseline/>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
       >
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={
+          <BorderColorOutlinedIcon
+            variant="contained"
+            color="primary"
+            type="submit"
+          ></BorderColorOutlinedIcon>}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
@@ -48,13 +54,10 @@ export default function ControlledAccordions(props) {
         </AccordionSummary>
         <AccordionDetails>
           {props.children}
-          <BorderColorOutlinedIcon
-            variant="contained"
-            color="primary"
-            type="submit"
-          ></BorderColorOutlinedIcon>
+
         </AccordionDetails>
       </Accordion>
+      <br/> 
     </div>
   );
 }
