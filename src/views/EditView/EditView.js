@@ -9,6 +9,9 @@ import { updateUser } from "../../services/UserServices";
 import { useHistory } from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import Footer from "../../components/Footer/Footer";
+import Grid from "@material-ui/core/Grid";
+import avatar from"../../assets/images/avatar1.png"
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -35,7 +38,6 @@ const EditView = () => {
       name: "tel",
     },
   });
-  let history = useHistory();
   const onChangeHandler = (e) => {
     setFormUpDate((formupdate) => ({
       ...formupdate,
@@ -82,7 +84,22 @@ const EditView = () => {
   return (
     <div>
       <AppBarMur />
-      <form onSubmit={(e) => updateHandler(e)}>
+      <Grid container component="main"style={{marginTop:"60px"}} >
+      <Grid item xs={false} sm={2} style={{textAlign:"center"}}>
+      <img
+            alt="image2"
+            style={{
+              marginRight: "auto",
+              marginLeft: "auto",
+              display: "block",
+            }}
+            height="110"
+            src={avatar}
+        />
+        <h1>{nom+" "+prenom}</h1>
+      </Grid>
+      <Grid item xs={12} sm={8} square>
+      <form onSubmit={(e) => updateHandler(e)} style={{minHeight:"500px" }}>
         {fieldsArray.map(({ name, value }) => (
           <Edit Type={name} Value={value} key={name}>
             <TextField
@@ -94,15 +111,19 @@ const EditView = () => {
             />
           </Edit>
         ))}
-        <Button variant="contained" color="primary" type="submit">
-          change
+        <Button variant="contained" color="primary" type="submit" style={{marginTop:"20px",marginBottom:"20px"}}>
+          Changer
         </Button>
       </form>
+      </Grid>
+      <Grid item xs={false} sm={2} />
+      </Grid>
       <Snackbar open={isSucceed} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           Votre Compte a éte modifié avec succes !
         </Alert>
       </Snackbar>
+      <Footer />
     </div>
   );
 };
